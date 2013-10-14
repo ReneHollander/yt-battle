@@ -23,6 +23,8 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 	}
 	
 	public void valueChanged(ListSelectionEvent e) {
+		if (!e.getValueIsAdjusting()) return;
+		
 		if (e.getSource() == view.getTeams()) {
 			switch(view.getTeams().getSelectedValue()) {
 			case "Team Red":
