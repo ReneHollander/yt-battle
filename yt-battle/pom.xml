@@ -56,6 +56,18 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<mainClass>at.er.ytbattle.gui.GUIControl</mainClass>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
 					<artifactId>maven-antrun-plugin</artifactId>
 					<version>1.3</version>
 				</plugin>

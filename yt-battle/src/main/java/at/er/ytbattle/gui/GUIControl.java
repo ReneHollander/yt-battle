@@ -18,8 +18,8 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 
 	private GUIView view;
 	
-	public GUIControl(GUIView view) {
-		this.view = view;
+	public GUIControl() {
+		this.view = new GUIView(this);
 	}
 	
 	public void valueChanged(ListSelectionEvent e) {
@@ -115,5 +115,9 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 				}
 			}
 		}
+	}
+	
+	public static void main(String[] args) {
+		new GUIControl();
 	}
 }

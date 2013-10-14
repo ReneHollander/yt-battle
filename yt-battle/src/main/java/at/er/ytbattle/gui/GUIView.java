@@ -31,10 +31,10 @@ public class GUIView extends JFrame {
 	private JList<String> teams;
 	private DefaultListModel<String> teamModel;
 	
-	public GUIView() {
+	public GUIView(GUIControl l) {
 		super("battle.save Editor by EXSolo");
 		
-		l = new GUIControl(this);
+		this.l = l;
 		
 		this.setSize(500, 200);
 		this.setLocationRelativeTo(null);
@@ -124,9 +124,5 @@ public class GUIView extends JFrame {
 
 	public void setTeamModel(DefaultListModel<String> teamModel) {
 		this.teamModel = teamModel;
-	}
-
-	public static void main(String[] args) {
-		new GUIView();
 	}
 }
