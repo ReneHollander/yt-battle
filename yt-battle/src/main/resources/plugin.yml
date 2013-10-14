@@ -1,0 +1,14 @@
+name: Battle
+version: 1.5.4
+description: Battle Plugin für das Battle von RathamoonLP. Special Thanks to Rene8888
+author: EXSolo
+website: http://www.exsoloscript.com
+
+main: at.er.ytbattle.battle.Battle
+database: false
+
+commands:
+  battle:
+    description: Type /battle help for a command overview
+  b:
+    description: Type /battle help for a command overview
