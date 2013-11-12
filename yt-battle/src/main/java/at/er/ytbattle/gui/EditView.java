@@ -25,12 +25,15 @@ public class EditView extends JFrame {
 	private JButton add;
 	private JButton edit;
 	private JButton del;
+	private JButton saveLife;
 	
+	private GUIView view;
 	private TeamType type;
 	
-	public EditView(TeamType type) {
+	public EditView(GUIView v, TeamType type) {
 		super("Edit Team " + type.getName());
 		
+		this.view = v;
 		this.type = type;
 		
 		this.setSize(500, 250);
@@ -41,6 +44,7 @@ public class EditView extends JFrame {
 		this.add = new JButton("Add Player to Team");
 		this.edit = new JButton("Edit Player");
 		this.del = new JButton("Remove Player from Team");
+		this.saveLife = new JButton("Save Lifes");
 		
 		playersModel = new DefaultListModel<String>();
 		players = new JList<String>(playersModel);
@@ -60,6 +64,7 @@ public class EditView extends JFrame {
 		buttonContainer.add(add);
 		buttonContainer.add(edit);
 		buttonContainer.add(del);
+		buttonContainer.add(saveLife);
 		
 		this.setLayout(new BorderLayout());
 		
@@ -85,12 +90,41 @@ public class EditView extends JFrame {
 		return false;
 	}
 	
+	public boolean checkForSaveLifes(ActionEvent e) {
+		if (e.getSource() == saveLife) return true;
+		return false;
+	}
+	
 	public TeamType getTeamType() {
 		return type;
 	}
 
 	public void setTeamType(TeamType type) {
 		this.type = type;
+	}
+
+	public JTextField getLifes() {
+		return lifes;
+	}
+
+	public void setLifes(JTextField lifes) {
+		this.lifes = lifes;
+	}
+
+	public GUIView getView() {
+		return view;
+	}
+
+	public void setView(GUIView view) {
+		this.view = view;
+	}
+
+	public DefaultListModel<String> getPlayersModel() {
+		return playersModel;
+	}
+
+	public void setPlayersModel(DefaultListModel<String> playersModel) {
+		this.playersModel = playersModel;
 	}
 
 	public enum TeamType {
