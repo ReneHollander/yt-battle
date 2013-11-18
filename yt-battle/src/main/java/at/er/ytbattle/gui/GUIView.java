@@ -72,7 +72,7 @@ public class GUIView extends JFrame {
 		
 		this.setVisible(true);
 	}
-	
+
 	private JMenuBar getMenu() {
 		JMenuBar bar = new JMenuBar();
 		

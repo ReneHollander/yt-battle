@@ -12,7 +12,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import at.er.ytbattle.battle.Game;
 import at.er.ytbattle.gui.EditView.TeamType;
-import at.er.ytbattle.util.ObjectSerialization;
+import at.rene8888.serilib.Deserialize;
+import at.rene8888.serilib.Serialize;
 
 public class GUIControl implements ActionListener, ListSelectionListener {
 
@@ -72,8 +73,7 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 			if (userSelection == JFileChooser.APPROVE_OPTION) {
 				File fileToOpen = fileChooser.getSelectedFile();
 				try {
-					Game g = (Game) ObjectSerialization
-							.fileToObject(fileToOpen);
+					Game g = (Game) Deserialize.readFromFile(fileToOpen, true);
 					
 					view.setGame(g);
 				} catch (ClassNotFoundException ex) {
@@ -101,14 +101,14 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 				if (fileChooser.getSelectedFile().getPath().endsWith("battle.save")) {
 					File fileToSave = fileChooser.getSelectedFile();
 					try {
-						ObjectSerialization.objectToFile(view.getGame(), fileToSave);
+						Serialize.writeToFile(view.getGame(), fileToSave, true);
 					} catch (IOException ex) {
 						ex.printStackTrace();
 					}
 				} else {
 					File f = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".save");
 					try {
-						ObjectSerialization.objectToFile(view.getGame(), f);
+						Serialize.writeToFile(view.getGame(), f, true);
 					} catch (IOException ex) {
 						ex.printStackTrace();
 					}

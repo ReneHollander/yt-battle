@@ -22,23 +22,24 @@ import org.bukkit.scoreboard.Scoreboard;
 import at.er.ytbattle.battle.cmd.Cmd_battle;
 import at.er.ytbattle.battle.event.GameListener;
 import at.er.ytbattle.battle.event.SpectatorListener;
-import at.er.ytbattle.util.ObjectSerialization;
+import at.rene8888.serilib.Deserialize;
+import at.rene8888.serilib.Serialize;
 
 public class Battle extends JavaPlugin implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private HashMap<String, ItemStack[]> inventories = new HashMap<String, ItemStack[]>();
 	private HashMap<String, ItemStack[]> armor = new HashMap<String, ItemStack[]>();
-	
+
 	private Game game;
 
 	public final GameListener gl = new GameListener(this);
 	public final SpectatorListener sl = new SpectatorListener(this);
 
 	public void onEnable() {
-		
+
 		game = new Game(this);
-		
+
 		addCraftings();
 		registerCommands();
 		registerEvents();
@@ -123,16 +124,13 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public void loadGame() {
-		File file;
-		
 		try {
-			file = new File(getDataFolder(), "battle.save");
-			Object o = ObjectSerialization.fileToObject(file);
-			
+			Object o = Deserialize.readFromFile(new File(getDataFolder(),
+					"battle.save"), true);
 			if (o instanceof Game) {
 				Game g = (Game) o;
-				
-				if (g.isSaved()) game = g;
+				if (g.isSaved())
+					game = g;
 			}
 		} catch (ClassNotFoundException e) {
 			System.out.println("Skipping data loading...");
@@ -143,20 +141,19 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public void saveGame() {
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			if (game.getPlayers().contains(p.getName())) {
-				p.setDisplayName(p.getName());
-			}
-		}
-
-		File file = new File(getDataFolder(), "battle.save");
-		
 		try {
-			if (file.exists()) file.delete();
-			else file.createNewFile();
-		
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				if (game.getPlayers().contains(p.getName())) {
+					p.setDisplayName(p.getName());
+				}
+			}
+			File file = new File(getDataFolder(), "battle.save");
+			if (file.exists())
+				file.delete();
+			else
+				file.createNewFile();
 			game.setSaved(true);
-			ObjectSerialization.objectToFile(game, file);
+			Serialize.writeToFile(game, file, true);
 		} catch (IOException e) {
 			game.setSaved(false);
 			e.printStackTrace();
@@ -190,7 +187,8 @@ public class Battle extends JavaPlugin implements Serializable {
 		if (game.getPurple().getLifes() > 0)
 			lifes.getScore(
 					Bukkit.getOfflinePlayer(ChatColor.DARK_PURPLE
-							+ "Team Purple")).setScore(game.getPurple().getLifes());
+							+ "Team Purple")).setScore(
+					game.getPurple().getLifes());
 		if (game.getCyan().getLifes() > 0)
 			lifes.getScore(
 					Bukkit.getOfflinePlayer(ChatColor.AQUA + "Team Cyan"))
@@ -233,34 +231,44 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public ItemStack[][] loadInventory(Player p) {
-		ItemStack[][] iss = {inventories.get(p.getName()), armor.get(p.getName())};
+		ItemStack[][] iss = { inventories.get(p.getName()),
+				armor.get(p.getName()) };
 		inventories.remove(p.getName());
 		armor.remove(p.getName());
-		
+
 		return iss;
 	}
-	
+
 	public void setTags() {
-		if (game.isStarted() == false) return;
-		
+		if (game.isStarted() == false)
+			return;
+
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			String name = p.getName();
-			
-			if (game.getRed().getPlayers().contains(name)) p.setPlayerListName(ChatColor.DARK_RED + p.getName());
-			else if (game.getBlue().getPlayers().contains(name)) p.setPlayerListName(ChatColor.DARK_BLUE + p.getName());
-			else if (game.getGreen().getPlayers().contains(name)) p.setPlayerListName(ChatColor.DARK_GREEN + p.getName());
-			else if (game.getYellow().getPlayers().contains(name)) p.setPlayerListName(ChatColor.YELLOW + p.getName());
-			else if (game.getPurple().getPlayers().contains(name)) p.setPlayerListName(ChatColor.DARK_PURPLE + p.getName());
-			else if (game.getCyan().getPlayers().contains(name)) p.setPlayerListName(ChatColor.DARK_AQUA + p.getName());
-			else if (game.getBlack().getPlayers().contains(name)) p.setPlayerListName(ChatColor.BLACK + p.getName());
-			else if (game.getWhite().getPlayers().contains(name)) p.setPlayerListName(ChatColor.BOLD + p.getName());
+
+			if (game.getRed().getPlayers().contains(name))
+				p.setPlayerListName(ChatColor.DARK_RED + p.getName());
+			else if (game.getBlue().getPlayers().contains(name))
+				p.setPlayerListName(ChatColor.DARK_BLUE + p.getName());
+			else if (game.getGreen().getPlayers().contains(name))
+				p.setPlayerListName(ChatColor.DARK_GREEN + p.getName());
+			else if (game.getYellow().getPlayers().contains(name))
+				p.setPlayerListName(ChatColor.YELLOW + p.getName());
+			else if (game.getPurple().getPlayers().contains(name))
+				p.setPlayerListName(ChatColor.DARK_PURPLE + p.getName());
+			else if (game.getCyan().getPlayers().contains(name))
+				p.setPlayerListName(ChatColor.DARK_AQUA + p.getName());
+			else if (game.getBlack().getPlayers().contains(name))
+				p.setPlayerListName(ChatColor.BLACK + p.getName());
+			else if (game.getWhite().getPlayers().contains(name))
+				p.setPlayerListName(ChatColor.BOLD + p.getName());
 		}
 	}
-	
+
 	public static String prefix() {
 		return ChatColor.GOLD + "[Battle] " + ChatColor.WHITE;
 	}
-	
+
 	public Game getGame() {
 		return game;
 	}
