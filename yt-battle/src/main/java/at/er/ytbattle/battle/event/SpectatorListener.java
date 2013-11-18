@@ -16,53 +16,53 @@ import at.er.ytbattle.battle.Battle;
 
 public class SpectatorListener implements Listener, Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Battle plugin;
-	
+
 	public SpectatorListener(Battle plugin) {
 		this.plugin = plugin;
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGH)
-    public void onBlockBreak(BlockBreakEvent event) {
+	public void onBlockBreak(BlockBreakEvent event) {
 		Player player = event.getPlayer();
-		
-	    if (plugin.getGame().getSpectators().contains(player.getName())) {
-	    	event.setCancelled(true);
-	    	player.sendMessage(Battle.prefix() + "You can't break blocks in spectator mode!");
-	    }
+
+		if (plugin.getGame().getSpectators().contains(player.getName())) {
+			event.setCancelled(true);
+			player.sendMessage(Battle.prefix() + "You can't break blocks in spectator mode!");
+		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGH)
-    public void onClickInventory(InventoryClickEvent event) {
+	public void onClickInventory(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
-		
+
 		if (plugin.getGame().getSpectators().contains(player.getName())) {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	public void onPlayerDamage(EntityDamageByEntityEvent event) {
 		Player damager = (Player) event.getDamager();
-				
+
 		if (plugin.getGame().getSpectators().contains(damager)) {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerPickupItem(PlayerPickupItemEvent event) {
+	public void onPlayerPickupItem(PlayerPickupItemEvent event) {
 		Player player = event.getPlayer();
-		
+
 		if (plugin.getGame().getSpectators().contains(player.getName())) {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGH)
-    public void onItemDrop(PlayerDropItemEvent event) {
+	public void onItemDrop(PlayerDropItemEvent event) {
 		Player player = event.getPlayer();
-		
+
 		if (plugin.getGame().getSpectators().contains(player.getName())) {
 			event.setCancelled(true);
 		}

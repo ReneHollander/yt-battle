@@ -28,8 +28,7 @@ public class Cmd_battle_spectate {
 					ItemStack map = new ItemStack(Material.EMPTY_MAP);
 
 					for (Player p : Bukkit.getOnlinePlayers()) {
-						if (!plugin.getGame().getSpectators()
-								.contains(p.getName())) {
+						if (!plugin.getGame().getSpectators().contains(p.getName())) {
 							p.hidePlayer(player);
 						}
 					}
@@ -40,12 +39,10 @@ public class Cmd_battle_spectate {
 					plugin.getGame().getPlayers().remove(player.getName());
 					plugin.getGame().getSpectators().add(player.getName());
 					player.getInventory().addItem(map);
-					player.sendMessage(Battle.prefix()
-							+ "You entered spectator mode. You can leave it with /battle leave");
+					player.sendMessage(Battle.prefix() + "You entered spectator mode. You can leave it with /battle leave");
 
 				} else {
-					player.sendMessage(Battle.prefix()
-							+ "You are already in Spectator mode! Leave it with /battle leave");
+					player.sendMessage(Battle.prefix() + "You are already in Spectator mode! Leave it with /battle leave");
 					return true;
 				}
 			}
@@ -55,14 +52,12 @@ public class Cmd_battle_spectate {
 				if (plugin.getGame().getSpectators().contains(player.getName())) {
 
 					if (args.length == 2) {
-						player.sendMessage(Battle.prefix()
-								+ "Correct usage: /battle spectate tp <playername>");
+						player.sendMessage(Battle.prefix() + "Correct usage: /battle spectate tp <playername>");
 					}
 
 					if (args.length > 2 && args[2].equalsIgnoreCase("spawn")) {
 
-						player.sendMessage(Battle.prefix()
-								+ "Teleporting to Battlespawn...");
+						player.sendMessage(Battle.prefix() + "Teleporting to Battlespawn...");
 						player.teleport(plugin.getGame().getSpawn().getLocation());
 						return true;
 					}
@@ -70,20 +65,16 @@ public class Cmd_battle_spectate {
 					if (args.length > 2) {
 
 						try {
-							player.teleport(Bukkit.getPlayer(args[2])
-									.getLocation());
-							player.sendMessage(Battle.prefix()
-									+ "Teleporting...");
+							player.teleport(Bukkit.getPlayer(args[2]).getLocation());
+							player.sendMessage(Battle.prefix() + "Teleporting...");
 
 						} catch (Exception e) {
 
-							player.sendMessage(Battle.prefix()
-									+ "Player isn't online!");
+							player.sendMessage(Battle.prefix() + "Player isn't online!");
 						}
 					}
 				} else {
-					player.sendMessage(Battle.prefix()
-							+ "You have to become a spectator first: /battle spectate");
+					player.sendMessage(Battle.prefix() + "You have to become a spectator first: /battle spectate");
 				}
 
 				return true;
@@ -94,8 +85,7 @@ public class Cmd_battle_spectate {
 				if (plugin.getGame().getSpectators().contains(player.getName())) {
 
 					if (args.length == 2) {
-						player.sendMessage(Battle.prefix()
-								+ "Correct usage: /battle spectate inv <playername>");
+						player.sendMessage(Battle.prefix() + "Correct usage: /battle spectate inv <playername>");
 						return true;
 					}
 
@@ -105,8 +95,7 @@ public class Cmd_battle_spectate {
 						try {
 							inv = Bukkit.getPlayer(args[2]).getInventory();
 						} catch (Exception e) {
-							player.sendMessage(Battle.prefix()
-									+ "Player isn't online!");
+							player.sendMessage(Battle.prefix() + "Player isn't online!");
 							return true;
 						}
 
@@ -119,8 +108,7 @@ public class Cmd_battle_spectate {
 					}
 
 				} else {
-					player.sendMessage(Battle.prefix()
-							+ "You have to become a spectator first: /battle spectate");
+					player.sendMessage(Battle.prefix() + "You have to become a spectator first: /battle spectate");
 					return true;
 				}
 			}

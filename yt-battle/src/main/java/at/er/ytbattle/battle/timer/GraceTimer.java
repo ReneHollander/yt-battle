@@ -16,7 +16,7 @@ public class GraceTimer implements Runnable {
 		this.plugin = plugin;
 		this.time = -1;
 	}
-	
+
 	public GraceTimer(Battle plugin, int timeSec) {
 		this.plugin = plugin;
 		this.time = timeSec;
@@ -44,12 +44,10 @@ public class GraceTimer implements Runnable {
 			plugin.getGame().getSpawn().getLocation().getWorld().setPVP(true);
 			for (String s : plugin.getGame().getPlayers()) {
 				Player player = Bukkit.getPlayer(s);
-				
-				player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER,
-						10, 1);
+
+				player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 10, 1);
 			}
-			Bukkit.broadcastMessage(Battle.prefix()
-					+ "The grace period has ended!");
+			Bukkit.broadcastMessage(Battle.prefix() + "The grace period has ended!");
 		}
 
 		if (time >= 0) {
@@ -60,18 +58,16 @@ public class GraceTimer implements Runnable {
 	private void note() {
 		for (String s : plugin.getGame().getPlayers()) {
 			Player player = Bukkit.getPlayer(s);
-			
+
 			player.playSound(player.getLocation(), Sound.NOTE_SNARE_DRUM, 10, 1);
 		}
 	}
 
 	private void broadcastTime() {
 		if (time > 60) {
-			Bukkit.broadcastMessage(Battle.prefix()
-					+ "The grace period will end in " + time / 60 + " Minutes");
+			Bukkit.broadcastMessage(Battle.prefix() + "The grace period will end in " + time / 60 + " Minutes");
 		} else {
-			Bukkit.broadcastMessage(Battle.prefix()
-					+ "The grace period will end in " + time + " Seconds");
+			Bukkit.broadcastMessage(Battle.prefix() + "The grace period will end in " + time + " Seconds");
 		}
 	}
 

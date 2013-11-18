@@ -13,8 +13,9 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-@SuppressWarnings("serial")
 public class EditView extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 	
 	private JList<String> players;
 	private DefaultListModel<String> playersModel;
@@ -22,62 +23,67 @@ public class EditView extends JFrame {
 	private EditControl l;
 	
 	private JTextField lifes;
-	
+
 	private JLabel lifesLabel;
-	
+
 	private JButton add;
 	private JButton edit;
 	private JButton del;
 	private JButton save;
-	
+	private JButton saveLife;
+
 	private GUIView view;
-	private TeamType type;
-	
-	public EditView(GUIView v, TeamType type) {
-		super("Edit Team " + type.getName());
-		
+	private at.er.ytbattle.gui.TeamType type;
+
+	public EditView(GUIView v, at.er.ytbattle.gui.TeamType red) {
+		super("Edit Team " + red.getName());
+
 		this.view = v;
-		this.type = type;
+		this.type = red;
 		
 		l = new EditControl(this);
 		
 		this.setSize(1000, 250);
+
+		this.setSize(500, 250);
 		this.setLocationRelativeTo(null);
-		
+
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+
 		this.add = new JButton("Add Player to Team");
 		this.edit = new JButton("Edit Player");
 		this.del = new JButton("Remove Player from Team");
 		this.save = new JButton("Save Team Options");
 		
+		this.saveLife = new JButton("Save Lifes");
+
 		playersModel = new DefaultListModel<String>();
 		players = new JList<String>(playersModel);
-		
+
 		lifes = new JTextField(3);
 		lifesLabel = new JLabel("Teamlifes: ");
-		
+
 		Container life = new Container();
 		life.setLayout(new BorderLayout());
-		
+
 		life.add(lifesLabel, BorderLayout.NORTH);
 		life.add(lifes, BorderLayout.CENTER);
-		
+
 		Container buttonContainer = new Container();
 		buttonContainer.setLayout(new FlowLayout());
-		
+
 		add.addActionListener(l);
 		edit.addActionListener(l);
 		del.addActionListener(l);
 		save.addActionListener(l);
-		
+
 		buttonContainer.add(add);
 		buttonContainer.add(edit);
 		buttonContainer.add(del);
 		buttonContainer.add(save);
 		
 		if (view.getGame() != null) {
-			switch(type.getId()) {
+			switch(red.getId()) {
 			case 1:
 				for (String player : view.getGame().getRed().getPlayers()) {
 					playersModel.addElement(player);
@@ -122,40 +128,50 @@ public class EditView extends JFrame {
 			
 		}else JOptionPane.showMessageDialog(null, "null");
 		
+		buttonContainer.add(saveLife);
 		this.setLayout(new BorderLayout());
-		
+
 		this.add(players, BorderLayout.CENTER);
 		this.add(life, BorderLayout.EAST);
 		this.add(buttonContainer, BorderLayout.SOUTH);
-		
+
 		this.setVisible(true);
 	}
-	
+
 	public boolean checkForAdd(ActionEvent e) {
-		if (e.getSource() == add) return true;
+		if (e.getSource() == add)
+			return true;
 		return false;
 	}
-	
+
 	public boolean checkForEdit(ActionEvent e) {
-		if (e.getSource() == edit) return true;
+		if (e.getSource() == edit)
+			return true;
 		return false;
 	}
-	
+
 	public boolean checkForRem(ActionEvent e) {
-		if (e.getSource() == del) return true;
+		if (e.getSource() == del)
+			return true;
 		return false;
 	}
-	
+
 	public boolean checkForSave(ActionEvent e) {
 		if (e.getSource() == save) return true;
 		return false;
 	}
-	
-	public TeamType getTeamType() {
+
+	public boolean checkForSaveLifes(ActionEvent e) {
+		if (e.getSource() == saveLife)
+			return true;
+		return false;
+	}
+
+	public at.er.ytbattle.gui.TeamType getTeamType() {
 		return type;
 	}
 
-	public void setTeamType(TeamType type) {
+	public void setTeamType(at.er.ytbattle.gui.TeamType type) {
 		this.type = type;
 	}
 

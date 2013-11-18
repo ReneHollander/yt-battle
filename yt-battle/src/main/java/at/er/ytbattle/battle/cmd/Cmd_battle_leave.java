@@ -18,8 +18,7 @@ public class Cmd_battle_leave {
 
 		Battle plugin = cmd.getPlugin();
 
-		if (plugin.getGame().getPlayers().contains(player.getName())
-				|| plugin.getGame().getSpectators().contains(player.getName())) {
+		if (plugin.getGame().getPlayers().contains(player.getName()) || plugin.getGame().getSpectators().contains(player.getName())) {
 			player.setDisplayName(player.getName());
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				p.showPlayer(player);
@@ -35,8 +34,7 @@ public class Cmd_battle_leave {
 
 			player.sendMessage(Battle.prefix() + "You have left the Battle");
 		} else {
-			player.sendMessage(Battle.prefix()
-					+ "You havn't joined the Battle before");
+			player.sendMessage(Battle.prefix() + "You havn't joined the Battle before");
 		}
 
 		return true;

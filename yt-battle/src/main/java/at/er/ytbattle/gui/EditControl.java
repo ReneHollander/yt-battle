@@ -12,15 +12,15 @@ public class EditControl implements ActionListener {
 	public EditControl(EditView v) {
 		view = v;
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if (true) {
 			String l = view.getLifes().getText();
 			int lifes = 0;
-			
+
 			try {
 				lifes = Integer.parseInt(l);
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(view, "Error on saving lifes: Text is not a number!");
 				return;
 			}

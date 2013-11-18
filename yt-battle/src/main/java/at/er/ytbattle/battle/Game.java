@@ -9,9 +9,9 @@ import at.er.ytbattle.util.SerializableLocation;
 
 public class Game implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Battle plugin;
-	
+
 	private Team red;
 	private Team blue;
 	private Team green;
@@ -20,11 +20,11 @@ public class Game implements Serializable {
 	private Team cyan;
 	private Team black;
 	private Team white;
-	
+
 	private ArrayList<String> players;
 	private ArrayList<String> spectators;
 	private ArrayList<String> teams;
-	
+
 	private SerializableLocation spawn;
 
 	private boolean started;
@@ -32,10 +32,10 @@ public class Game implements Serializable {
 
 	private GraceTimer graceTimer;
 	private RemindTimer remindTimer;
-	
+
 	public Game(Battle b) {
 		plugin = b;
-		
+
 		red = new Team(plugin);
 		blue = new Team(plugin);
 		green = new Team(plugin);
@@ -44,16 +44,16 @@ public class Game implements Serializable {
 		cyan = new Team(plugin);
 		black = new Team(plugin);
 		white = new Team(plugin);
-		
+
 		players = new ArrayList<String>();
 		spectators = new ArrayList<String>();
 		teams = new ArrayList<String>();
-		
+
 		spawn = null;
-		
+
 		started = false;
 		saved = false;
-		
+
 		remindTimer = new RemindTimer();
 		graceTimer = null;
 	}
@@ -185,5 +185,5 @@ public class Game implements Serializable {
 	public void setSpawn(SerializableLocation spawn) {
 		this.spawn = spawn;
 	}
-	
+
 }

@@ -11,7 +11,7 @@ import at.er.ytbattle.battle.Battle;
 
 public class RemindTimer implements Runnable, Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int timeInMinutes = 0;
 
 	public void run() {
@@ -31,8 +31,6 @@ public class RemindTimer implements Runnable, Serializable {
 	}
 
 	private void broadcastTime() {
-		Bukkit.broadcastMessage(Battle.prefix() + ChatColor.DARK_RED
-				+ "The battle is going on for " + timeInMinutes
-				+ " minutes");
+		Bukkit.broadcastMessage(Battle.prefix() + ChatColor.DARK_RED + "The battle is going on for " + timeInMinutes + " minutes");
 	}
 }

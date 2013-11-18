@@ -35,8 +35,7 @@ public class Cmd_battle implements CommandExecutor {
 		this.stats_list = new Cmd_battle_stats_list(this);
 	}
 
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
@@ -44,8 +43,7 @@ public class Cmd_battle implements CommandExecutor {
 			if (label.equalsIgnoreCase("battle") || label.equalsIgnoreCase("b")) {
 
 				if (args.length == 0) {
-					player.sendMessage(Battle.prefix()
-							+ "EXSolo's Battle Plugin: For a command overview do /battle help");
+					player.sendMessage(Battle.prefix() + "EXSolo's Battle Plugin: For a command overview do /battle help");
 					return true;
 				}
 

@@ -31,8 +31,7 @@ public class Cmd_battle_start {
 		int timer = 0;
 
 		int startlifes = plugin.getConfig().getInt("config.lifes-at-start");
-		boolean reminder = plugin.getConfig().getBoolean(
-				"config.enable-remind-scheduler");
+		boolean reminder = plugin.getConfig().getBoolean("config.enable-remind-scheduler");
 
 		if (plugin.getGame().getRed().getPlayers().size() > 0) {
 			plugin.getGame().getRed().setLifes(startlifes);
@@ -71,35 +70,25 @@ public class Cmd_battle_start {
 			if (plugin.getGame().getTeams().size() > 1) {
 				if (plugin.getGame().getSpawn() == null) {
 					plugin.getGame().setSpawn(new SerializableLocation(player.getLocation()));
-					plugin.getGame()
-							.getSpawn().getLocation()
-							.getWorld()
-							.setSpawnLocation(
-									(int) plugin.getGame().getSpawn().getLocation().getX(),
-									(int) plugin.getGame().getSpawn().getLocation().getY(),
-									(int) plugin.getGame().getSpawn().getLocation().getZ());
+					plugin.getGame().getSpawn().getLocation().getWorld()
+							.setSpawnLocation((int) plugin.getGame().getSpawn().getLocation().getX(), (int) plugin.getGame().getSpawn().getLocation().getY(), (int) plugin.getGame().getSpawn().getLocation().getZ());
 
-					plugin.getConfig().set("saves.spawn.world",
-							player.getLocation().getWorld().getName());
-					plugin.getConfig().set("saves.spawn.x",
-							player.getLocation().getX());
-					plugin.getConfig().set("saves.spawn.y",
-							player.getLocation().getY());
-					plugin.getConfig().set("saves.spawn.z",
-							player.getLocation().getZ());
+					plugin.getConfig().set("saves.spawn.world", player.getLocation().getWorld().getName());
+					plugin.getConfig().set("saves.spawn.x", player.getLocation().getX());
+					plugin.getConfig().set("saves.spawn.y", player.getLocation().getY());
+					plugin.getConfig().set("saves.spawn.z", player.getLocation().getZ());
 
 					plugin.saveConfig();
 
-					player.sendMessage(Battle.prefix()
-							+ "Battlespawn has been set to your current location!");
+					player.sendMessage(Battle.prefix() + "Battlespawn has been set to your current location!");
 				}
 
 				plugin.getGame().getSpawn().getLocation().getWorld().setTime(200);
 
 				for (String s : plugin.getGame().getPlayers()) {
-					
+
 					Player p = Bukkit.getPlayer(s);
-					
+
 					ItemStack base = new ItemStack(Material.QUARTZ_ORE);
 					ItemMeta baseMeta = base.getItemMeta();
 					baseMeta.setDisplayName(ChatColor.GRAY + "Base Block");
@@ -109,8 +98,7 @@ public class Cmd_battle_start {
 					p.teleport(plugin.getGame().getSpawn().getLocation());
 					p.setGameMode(GameMode.SURVIVAL);
 					p.setAllowFlight(false);
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,
-							300, 1));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 1));
 
 					p.closeInventory();
 					p.getInventory().clear();
@@ -123,40 +111,31 @@ public class Cmd_battle_start {
 					p.setFoodLevel(20);
 
 					if (plugin.getGame().getRed().getPlayers().contains(p.getName())) {
-						p.getInventory().addItem(
-								new ItemStack(Material.WOOL, 2, (short) 14));
+						p.getInventory().addItem(new ItemStack(Material.WOOL, 2, (short) 14));
 					}
 					if (plugin.getGame().getBlue().getPlayers().contains(p.getName())) {
-						p.getInventory().addItem(
-								new ItemStack(Material.WOOL, 2, (short) 11));
+						p.getInventory().addItem(new ItemStack(Material.WOOL, 2, (short) 11));
 					}
 					if (plugin.getGame().getGreen().getPlayers().contains(p.getName())) {
-						p.getInventory().addItem(
-								new ItemStack(Material.WOOL, 2, (short) 5));
+						p.getInventory().addItem(new ItemStack(Material.WOOL, 2, (short) 5));
 					}
 					if (plugin.getGame().getYellow().getPlayers().contains(p.getName())) {
-						p.getInventory().addItem(
-								new ItemStack(Material.WOOL, 2, (short) 4));
+						p.getInventory().addItem(new ItemStack(Material.WOOL, 2, (short) 4));
 					}
 					if (plugin.getGame().getPurple().getPlayers().contains(p.getName())) {
-						p.getInventory().addItem(
-								new ItemStack(Material.WOOL, 2, (short) 10));
+						p.getInventory().addItem(new ItemStack(Material.WOOL, 2, (short) 10));
 					}
 					if (plugin.getGame().getCyan().getPlayers().contains(p.getName())) {
-						p.getInventory().addItem(
-								new ItemStack(Material.WOOL, 2, (short) 9));
+						p.getInventory().addItem(new ItemStack(Material.WOOL, 2, (short) 9));
 					}
 					if (plugin.getGame().getBlack().getPlayers().contains(p.getName())) {
-						p.getInventory().addItem(
-								new ItemStack(Material.WOOL, 2, (short) 15));
+						p.getInventory().addItem(new ItemStack(Material.WOOL, 2, (short) 15));
 					}
 					if (plugin.getGame().getWhite().getPlayers().contains(p.getName())) {
-						p.getInventory().addItem(
-								new ItemStack(Material.WOOL, 2));
+						p.getInventory().addItem(new ItemStack(Material.WOOL, 2));
 					}
 
-					if (plugin.getConfig().getBoolean(
-							"config.enable-base-block")) {
+					if (plugin.getConfig().getBoolean("config.enable-base-block")) {
 						p.getInventory().addItem(base);
 					}
 				}
@@ -169,63 +148,25 @@ public class Cmd_battle_start {
 				if (timer > 0) {
 					plugin.getGame().getSpawn().getLocation().getWorld().setPVP(false);
 
-					plugin.getGame().setGraceTimer(
-							new GraceTimer(plugin, timer * 60));
-					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
-							plugin.getGame().getGraceTimer(), 0, 20);
+					plugin.getGame().setGraceTimer(new GraceTimer(plugin, timer * 60));
+					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, plugin.getGame().getGraceTimer(), 0, 20);
 				}
 
 				if (reminder == true) {
-					Bukkit.broadcastMessage(Battle.prefix()
-							+ "Starting battle reminder. Scheduling every 15 minutes!");
-					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
-							plugin.getGame().getRemindTimer(), 0L, 1200L);
+					Bukkit.broadcastMessage(Battle.prefix() + "Starting battle reminder. Scheduling every 15 minutes!");
+					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, plugin.getGame().getRemindTimer(), 0L, 1200L);
 				}
 
-				plugin.getGame()
-						.getRed()
-						.getBlockPlaceTimer()
-						.setWools(plugin.getGame().getRed().getPlayers().size());
-				plugin.getGame()
-						.getBlue()
-						.getBlockPlaceTimer()
-						.setWools(
-								plugin.getGame().getBlue().getPlayers().size());
-				plugin.getGame()
-						.getGreen()
-						.getBlockPlaceTimer()
-						.setWools(
-								plugin.getGame().getGreen().getPlayers().size());
-				plugin.getGame()
-						.getYellow()
-						.getBlockPlaceTimer()
-						.setWools(
-								plugin.getGame().getYellow().getPlayers()
-										.size());
-				plugin.getGame()
-						.getPurple()
-						.getBlockPlaceTimer()
-						.setWools(
-								plugin.getGame().getPurple().getPlayers()
-										.size());
-				plugin.getGame()
-						.getCyan()
-						.getBlockPlaceTimer()
-						.setWools(
-								plugin.getGame().getCyan().getPlayers().size());
-				plugin.getGame()
-						.getWhite()
-						.getBlockPlaceTimer()
-						.setWools(
-								plugin.getGame().getWhite().getPlayers().size());
-				plugin.getGame()
-						.getBlack()
-						.getBlockPlaceTimer()
-						.setWools(
-								plugin.getGame().getBlack().getPlayers().size());
+				plugin.getGame().getRed().getBlockPlaceTimer().setWools(plugin.getGame().getRed().getPlayers().size());
+				plugin.getGame().getBlue().getBlockPlaceTimer().setWools(plugin.getGame().getBlue().getPlayers().size());
+				plugin.getGame().getGreen().getBlockPlaceTimer().setWools(plugin.getGame().getGreen().getPlayers().size());
+				plugin.getGame().getYellow().getBlockPlaceTimer().setWools(plugin.getGame().getYellow().getPlayers().size());
+				plugin.getGame().getPurple().getBlockPlaceTimer().setWools(plugin.getGame().getPurple().getPlayers().size());
+				plugin.getGame().getCyan().getBlockPlaceTimer().setWools(plugin.getGame().getCyan().getPlayers().size());
+				plugin.getGame().getWhite().getBlockPlaceTimer().setWools(plugin.getGame().getWhite().getPlayers().size());
+				plugin.getGame().getBlack().getBlockPlaceTimer().setWools(plugin.getGame().getBlack().getPlayers().size());
 
-				Bukkit.broadcastMessage(Battle.prefix()
-						+ "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
+				Bukkit.broadcastMessage(Battle.prefix() + "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
 
 				plugin.updateScoreboard();
 
@@ -235,12 +176,10 @@ public class Cmd_battle_start {
 
 				return true;
 			} else {
-				player.sendMessage(Battle.prefix()
-						+ "There have to be at least two teams with one or more Player(s) before the battle can be launched!");
+				player.sendMessage(Battle.prefix() + "There have to be at least two teams with one or more Player(s) before the battle can be launched!");
 			}
 		} else {
-			player.sendMessage(Battle.prefix()
-					+ "Battle has allready been started!");
+			player.sendMessage(Battle.prefix() + "Battle has allready been started!");
 		}
 		return true;
 	}

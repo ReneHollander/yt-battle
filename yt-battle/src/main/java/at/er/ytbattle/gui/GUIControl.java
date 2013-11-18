@@ -11,25 +11,25 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import at.er.ytbattle.battle.Game;
-import at.er.ytbattle.gui.EditView.TeamType;
-import at.er.ytbattle.util.ObjectSerialization;
+import at.rene8888.serilib.Deserialize;
+import at.rene8888.serilib.Serialize;
 
 public class GUIControl implements ActionListener, ListSelectionListener {
 
 	private GUIView view;
-	
+
 	public GUIControl() {
 		this.view = new GUIView(this);
 	}
-	
+
 	public void valueChanged(ListSelectionEvent e) {
-		if (!e.getValueIsAdjusting()) return;
-		
+		if (!e.getValueIsAdjusting())
+			return;
+
 		if (e.getSource() == view.getTeams()) {
-			switch(view.getTeams().getSelectedValue()) {
+			switch (view.getTeams().getSelectedValue()) {
 			case "Team Red":
 				new EditView(view, TeamType.RED);
-				System.out.println("123");
 				break;
 			case "Team Blue":
 				new EditView(view, TeamType.BLUE);
@@ -60,21 +60,19 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 		if (view.checkForOpen(e)) {
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle("Open Battle");
-			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-			
+			fileChooser.setCurrentDirectory(new File("./"));
+
 			FileNameExtensionFilter battleFilter = new FileNameExtensionFilter("Battle files", "save");
-			
+
 			fileChooser.setAcceptAllFileFilterUsed(false);
 			fileChooser.addChoosableFileFilter(battleFilter);
-			
+
 			int userSelection = fileChooser.showOpenDialog(view);
 
 			if (userSelection == JFileChooser.APPROVE_OPTION) {
 				File fileToOpen = fileChooser.getSelectedFile();
 				try {
-					Game g = (Game) ObjectSerialization
-							.fileToObject(fileToOpen);
-					
+					Game g = (Game) Deserialize.readFromFile(fileToOpen, true);
 					view.setGame(g);
 				} catch (ClassNotFoundException ex) {
 					ex.printStackTrace();
@@ -83,41 +81,37 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 				}
 			}
 		}
-		
+
 		if (view.checkForSave(e)) {
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle("Save Battle");
-			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-			
+			fileChooser.setCurrentDirectory(new File("./"));
+
 			FileNameExtensionFilter battleFilter = new FileNameExtensionFilter("Battle files", "save");
-			
+
 			fileChooser.setAcceptAllFileFilterUsed(false);
 			fileChooser.addChoosableFileFilter(battleFilter);
-			
+
 			int userSelection = fileChooser.showSaveDialog(view);
 
 			if (userSelection == JFileChooser.APPROVE_OPTION) {
-				
+
 				if (fileChooser.getSelectedFile().getPath().endsWith("battle.save")) {
 					File fileToSave = fileChooser.getSelectedFile();
 					try {
-						ObjectSerialization.objectToFile(view.getGame(), fileToSave);
+						Serialize.writeToFile(view.getGame(), fileToSave, true);
 					} catch (IOException ex) {
 						ex.printStackTrace();
 					}
 				} else {
 					File f = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".save");
 					try {
-						ObjectSerialization.objectToFile(view.getGame(), f);
+						Serialize.writeToFile(view.getGame(), f, true);
 					} catch (IOException ex) {
 						ex.printStackTrace();
 					}
 				}
 			}
 		}
-	}
-	
-	public static void main(String[] args) {
-		new GUIControl();
 	}
 }
