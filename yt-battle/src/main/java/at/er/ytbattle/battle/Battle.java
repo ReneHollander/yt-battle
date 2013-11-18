@@ -68,8 +68,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.getConfig().addDefault("config.enable-automatic-load", false);
 		this.getConfig().addDefault("config.enable-base-block", true);
 		this.getConfig().addDefault("config.lifes-at-start", 10);
-		this.getConfig().addDefault(
-				"config.minutes-till-broken-wool-effects-appears", 15);
+		this.getConfig().addDefault("config.minutes-till-broken-wool-effects-appears", 15);
 
 		this.getConfig().addDefault("saves.spawn.world", "");
 		this.getConfig().addDefault("saves.spawn.x", 0);
@@ -104,10 +103,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		ShapelessRecipe lifes = new ShapelessRecipe(tear);
 		for (int i = 0; i <= 15; i++) {
 			for (int j = 0; j <= 15; j++) {
-				if ((i == 0 || i == 4 || i == 5 || i == 9 || i == 10 || i == 11
-						|| i == 14 || i == 15)
-						&& (j == 0 || j == 4 || j == 5 || j == 9 || j == 10
-								|| j == 11 || j == 14 || j == 15)) {
+				if ((i == 0 || i == 4 || i == 5 || i == 9 || i == 10 || i == 11 || i == 14 || i == 15) && (j == 0 || j == 4 || j == 5 || j == 9 || j == 10 || j == 11 || j == 14 || j == 15)) {
 					lifes.addIngredient(1, Material.WOOL.getNewData((byte) i));
 					lifes.addIngredient(1, Material.WOOL.getNewData((byte) j));
 					Bukkit.getServer().addRecipe(lifes);
@@ -125,8 +121,7 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	public void loadGame() {
 		try {
-			Object o = Deserialize.readFromFile(new File(getDataFolder(),
-					"battle.save"), true);
+			Object o = Deserialize.readFromFile(new File(getDataFolder(), "battle.save"), true);
 			if (o instanceof Game) {
 				Game g = (Game) o;
 				if (g.isSaved())
@@ -169,43 +164,24 @@ public class Battle extends JavaPlugin implements Serializable {
 		lifes.setDisplaySlot(DisplaySlot.SIDEBAR);
 
 		if (game.getRed().getLifes() > 0)
-			lifes.getScore(
-					Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Team Red"))
-					.setScore(game.getRed().getLifes());
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Team Red")).setScore(game.getRed().getLifes());
 		if (game.getBlue().getLifes() > 0)
-			lifes.getScore(
-					Bukkit.getOfflinePlayer(ChatColor.DARK_BLUE + "Team Blue"))
-					.setScore(game.getBlue().getLifes());
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_BLUE + "Team Blue")).setScore(game.getBlue().getLifes());
 		if (game.getGreen().getLifes() > 0)
-			lifes.getScore(
-					Bukkit.getOfflinePlayer(ChatColor.GREEN + "Team Green"))
-					.setScore(game.getGreen().getLifes());
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.GREEN + "Team Green")).setScore(game.getGreen().getLifes());
 		if (game.getYellow().getLifes() > 0)
-			lifes.getScore(
-					Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Team Yellow"))
-					.setScore(game.getYellow().getLifes());
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Team Yellow")).setScore(game.getYellow().getLifes());
 		if (game.getPurple().getLifes() > 0)
-			lifes.getScore(
-					Bukkit.getOfflinePlayer(ChatColor.DARK_PURPLE
-							+ "Team Purple")).setScore(
-					game.getPurple().getLifes());
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_PURPLE + "Team Purple")).setScore(game.getPurple().getLifes());
 		if (game.getCyan().getLifes() > 0)
-			lifes.getScore(
-					Bukkit.getOfflinePlayer(ChatColor.AQUA + "Team Cyan"))
-					.setScore(game.getCyan().getLifes());
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.AQUA + "Team Cyan")).setScore(game.getCyan().getLifes());
 		if (game.getBlack().getLifes() > 0)
-			lifes.getScore(
-					Bukkit.getOfflinePlayer(ChatColor.BLACK + "Team Black"))
-					.setScore(game.getBlack().getLifes());
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.BLACK + "Team Black")).setScore(game.getBlack().getLifes());
 		if (game.getWhite().getLifes() > 0)
-			lifes.getScore(
-					Bukkit.getOfflinePlayer(ChatColor.WHITE + "Team White"))
-					.setScore(game.getWhite().getLifes());
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.WHITE + "Team White")).setScore(game.getWhite().getLifes());
 
 		if (sb.getPlayers().size() == 0)
-			lifes.getScore(
-					Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v"
-							+ getDescription().getVersion())).setScore(0);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(0);
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setScoreboard(sb);
@@ -231,8 +207,7 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public ItemStack[][] loadInventory(Player p) {
-		ItemStack[][] iss = { inventories.get(p.getName()),
-				armor.get(p.getName()) };
+		ItemStack[][] iss = { inventories.get(p.getName()), armor.get(p.getName()) };
 		inventories.remove(p.getName());
 		armor.remove(p.getName());
 

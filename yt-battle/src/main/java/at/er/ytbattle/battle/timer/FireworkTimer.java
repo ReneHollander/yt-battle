@@ -18,14 +18,13 @@ public class FireworkTimer implements Runnable {
 			w.setTime(18000);
 			w.setStorm(false);
 		}
-		
+
 		shootFirework();
 	}
 
 	public void shootFirework() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			Firework f = (Firework) p.getWorld().spawn(p.getLocation(),
-					Firework.class);
+			Firework f = (Firework) p.getWorld().spawn(p.getLocation(), Firework.class);
 			FireworkMeta fm = f.getFireworkMeta();
 			Random r = new Random();
 			int fType = r.nextInt(5) + 1;
@@ -51,15 +50,15 @@ public class FireworkTimer implements Runnable {
 
 			int c1i = r.nextInt(18) + 1;
 			int c2i = r.nextInt(18) + 1;
-			
+
 			Color c1 = getColour(c1i);
 			Color c2 = getColour(c2i);
-			
+
 			FireworkEffect effect = FireworkEffect.builder().flicker(r.nextBoolean()).withColor(c1).withFade(c2).with(type).trail(r.nextBoolean()).build();
 			fm.addEffect(effect);
 			int power = r.nextInt(2) + 1;
 			fm.setPower(power);
-			
+
 			f.setFireworkMeta(fm);
 		}
 	}

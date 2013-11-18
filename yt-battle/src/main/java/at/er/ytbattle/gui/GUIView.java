@@ -18,35 +18,35 @@ import at.er.ytbattle.battle.Game;
 
 @SuppressWarnings("serial")
 public class GUIView extends JFrame {
-	
+
 	private Game game;
-	
+
 	private GUIControl l;
-	
+
 	private JMenu file;
-	
+
 	private JMenuItem open;
 	private JMenuItem save;
-	
+
 	private JList<String> teams;
 	private DefaultListModel<String> teamModel;
-	
+
 	public GUIView(GUIControl l) {
 		super("battle.save Editor by EXSolo");
-		
+
 		this.l = l;
-		
+
 		this.setSize(500, 200);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		this.setJMenuBar(getMenu());
-		
+
 		this.teamModel = new DefaultListModel<String>();
 		this.teams = new JList<String>(teamModel);
-		
+
 		teams.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
+
 		teamModel.addElement("Team Red");
 		teamModel.addElement("Team Blue");
 		teamModel.addElement("Team Green");
@@ -55,53 +55,55 @@ public class GUIView extends JFrame {
 		teamModel.addElement("Team Cyan");
 		teamModel.addElement("Team Black");
 		teamModel.addElement("Team White");
-		
+
 		teams.setBorder(BorderFactory.createEtchedBorder(Color.WHITE, Color.GRAY));
-		
+
 		teams.addListSelectionListener(l);
-		
+
 		teams.setCellRenderer(new DefaultListCellRenderer() {
 			public int getHorizontalAlignment() {
 				return CENTER;
 			}
 		});
-		
+
 		this.setLayout(new BorderLayout());
-		
+
 		this.add(teams, BorderLayout.CENTER);
-		
+
 		this.setVisible(true);
 	}
 
 	private JMenuBar getMenu() {
 		JMenuBar bar = new JMenuBar();
-		
+
 		file = new JMenu("File");
-		
+
 		open = new JMenuItem("Open");
 		save = new JMenuItem("Save");
-		
+
 		file.add(open);
 		file.add(save);
-		
+
 		open.addActionListener(l);
 		save.addActionListener(l);
-		
+
 		bar.add(file);
-		
+
 		return bar;
 	}
-	
+
 	public boolean checkForOpen(ActionEvent e) {
-		if (e.getSource() == open) return true;
+		if (e.getSource() == open)
+			return true;
 		return false;
 	}
-	
+
 	public boolean checkForSave(ActionEvent e) {
-		if (e.getSource() == save) return true;
+		if (e.getSource() == save)
+			return true;
 		return false;
 	}
-	
+
 	public Game getGame() {
 		return game;
 	}

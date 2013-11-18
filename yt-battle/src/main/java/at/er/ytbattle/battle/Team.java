@@ -9,31 +9,31 @@ public class Team implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Battle plugin;
-	
+
 	private ArrayList<String> players;
 	private int lifes;
-	
+
 	private BlockPlaceTimer bpt;
-	
+
 	public Team(Battle b, ArrayList<String> players, int lifes) {
 		this.plugin = b;
 		this.players = players;
 		this.lifes = lifes;
-		this.bpt = new BlockPlaceTimer(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears")*60, 0);
+		this.bpt = new BlockPlaceTimer(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60, 0);
 	}
-	
+
 	public Team(Battle b, ArrayList<String> players) {
 		this.plugin = b;
 		this.players = players;
 		this.lifes = 0;
-		this.bpt = new BlockPlaceTimer(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears")*60, 0);
+		this.bpt = new BlockPlaceTimer(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60, 0);
 	}
-	
+
 	public Team(Battle b) {
 		this.plugin = b;
 		this.players = new ArrayList<String>();
 		this.lifes = 0;
-		this.bpt = new BlockPlaceTimer(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears")*60, 0);
+		this.bpt = new BlockPlaceTimer(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60, 0);
 	}
 
 	public Battle getPlugin() {
@@ -67,6 +67,5 @@ public class Team implements Serializable {
 	public void setBlockPlaceTimer(BlockPlaceTimer bpt) {
 		this.bpt = bpt;
 	}
-	
-	
+
 }

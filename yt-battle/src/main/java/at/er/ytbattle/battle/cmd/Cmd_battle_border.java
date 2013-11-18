@@ -19,7 +19,7 @@ public class Cmd_battle_border {
 		Battle plugin = cmd.getPlugin();
 
 		int radius = 0;
-		
+
 		if (args.length >= 2) {
 			try {
 				radius = Integer.parseInt(args[1]);
@@ -33,21 +33,17 @@ public class Cmd_battle_border {
 						BorderCreator creator = new BorderCreator(plugin);
 						player.sendMessage(creator.build(radius));
 					} else {
-						player.sendMessage(Battle.prefix()
-								+ "Borderradius has to be greater than 0!");
+						player.sendMessage(Battle.prefix() + "Borderradius has to be greater than 0!");
 					}
 				} else {
-					player.sendMessage(Battle.prefix()
-							+ "Set the Battlespawn first: /battle setspawn");
+					player.sendMessage(Battle.prefix() + "Set the Battlespawn first: /battle setspawn");
 				}
 			} else {
-				player.sendMessage(Battle.prefix()
-						+ "WordEdit has to be installed, for creating the border!");
+				player.sendMessage(Battle.prefix() + "WordEdit has to be installed, for creating the border!");
 			}
 
 		} else {
-			player.sendMessage(Battle.prefix()
-					+ "Correct usage: /battle border <borderradius>");
+			player.sendMessage(Battle.prefix() + "Correct usage: /battle border <borderradius>");
 		}
 
 		return true;

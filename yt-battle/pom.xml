@@ -21,17 +21,17 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.6.2-R1.0</version>
+			<version>1.6.4-R2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.6.2-R1.0</version>
+			<version>1.6.4-R2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldedit</artifactId>
-			<version>5.5.7</version>
+			<version>5.5.8</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/WorldEdit.jar</systemPath>
 		</dependency>
@@ -69,7 +69,7 @@
 						<archive>
 							<manifest>
 								<addClasspath>true</addClasspath>
-								<mainClass>at.er.ytbattle.gui.GUIControl</mainClass>
+								<mainClass>at.er.ytbattle.gui.Main</mainClass>
 							</manifest>
 						</archive>
 					</configuration>
