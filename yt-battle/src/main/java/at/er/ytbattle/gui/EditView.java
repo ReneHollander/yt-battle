@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
@@ -18,6 +19,8 @@ public class EditView extends JFrame {
 	private JList<String> players;
 	private DefaultListModel<String> playersModel;
 	
+	private EditControl l;
+	
 	private JTextField lifes;
 	
 	private JLabel lifesLabel;
@@ -25,7 +28,7 @@ public class EditView extends JFrame {
 	private JButton add;
 	private JButton edit;
 	private JButton del;
-	private JButton saveLife;
+	private JButton save;
 	
 	private GUIView view;
 	private TeamType type;
@@ -36,7 +39,9 @@ public class EditView extends JFrame {
 		this.view = v;
 		this.type = type;
 		
-		this.setSize(500, 250);
+		l = new EditControl(this);
+		
+		this.setSize(1000, 250);
 		this.setLocationRelativeTo(null);
 		
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -44,7 +49,7 @@ public class EditView extends JFrame {
 		this.add = new JButton("Add Player to Team");
 		this.edit = new JButton("Edit Player");
 		this.del = new JButton("Remove Player from Team");
-		this.saveLife = new JButton("Save Lifes");
+		this.save = new JButton("Save Team Options");
 		
 		playersModel = new DefaultListModel<String>();
 		players = new JList<String>(playersModel);
@@ -61,10 +66,61 @@ public class EditView extends JFrame {
 		Container buttonContainer = new Container();
 		buttonContainer.setLayout(new FlowLayout());
 		
+		add.addActionListener(l);
+		edit.addActionListener(l);
+		del.addActionListener(l);
+		save.addActionListener(l);
+		
 		buttonContainer.add(add);
 		buttonContainer.add(edit);
 		buttonContainer.add(del);
-		buttonContainer.add(saveLife);
+		buttonContainer.add(save);
+		
+		if (view.getGame() != null) {
+			switch(type.getId()) {
+			case 1:
+				for (String player : view.getGame().getRed().getPlayers()) {
+					playersModel.addElement(player);
+				}
+				break;
+			case 2:
+				for (String player : view.getGame().getBlue().getPlayers()) {
+					playersModel.addElement(player);
+				}
+				break;
+			case 3:
+				for (String player : view.getGame().getGreen().getPlayers()) {
+					playersModel.addElement(player);
+				}
+				break;
+			case 4:
+				for (String player : view.getGame().getYellow().getPlayers()) {
+					playersModel.addElement(player);
+				}
+				break;
+			case 5:
+				for (String player : view.getGame().getPurple().getPlayers()) {
+					playersModel.addElement(player);
+				}
+				break;
+			case 6:
+				for (String player : view.getGame().getCyan().getPlayers()) {
+					playersModel.addElement(player);
+				}
+				break;
+			case 7:
+				for (String player : view.getGame().getBlack().getPlayers()) {
+					playersModel.addElement(player);
+				}
+				break;
+			case 8:
+				for (String player : view.getGame().getWhite().getPlayers()) {
+					playersModel.addElement(player);
+				}
+				break;
+			}
+			
+		}else JOptionPane.showMessageDialog(null, "null");
 		
 		this.setLayout(new BorderLayout());
 		
@@ -90,8 +146,8 @@ public class EditView extends JFrame {
 		return false;
 	}
 	
-	public boolean checkForSaveLifes(ActionEvent e) {
-		if (e.getSource() == saveLife) return true;
+	public boolean checkForSave(ActionEvent e) {
+		if (e.getSource() == save) return true;
 		return false;
 	}
 	
@@ -125,6 +181,14 @@ public class EditView extends JFrame {
 
 	public void setPlayersModel(DefaultListModel<String> playersModel) {
 		this.playersModel = playersModel;
+	}
+
+	public JLabel getLifesLabel() {
+		return lifesLabel;
+	}
+
+	public void setLifesLabel(JLabel lifesLabel) {
+		this.lifesLabel = lifesLabel;
 	}
 
 	public enum TeamType {

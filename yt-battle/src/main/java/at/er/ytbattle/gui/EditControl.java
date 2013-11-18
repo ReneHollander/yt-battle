@@ -9,12 +9,12 @@ public class EditControl implements ActionListener {
 
 	private EditView view;
 	
-	private EditControl(EditView v) {
+	public EditControl(EditView v) {
 		view = v;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if (view.checkForSaveLifes(e)) {
+		if (true) {
 			String l = view.getLifes().getText();
 			int lifes = 0;
 			
@@ -22,8 +22,11 @@ public class EditControl implements ActionListener {
 				lifes = Integer.parseInt(l);
 			} catch(Exception ex) {
 				JOptionPane.showMessageDialog(view, "Error on saving lifes: Text is not a number!");
+				return;
 			}
+			
+			view.getLifesLabel().setText(lifes + "");
+			view.getLifes().setText("");
 		}
 	}
-
 }
