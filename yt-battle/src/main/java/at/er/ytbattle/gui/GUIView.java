@@ -36,7 +36,7 @@ public class GUIView extends JFrame {
 
 		this.l = l;
 
-		this.setSize(500, 200);
+		this.setSize(500, 250);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

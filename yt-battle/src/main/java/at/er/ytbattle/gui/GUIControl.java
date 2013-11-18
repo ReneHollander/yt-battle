@@ -11,7 +11,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import at.er.ytbattle.battle.Game;
-import at.er.ytbattle.gui.EditView.TeamType;
 import at.rene8888.serilib.Deserialize;
 import at.rene8888.serilib.Serialize;
 
@@ -31,7 +30,6 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 			switch (view.getTeams().getSelectedValue()) {
 			case "Team Red":
 				new EditView(view, TeamType.RED);
-				System.out.println("123");
 				break;
 			case "Team Blue":
 				new EditView(view, TeamType.BLUE);
@@ -62,7 +60,7 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 		if (view.checkForOpen(e)) {
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle("Open Battle");
-			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+			fileChooser.setCurrentDirectory(new File("./"));
 
 			FileNameExtensionFilter battleFilter = new FileNameExtensionFilter("Battle files", "save");
 
@@ -75,7 +73,6 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 				File fileToOpen = fileChooser.getSelectedFile();
 				try {
 					Game g = (Game) Deserialize.readFromFile(fileToOpen, true);
-
 					view.setGame(g);
 				} catch (ClassNotFoundException ex) {
 					ex.printStackTrace();
@@ -88,7 +85,7 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 		if (view.checkForSave(e)) {
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle("Save Battle");
-			fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+			fileChooser.setCurrentDirectory(new File("./"));
 
 			FileNameExtensionFilter battleFilter = new FileNameExtensionFilter("Battle files", "save");
 

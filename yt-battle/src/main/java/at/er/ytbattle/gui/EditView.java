@@ -12,9 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
 
-@SuppressWarnings("serial")
 public class EditView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JList<String> players;
 	private DefaultListModel<String> playersModel;
 
@@ -129,25 +130,5 @@ public class EditView extends JFrame {
 
 	public void setPlayersModel(DefaultListModel<String> playersModel) {
 		this.playersModel = playersModel;
-	}
-
-	public enum TeamType {
-		RED(1, "Red"), BLUE(2, "Blue"), GREEN(3, "Green"), YELLOW(4, "Yellow"), PURPLE(5, "Purple"), CYAN(6, "Cyan"), BLACK(7, "Black"), WHITE(8, "White");
-
-		private int id;
-		private String name;
-
-		private TeamType(int id, String name) {
-			this.id = id;
-			this.name = name;
-		}
-
-		public int getId() {
-			return id;
-		}
-
-		public String getName() {
-			return name;
-		}
 	}
 }
