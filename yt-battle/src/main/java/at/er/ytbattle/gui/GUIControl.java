@@ -29,29 +29,29 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 		if (e.getSource() == view.getTeams()) {
 			switch(view.getTeams().getSelectedValue()) {
 			case "Team Red":
-				new EditView(TeamType.RED);
+				new EditView(view, TeamType.RED);
 				System.out.println("123");
 				break;
 			case "Team Blue":
-				new EditView(TeamType.BLUE);
+				new EditView(view, TeamType.BLUE);
 				break;
 			case "Team Green":
-				new EditView(TeamType.GREEN);
+				new EditView(view, TeamType.GREEN);
 				break;
 			case "Team Yellow":
-				new EditView(TeamType.YELLOW);
+				new EditView(view, TeamType.YELLOW);
 				break;
 			case "Team Purple":
-				new EditView(TeamType.PURPLE);
+				new EditView(view, TeamType.PURPLE);
 				break;
 			case "Team Cyan":
-				new EditView(TeamType.CYAN);
+				new EditView(view, TeamType.CYAN);
 				break;
 			case "Team Black":
-				new EditView(TeamType.BLACK);
+				new EditView(view, TeamType.BLACK);
 				break;
 			case "Team White":
-				new EditView(TeamType.WHITE);
+				new EditView(view, TeamType.WHITE);
 				break;
 			}
 		}
