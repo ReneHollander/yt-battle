@@ -1,12 +1,16 @@
 package at.er.ytbattle.battle.timer;
 
+import java.io.Serializable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
 
-public class GraceTimer implements Runnable {
+public class GraceTimer implements Runnable, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Battle plugin;
 
