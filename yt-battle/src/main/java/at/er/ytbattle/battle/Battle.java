@@ -33,10 +33,14 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	private Game game;
 
+	public boolean dontSave;
+
 	public final GameListener gl = new GameListener(this);
 	public final SpectatorListener sl = new SpectatorListener(this);
 
 	public void onEnable() {
+
+		this.dontSave = false;
 
 		game = new Game(this);
 
@@ -75,7 +79,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.getConfig().addDefault("saves.spawn.y", 0);
 		this.getConfig().addDefault("saves.spawn.z", 0);
 
-		this.getConfig().options().header("Battle Plugin by EXSolo");
+		this.getConfig().options().header("Battle Plugin by EXSolo and Rene8888");
 
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
@@ -84,6 +88,10 @@ public class Battle extends JavaPlugin implements Serializable {
 	public void registerCommands() {
 		getCommand("battle").setExecutor(new Cmd_battle(this));
 		getCommand("b").setExecutor(new Cmd_battle(this));
+	}
+
+	public void dontSave(boolean b) {
+		this.dontSave = b;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -103,7 +111,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		ShapelessRecipe lifes = new ShapelessRecipe(tear);
 		for (int i = 0; i <= 15; i++) {
 			for (int j = 0; j <= 15; j++) {
-				if ((i == 0 || i == 4 || i == 5 || i == 9 || i == 10 || i == 11 || i == 14 || i == 15) && (j == 0 || j == 4 || j == 5 || j == 9 || j == 10 || j == 11 || j == 14 || j == 15)) {
+				if ((i == 0 || i == 4 || i == 5 || i == 9 || i == 10 || i == 11 || i == 14 || i == 15) && (j == 0 || j == 4 || j == 5 || j == 9 || j == 10 || j == 11 || j == 14 || j == 15)) {;
 					lifes.addIngredient(1, Material.WOOL.getNewData((byte) i));
 					lifes.addIngredient(1, Material.WOOL.getNewData((byte) j));
 					Bukkit.getServer().addRecipe(lifes);
@@ -120,44 +128,57 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public void loadGame() {
-		try {
-			Object o = Deserialize.readFromFile(new File(getDataFolder(), "battle.save"), true);
-			if (o instanceof Game) {
-				Game g = (Game) o;
-				if (g.isSaved())
-					game = g;
+		
+		File save = new File(getDataFolder(), "battle.save");
+		
+		if (save.exists()) {
+			Object o;
+			try {
+				o = Deserialize.readFromFile(save, true);
+				if (o instanceof Game) {
+					Game g = (Game) o;
+					if (g.isSaved()) {
+						game = g;
+						System.out.println("Loaded battle.save!");
+					}
+				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (ClassNotFoundException e) {
-			System.out.println("Skipping data loading...");
-		} catch (IOException e) {
+		} else {
 			System.out.println("No battle.save file detected...");
 			System.out.println("Skipping data loading...");
 		}
+		
 	}
 
 	public void saveGame() {
-		try {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (game.getPlayers().contains(p.getName())) {
-					p.setDisplayName(p.getName());
+		if (!dontSave) {
+			try {
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					if (game.getPlayers().contains(p.getName())) {
+						p.setDisplayName(p.getName());
+					}
 				}
+				File file = new File(getDataFolder(), "battle.save");
+				if (file.exists())
+					file.delete();
+				else
+					file.createNewFile();
+				game.setSaved(true);
+				Serialize.writeToFile(game, file, true);
+			} catch (IOException e) {
+				game.setSaved(false);
+				e.printStackTrace();
 			}
-			File file = new File(getDataFolder(), "battle.save");
-			if (file.exists())
-				file.delete();
-			else
-				file.createNewFile();
-			game.setSaved(true);
-			Serialize.writeToFile(game, file, true);
-		} catch (IOException e) {
-			game.setSaved(false);
-			e.printStackTrace();
 		}
 	}
 
 	public void updateScoreboard() {
 		Scoreboard sb = Bukkit.getScoreboardManager().getNewScoreboard();
-
+		
 		Objective lifes = sb.registerNewObjective("stats", "dummy");
 
 		lifes.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
@@ -180,8 +201,14 @@ public class Battle extends JavaPlugin implements Serializable {
 		if (game.getWhite().getLifes() > 0)
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.WHITE + "Team White")).setScore(game.getWhite().getLifes());
 
-		if (sb.getPlayers().size() == 0)
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(0);
+		if (sb.getPlayers().size() == 0) {
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(4);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(3);
+			lifes.getScore(Bukkit.getOfflinePlayer("by")).setScore(2);
+			lifes.getScore(Bukkit.getOfflinePlayer("EXSolo")).setScore(1);
+			lifes.getScore(Bukkit.getOfflinePlayer("Rene8888")).setScore(0);
+		}
+			
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setScoreboard(sb);

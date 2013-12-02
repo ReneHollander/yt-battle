@@ -1,7 +1,7 @@
 name: Battle
-version: 1.5.4
-description: Battle Plugin für das Battle von RathamoonLP. Special Thanks to Rene8888
-author: EXSolo
+version: 1.6.0
+description: Battle Plugin für das Battle von RathamoonLP
+authors: [EXSolo, Rene8888]
 website: http://www.exsoloscript.com
 
 main: at.er.ytbattle.battle.Battle

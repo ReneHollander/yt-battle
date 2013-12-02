@@ -32,7 +32,7 @@ public class GUIView extends JFrame {
 	private DefaultListModel<String> teamModel;
 
 	public GUIView(GUIControl l) {
-		super("battle.save Editor by EXSolo");
+		super("battle.save Editor by EXSolo and Rene8888");
 
 		this.l = l;
 

@@ -3,9 +3,21 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>at.er</groupId>
 	<artifactId>yt-battle</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.6.0</version>
 	<name>YTBattle</name>
 	<description>YTBattle</description>
+	<developers>
+		<developer>
+			<id>EXSolo</id>
+			<name>EXSolo</name>
+			<email>support@exsoloscript.com</email>
+		</developer>
+		<developer>
+			<id>Rene8888</id>
+			<name>Rene8888</name>
+			<email>rene@rene8888.at</email>
+		</developer>
+	</developers>
 	<packaging>jar</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,16 +28,6 @@
 			<url>http://repo.bukkit.org/content/groups/public/</url>
 		</repository>
 	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>autoincrement-versions-maven-plugin</id>
-			<name>autoincrement-versions-maven-plugin</name>
-			<url>http://autoincrement-versions-maven-plugin.googlecode.com/svn/repo</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.bukkit</groupId>
@@ -53,6 +55,18 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>at.er.ytbattle.gui.Main</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 			<plugin>
