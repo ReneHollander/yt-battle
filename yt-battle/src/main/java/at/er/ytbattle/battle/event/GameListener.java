@@ -3,8 +3,6 @@ package at.er.ytbattle.battle.event;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import net.minecraft.server.v1_6_R3.Packet205ClientCommand;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -15,7 +13,6 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -336,9 +333,7 @@ public class GameListener implements Listener, Serializable {
 
 			public void run() {
 				if (player.isDead()) {
-					Packet205ClientCommand packet = new Packet205ClientCommand();
-					packet.a = 1;
-					((CraftPlayer) player).getHandle().playerConnection.a(packet);
+					// Reimplement Auto Respawn
 				}
 			}
 		}, 20L);
