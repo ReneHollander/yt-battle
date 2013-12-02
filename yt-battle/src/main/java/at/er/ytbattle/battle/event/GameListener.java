@@ -42,6 +42,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.timer.FireworkTimer;
+import at.er.ytbattle.battle.timer.InvincibilityTimer;
 
 public class GameListener implements Listener, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -330,7 +331,7 @@ public class GameListener implements Listener, Serializable {
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		final Player player = event.getEntity();
 		Location spawn = plugin.getGame().getSpawn().getLocation();
-
+		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 
 			public void run() {
@@ -343,10 +344,7 @@ public class GameListener implements Listener, Serializable {
 		}, 20L);
 
 		if (plugin.getGame().getPlayers().contains(player.getName())) {
-			System.out.println("test1");
 			if (plugin.getGame().isStarted()) {
-
-				System.out.println("test2");
 
 				if (plugin.getGame().getRed().getPlayers().contains(player.getName()) && plugin.getGame().getRed().getLifes() > 0)
 					plugin.getGame().getRed().setLifes(plugin.getGame().getRed().getLifes() - 1);
@@ -569,8 +567,7 @@ public class GameListener implements Listener, Serializable {
 					}
 
 					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new FireworkTimer(), 0, 80);
-					Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! Battle plugin.getGame() v" + plugin.getDescription().getVersion() + " made by EXSolo. Download link will be published soon! Visit " + ChatColor.UNDERLINE
-							+ "www.youtube.com/user/exsoloscript" + ChatColor.WHITE + " for more informations!");
+					Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! Battle Plugin v" + plugin.getDescription().getVersion() + " made by EXSolo and Reen8888.");
 				}
 			}
 		}
@@ -587,6 +584,8 @@ public class GameListener implements Listener, Serializable {
 		player.getInventory().addItem(new ItemStack(Material.IRON_LEGGINGS));
 		player.getInventory().addItem(new ItemStack(Material.IRON_BOOTS));
 
+		new InvincibilityTimer(plugin, player.getName(), 10);
+		
 		if (plugin.getGame().isStarted() && plugin.getGame().getPlayers().contains(player.getName())) {
 			event.setRespawnLocation(plugin.getGame().getSpawn().getLocation());
 
