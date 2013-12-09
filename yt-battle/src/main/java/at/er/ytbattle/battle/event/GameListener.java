@@ -49,7 +49,7 @@ import at.er.ytbattle.battle.timer.InvincibilityTimer;
 import at.er.ytbattle.util.PlayerArmor;
 
 /*
-DyeColor color = ((Wool) event.getBlock()).getColor();
+DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
 if (color == DyeColor.WHITE) {
 	
 } else if (color == DyeColor.YELLOW) {
@@ -67,7 +67,7 @@ if (color == DyeColor.WHITE) {
 } else if (color == DyeColor.BLACK) {
 	
 }
- */
+*/
 
 public class GameListener implements Listener, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -90,12 +90,11 @@ public class GameListener implements Listener, Serializable {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onBlockBreak(BlockBreakEvent event) {
-
 		Player player = (Player) event.getPlayer();
 
 		if (event.getBlock().getType() == Material.WOOL && plugin.getGame().isStarted() && plugin.getGame().getPlayers().contains(player.getName())) {
-
-			DyeColor color = ((Wool) event.getBlock()).getColor();
+			
+			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
 			
 			if (color == DyeColor.WHITE) {
 				if (plugin.getGame().getWhite().getPlayers().contains(player.getName()) == false) {
@@ -200,7 +199,8 @@ public class GameListener implements Listener, Serializable {
 
 		if (event.getBlock().getType() == Material.WOOL && plugin.getGame().isStarted() && plugin.getGame().getPlayers().contains(player.getName())) {
 
-			DyeColor color = ((Wool) event.getBlock()).getColor();
+			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
+			
 			if (color == DyeColor.WHITE) {
 				if (plugin.getGame().getWhite().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
@@ -341,15 +341,15 @@ public class GameListener implements Listener, Serializable {
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		final Player player = event.getEntity();
 		Location spawn = plugin.getGame().getSpawn().getLocation();
-
+		/* TODO Reimplement Auto Respawn
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			public void run() {
 				if (player.isDead()) {
-					// Reimplement Auto Respawn
+				
 				}
 			}
 		}, 20L);
-
+		 */
 		if (plugin.getGame().getPlayers().contains(player.getName())) {
 			if (plugin.getGame().isStarted()) {
 

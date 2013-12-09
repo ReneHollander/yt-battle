@@ -28,39 +28,41 @@ import at.rene8888.serilib.Serialize;
 public class Battle extends JavaPlugin implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private HashMap<String, ItemStack[]> inventories = new HashMap<String, ItemStack[]>();
-	private HashMap<String, ItemStack[]> armor = new HashMap<String, ItemStack[]>();
-
-	private Game game;
-
 	public boolean dontSave;
 
-	public final GameListener gl = new GameListener(this);
-	public final SpectatorListener sl = new SpectatorListener(this);
+	private Game game;
+	public GameListener gl;
+	public SpectatorListener sl;
+	private HashMap<String, ItemStack[]> inventories;
+	private HashMap<String, ItemStack[]> armor;
 
 	public void onEnable() {
 
 		this.dontSave = false;
 
-		game = new Game(this);
+		this.game = new Game(this);
+		this.gl = new GameListener(this);
+		this.sl = new SpectatorListener(this);
+		this.inventories = new HashMap<String, ItemStack[]>();
+		this.armor = new HashMap<String, ItemStack[]>();
 
-		addCraftings();
-		registerCommands();
-		registerEvents();
-		loadConfig();
+		this.loadConfig();
+		this.loadGame();
 
-		loadGame();
+		this.addCraftings();
+		this.registerCommands();
+		this.registerEvents();
+
+		this.setTags();
+		this.updateScoreboard();
 	}
 
 	public void onDisable() {
-		// Save infos to save file
-
 		saveGame();
 	}
 
 	public void registerEvents() {
 		PluginManager pm = getServer().getPluginManager();
-
 		pm.registerEvents(this.gl, this); // game
 		pm.registerEvents(this.sl, this); // spectator
 	}
@@ -103,15 +105,10 @@ public class Battle extends JavaPlugin implements Serializable {
 		tearMeta.setLore(Arrays.asList("Right Click Me"));
 		tear.setItemMeta(tearMeta);
 
-		ItemStack steak = new ItemStack(Material.COOKED_BEEF);
-		ItemMeta steakMeta = steak.getItemMeta();
-		steakMeta.setDisplayName(ChatColor.DARK_PURPLE + "Nom Nom!");
-		steak.setItemMeta(steakMeta);
-
 		ShapelessRecipe lifes = new ShapelessRecipe(tear);
 		for (int i = 0; i <= 15; i++) {
 			for (int j = 0; j <= 15; j++) {
-				if ((i == 0 || i == 4 || i == 5 || i == 9 || i == 10 || i == 11 || i == 14 || i == 15) && (j == 0 || j == 4 || j == 5 || j == 9 || j == 10 || j == 11 || j == 14 || j == 15)) {;
+				if ((i == 0 || i == 4 || i == 5 || i == 9 || i == 10 || i == 11 || i == 14 || i == 15) && (j == 0 || j == 4 || j == 5 || j == 9 || j == 10 || j == 11 || j == 14 || j == 15)) {
 					lifes.addIngredient(1, Material.WOOL.getNewData((byte) i));
 					lifes.addIngredient(1, Material.WOOL.getNewData((byte) j));
 					Bukkit.getServer().addRecipe(lifes);
@@ -121,6 +118,10 @@ public class Battle extends JavaPlugin implements Serializable {
 			}
 		}
 
+		ItemStack steak = new ItemStack(Material.COOKED_BEEF);
+		ItemMeta steakMeta = steak.getItemMeta();
+		steakMeta.setDisplayName(ChatColor.DARK_PURPLE + "Nom Nom!");
+
 		ShapelessRecipe food = new ShapelessRecipe(steak);
 		food.addIngredient(Material.ROTTEN_FLESH);
 		food.addIngredient(Material.GOLD_NUGGET);
@@ -128,13 +129,12 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public void loadGame() {
-		
+
 		File save = new File(getDataFolder(), "battle.save");
-		
+
 		if (save.exists()) {
-			Object o;
 			try {
-				o = Deserialize.readFromFile(save, true);
+				Object o = Deserialize.readFromFile(save, true);
 				if (o instanceof Game) {
 					Game g = (Game) o;
 					if (g.isSaved()) {
@@ -151,7 +151,7 @@ public class Battle extends JavaPlugin implements Serializable {
 			System.out.println("No battle.save file detected...");
 			System.out.println("Skipping data loading...");
 		}
-		
+
 	}
 
 	public void saveGame() {
@@ -163,10 +163,6 @@ public class Battle extends JavaPlugin implements Serializable {
 					}
 				}
 				File file = new File(getDataFolder(), "battle.save");
-				if (file.exists())
-					file.delete();
-				else
-					file.createNewFile();
 				game.setSaved(true);
 				Serialize.writeToFile(game, file, true);
 			} catch (IOException e) {
@@ -178,7 +174,6 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	public void updateScoreboard() {
 		Scoreboard sb = Bukkit.getScoreboardManager().getNewScoreboard();
-		
 		Objective lifes = sb.registerNewObjective("stats", "dummy");
 
 		lifes.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
@@ -204,11 +199,10 @@ public class Battle extends JavaPlugin implements Serializable {
 		if (sb.getPlayers().size() == 0) {
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(4);
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(3);
-			lifes.getScore(Bukkit.getOfflinePlayer("by")).setScore(2);
-			lifes.getScore(Bukkit.getOfflinePlayer("EXSolo")).setScore(1);
-			lifes.getScore(Bukkit.getOfflinePlayer("Rene8888")).setScore(0);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "by")).setScore(2);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "EXSolo")).setScore(1);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Rene8888")).setScore(0);
 		}
-			
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setScoreboard(sb);
