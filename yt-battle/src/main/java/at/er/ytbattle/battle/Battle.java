@@ -40,6 +40,8 @@ public class Battle extends JavaPlugin implements Serializable {
 
 		this.dontSave = false;
 
+		this.loadConfig();
+		
 		this.game = new Game(this);
 		this.gl = new GameListener(this);
 		this.sl = new SpectatorListener(this);
@@ -156,18 +158,20 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	public void saveGame() {
 		if (!dontSave) {
-			try {
-				for (Player p : Bukkit.getOnlinePlayers()) {
-					if (game.getPlayers().contains(p.getName())) {
-						p.setDisplayName(p.getName());
+			if (game.isStarted()) {
+				try {
+					for (Player p : Bukkit.getOnlinePlayers()) {
+						if (game.getPlayers().contains(p.getName())) {
+							p.setDisplayName(p.getName());
+						}
 					}
+					File file = new File(getDataFolder(), "battle.save");
+					game.setSaved(true);
+					Serialize.writeToFile(game, file, true);
+				} catch (IOException e) {
+					game.setSaved(false);
+					e.printStackTrace();
 				}
-				File file = new File(getDataFolder(), "battle.save");
-				game.setSaved(true);
-				Serialize.writeToFile(game, file, true);
-			} catch (IOException e) {
-				game.setSaved(false);
-				e.printStackTrace();
 			}
 		}
 	}
@@ -197,11 +201,15 @@ public class Battle extends JavaPlugin implements Serializable {
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.WHITE + "Team White")).setScore(game.getWhite().getLifes());
 
 		if (sb.getPlayers().size() == 0) {
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(4);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(8);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(7);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "by")).setScore(6);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "EXSolo")).setScore(5);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Rene8888")).setScore(4);
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(3);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "by")).setScore(2);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "EXSolo")).setScore(1);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Rene8888")).setScore(0);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Beta Testers:")).setScore(2);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Evoferry")).setScore(1);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Lolmixer")).setScore(0);
 		}
 
 		for (Player p : Bukkit.getOnlinePlayers()) {

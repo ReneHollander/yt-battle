@@ -91,7 +91,7 @@ public class GameListener implements Listener, Serializable {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onBlockBreak(BlockBreakEvent event) {
 		Player player = (Player) event.getPlayer();
-
+		
 		if (event.getBlock().getType() == Material.WOOL && plugin.getGame().isStarted() && plugin.getGame().getPlayers().contains(player.getName())) {
 			
 			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
@@ -191,6 +191,8 @@ public class GameListener implements Listener, Serializable {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
+		
+		/* TODO Validata wool block palce by remove blocks in a 3x3x3 */
 
 		if (event.getBlock().getType() == Material.GLASS && player.getWorld() == plugin.getGame().getSpawn().getLocation().getWorld() && plugin.getGame().isStarted()) {
 			event.setCancelled(true);
@@ -339,286 +341,303 @@ public class GameListener implements Listener, Serializable {
 	@SuppressWarnings("rawtypes")
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		final Player player = event.getEntity();
-		Location spawn = plugin.getGame().getSpawn().getLocation();
-		/* TODO Reimplement Auto Respawn
-		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-			public void run() {
-				if (player.isDead()) {
-				
-				}
-			}
-		}, 20L);
-		 */
-		if (plugin.getGame().getPlayers().contains(player.getName())) {
-			if (plugin.getGame().isStarted()) {
+		Player player = event.getEntity();
+		if (plugin.getGame().isStarted()) {
+			Location spawn = plugin.getGame().getSpawn().getLocation();
+			/* TODO Spiel starten, reloaden sterben -> Team gewinnt nicht */
+	        /* TODO Fix auto respawn
+			try {
+	            Object nmsPlayer = player.getClass().getMethod("getHandle").invoke(player);
+	            Object packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
+	            Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
+	 
+	            for(Object ob : enumClass.getEnumConstants()){
+	                if(ob.toString().equals("PERFORM_RESPAWN")){
+	                    packet = packet.getClass().getConstructor(enumClass).newInstance(ob);
+	                }
+	            }
+	 
+	            Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+	            con.getClass().getMethod("a", packet.getClass()).invoke(con, packet);
+	        }
+	        catch(Throwable t){
+	            t.printStackTrace();
+	        }
+	        */
+			if (plugin.getGame().getPlayers().contains(player.getName())) {
+				if (plugin.getGame().isStarted()) {
 
-				ItemStack helmet = player.getInventory().getHelmet();
-				ItemStack chestplate = player.getInventory().getChestplate();
-				ItemStack leggings = player.getInventory().getLeggings();
-				ItemStack boots = player.getInventory().getBoots();
+					ItemStack helmet = player.getInventory().getHelmet();
+					ItemStack chestplate = player.getInventory().getChestplate();
+					ItemStack leggings = player.getInventory().getLeggings();
+					ItemStack boots = player.getInventory().getBoots();
 
-				if (helmet != null) {
-					if (helmet.getType() == Material.DIAMOND_HELMET)
-						helmet = new ItemStack(Material.IRON_HELMET);
-					helmet.setDurability((short) 0);
-					Iterator<?> hit = helmet.getEnchantments().entrySet().iterator();
-					while (hit.hasNext())
-						helmet.removeEnchantment((Enchantment) ((Map.Entry) hit.next()).getKey());
-				}
-
-				if (chestplate != null) {
-					if (chestplate.getType() == Material.DIAMOND_CHESTPLATE)
-						chestplate = new ItemStack(Material.IRON_CHESTPLATE);
-					chestplate.setDurability((short) 0);
-					Iterator<?> cit = chestplate.getEnchantments().entrySet().iterator();
-					while (cit.hasNext())
-						chestplate.removeEnchantment((Enchantment) ((Map.Entry) cit.next()).getKey());
-				}
-
-				if (leggings != null) {
-					if (leggings.getType() == Material.DIAMOND_LEGGINGS)
-						leggings = new ItemStack(Material.IRON_LEGGINGS);
-					leggings.setDurability((short) 0);
-					Iterator<?> lit = leggings.getEnchantments().entrySet().iterator();
-					while (lit.hasNext())
-						leggings.removeEnchantment((Enchantment) ((Map.Entry) lit.next()).getKey());
-				}
-
-				if (boots != null) {
-					if (boots.getType() == Material.DIAMOND_BOOTS)
-						boots = new ItemStack(Material.IRON_BOOTS);
-					boots.setDurability((short) 0);
-					Iterator<?> bit = boots.getEnchantments().entrySet().iterator();
-					while (bit.hasNext())
-						boots.removeEnchantment((Enchantment) ((Map.Entry) bit.next()).getKey());
-				}
-				
-				PlayerArmor armor = new PlayerArmor(helmet, chestplate, leggings, boots);
-				this.playerAmror.put(player, armor);
-
-				if (plugin.getGame().getRed().getPlayers().contains(player.getName()) && plugin.getGame().getRed().getLifes() > 0)
-					plugin.getGame().getRed().setLifes(plugin.getGame().getRed().getLifes() - 1);
-				if (plugin.getGame().getBlue().getPlayers().contains(player.getName()) && plugin.getGame().getBlue().getLifes() > 0)
-					plugin.getGame().getBlue().setLifes(plugin.getGame().getRed().getLifes() - 1);
-				if (plugin.getGame().getGreen().getPlayers().contains(player.getName()) && plugin.getGame().getGreen().getLifes() > 0)
-					plugin.getGame().getGreen().setLifes(plugin.getGame().getGreen().getLifes() - 1);
-				if (plugin.getGame().getYellow().getPlayers().contains(player.getName()) && plugin.getGame().getYellow().getLifes() > 0)
-					plugin.getGame().getYellow().setLifes(plugin.getGame().getYellow().getLifes() - 1);
-				if (plugin.getGame().getPurple().getPlayers().contains(player.getName()) && plugin.getGame().getPurple().getLifes() > 0)
-					plugin.getGame().getPurple().setLifes(plugin.getGame().getPurple().getLifes() - 1);
-				if (plugin.getGame().getCyan().getPlayers().contains(player.getName()) && plugin.getGame().getCyan().getLifes() > 0)
-					plugin.getGame().getCyan().setLifes(plugin.getGame().getCyan().getLifes() - 1);
-				if (plugin.getGame().getBlack().getPlayers().contains(player.getName()) && plugin.getGame().getBlack().getLifes() > 0)
-					plugin.getGame().getBlack().setLifes(plugin.getGame().getBlack().getLifes() - 1);
-				if (plugin.getGame().getWhite().getPlayers().contains(player.getName()) && plugin.getGame().getWhite().getLifes() > 0)
-					plugin.getGame().getWhite().setLifes(plugin.getGame().getWhite().getLifes() - 1);
-
-				plugin.updateScoreboard();
-
-				if (plugin.getGame().getRed().getLifes() <= 0 && plugin.getGame().getTeams().contains("red") && plugin.getGame().getRed().getPlayers().contains(player.getName())) {
-					player.teleport(spawn);
-					player.setDisplayName(player.getName());
-					plugin.getGame().getPlayers().remove(player.getName());
-					plugin.getGame().getRed().getPlayers().remove(player.getName());
-					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the red team has lost!");
-
-					if (plugin.getGame().getRed().getPlayers().size() == 0) {
-						plugin.getGame().getTeams().remove("red");
-						Bukkit.broadcastMessage(Battle.prefix() + "Team red has lost!");
+					if (helmet != null) {
+						if (helmet.getType() == Material.DIAMOND_HELMET)
+							helmet = new ItemStack(Material.IRON_HELMET);
+						helmet.setDurability((short) 0);
+						Iterator<?> hit = helmet.getEnchantments().entrySet().iterator();
+						while (hit.hasNext())
+							helmet.removeEnchantment((Enchantment) ((Map.Entry) hit.next()).getKey());
 					}
-				}
 
-				if (plugin.getGame().getBlue().getLifes() <= 0 && plugin.getGame().getTeams().contains("blue") && plugin.getGame().getBlue().getPlayers().contains(player.getName())) {
-					player.teleport(spawn);
-					player.setDisplayName(player.getName());
-					plugin.getGame().getPlayers().remove(player.getName());
-					plugin.getGame().getBlue().getPlayers().remove(player.getName());
-					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the blue team has lost!");
-
-					if (plugin.getGame().getBlue().getPlayers().size() == 0) {
-						plugin.getGame().getTeams().remove("blue");
-						Bukkit.broadcastMessage(Battle.prefix() + "Team blue has lost!");
+					if (chestplate != null) {
+						if (chestplate.getType() == Material.DIAMOND_CHESTPLATE)
+							chestplate = new ItemStack(Material.IRON_CHESTPLATE);
+						chestplate.setDurability((short) 0);
+						Iterator<?> cit = chestplate.getEnchantments().entrySet().iterator();
+						while (cit.hasNext())
+							chestplate.removeEnchantment((Enchantment) ((Map.Entry) cit.next()).getKey());
 					}
-				}
 
-				if (plugin.getGame().getGreen().getLifes() <= 0 && plugin.getGame().getTeams().contains("green") && plugin.getGame().getGreen().getPlayers().contains(player.getName())) {
-					player.teleport(spawn);
-					player.setDisplayName(player.getName());
-					plugin.getGame().getPlayers().remove(player.getName());
-					plugin.getGame().getGreen().getPlayers().remove(player.getName());
-					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the green team has lost!");
-
-					if (plugin.getGame().getGreen().getPlayers().size() == 0) {
-						plugin.getGame().getTeams().remove("green");
-						Bukkit.broadcastMessage(Battle.prefix() + "Team green has lost!");
+					if (leggings != null) {
+						if (leggings.getType() == Material.DIAMOND_LEGGINGS)
+							leggings = new ItemStack(Material.IRON_LEGGINGS);
+						leggings.setDurability((short) 0);
+						Iterator<?> lit = leggings.getEnchantments().entrySet().iterator();
+						while (lit.hasNext())
+							leggings.removeEnchantment((Enchantment) ((Map.Entry) lit.next()).getKey());
 					}
-				}
 
-				if (plugin.getGame().getYellow().getLifes() <= 0 && plugin.getGame().getTeams().contains("yellow") && plugin.getGame().getYellow().getPlayers().contains(player.getName())) {
-					player.teleport(spawn);
-					player.setDisplayName(player.getName());
-					plugin.getGame().getPlayers().remove(player.getName());
-					plugin.getGame().getYellow().getPlayers().remove(player.getName());
-					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the yellow team has lost!");
-
-					if (plugin.getGame().getYellow().getPlayers().size() == 0) {
-						plugin.getGame().getTeams().remove("yellow");
-						Bukkit.broadcastMessage(Battle.prefix() + "Team yellow has lost!");
+					if (boots != null) {
+						if (boots.getType() == Material.DIAMOND_BOOTS)
+							boots = new ItemStack(Material.IRON_BOOTS);
+						boots.setDurability((short) 0);
+						Iterator<?> bit = boots.getEnchantments().entrySet().iterator();
+						while (bit.hasNext())
+							boots.removeEnchantment((Enchantment) ((Map.Entry) bit.next()).getKey());
 					}
-				}
+					
+					PlayerArmor armor = new PlayerArmor(helmet, chestplate, leggings, boots);
+					this.playerAmror.put(player, armor);
 
-				if (plugin.getGame().getPurple().getLifes() <= 0 && plugin.getGame().getTeams().contains("purple") && plugin.getGame().getPurple().getPlayers().contains(player.getName())) {
-					player.teleport(spawn);
-					player.setDisplayName(player.getName());
-					plugin.getGame().getPlayers().remove(player.getName());
-					plugin.getGame().getPurple().getPlayers().remove(player.getName());
-					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the purple team has lost!");
+					if (plugin.getGame().getRed().getPlayers().contains(player.getName()) && plugin.getGame().getRed().getLifes() > 0)
+						plugin.getGame().getRed().setLifes(plugin.getGame().getRed().getLifes() - 1);
+					if (plugin.getGame().getBlue().getPlayers().contains(player.getName()) && plugin.getGame().getBlue().getLifes() > 0)
+						plugin.getGame().getBlue().setLifes(plugin.getGame().getRed().getLifes() - 1);
+					if (plugin.getGame().getGreen().getPlayers().contains(player.getName()) && plugin.getGame().getGreen().getLifes() > 0)
+						plugin.getGame().getGreen().setLifes(plugin.getGame().getGreen().getLifes() - 1);
+					if (plugin.getGame().getYellow().getPlayers().contains(player.getName()) && plugin.getGame().getYellow().getLifes() > 0)
+						plugin.getGame().getYellow().setLifes(plugin.getGame().getYellow().getLifes() - 1);
+					if (plugin.getGame().getPurple().getPlayers().contains(player.getName()) && plugin.getGame().getPurple().getLifes() > 0)
+						plugin.getGame().getPurple().setLifes(plugin.getGame().getPurple().getLifes() - 1);
+					if (plugin.getGame().getCyan().getPlayers().contains(player.getName()) && plugin.getGame().getCyan().getLifes() > 0)
+						plugin.getGame().getCyan().setLifes(plugin.getGame().getCyan().getLifes() - 1);
+					if (plugin.getGame().getBlack().getPlayers().contains(player.getName()) && plugin.getGame().getBlack().getLifes() > 0)
+						plugin.getGame().getBlack().setLifes(plugin.getGame().getBlack().getLifes() - 1);
+					if (plugin.getGame().getWhite().getPlayers().contains(player.getName()) && plugin.getGame().getWhite().getLifes() > 0)
+						plugin.getGame().getWhite().setLifes(plugin.getGame().getWhite().getLifes() - 1);
 
-					if (plugin.getGame().getPurple().getPlayers().size() == 0) {
-						plugin.getGame().getTeams().remove("purple");
-						Bukkit.broadcastMessage(Battle.prefix() + "Team purple has lost!");
-					}
-				}
+					plugin.updateScoreboard();
 
-				if (plugin.getGame().getCyan().getLifes() <= 0 && plugin.getGame().getTeams().contains("cyan") && plugin.getGame().getCyan().getPlayers().contains(player.getName())) {
-					player.teleport(spawn);
-					player.setDisplayName(player.getName());
-					plugin.getGame().getPlayers().remove(player.getName());
-					plugin.getGame().getCyan().getPlayers().remove(player.getName());
-					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the cyan team has lost!");
+					if (plugin.getGame().getRed().getLifes() <= 0 && plugin.getGame().getTeams().contains("red") && plugin.getGame().getRed().getPlayers().contains(player.getName())) {
+						player.teleport(spawn);
+						player.setDisplayName(player.getName());
+						plugin.getGame().getPlayers().remove(player.getName());
+						plugin.getGame().getRed().getPlayers().remove(player.getName());
+						Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the red team has lost!");
 
-					if (plugin.getGame().getCyan().getPlayers().size() == 0) {
-						plugin.getGame().getTeams().remove("cyan");
-						Bukkit.broadcastMessage(Battle.prefix() + "Team cyan has lost!");
-					}
-				}
-
-				if (plugin.getGame().getBlack().getLifes() <= 0 && plugin.getGame().getTeams().contains("black") && plugin.getGame().getBlack().getPlayers().contains(player.getName())) {
-					player.teleport(spawn);
-					player.setDisplayName(player.getName());
-					plugin.getGame().getPlayers().remove(player.getName());
-					plugin.getGame().getBlack().getPlayers().remove(player.getName());
-					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the black team has lost!");
-
-					if (plugin.getGame().getBlack().getPlayers().size() == 0) {
-						plugin.getGame().getTeams().remove("black");
-						Bukkit.broadcastMessage(Battle.prefix() + "Team black has lost!");
-					}
-				}
-
-				if (plugin.getGame().getWhite().getLifes() <= 0 && plugin.getGame().getTeams().contains("white") && plugin.getGame().getWhite().getPlayers().contains(player.getName())) {
-					player.teleport(spawn);
-					player.setDisplayName(player.getName());
-					plugin.getGame().getPlayers().remove(player.getName());
-					plugin.getGame().getWhite().getPlayers().remove(player.getName());
-					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the white team has lost!");
-
-					if (plugin.getGame().getWhite().getPlayers().size() == 0) {
-						plugin.getGame().getTeams().remove("white");
-						Bukkit.broadcastMessage(Battle.prefix() + "Team white has lost!");
-					}
-				}
-
-				if (plugin.getGame().getTeams().size() == 1) {
-					if (plugin.getGame().getTeams().contains("red")) {
-						Bukkit.broadcastMessage(Battle.prefix() + "Team red has won the Battle!");
-						for (String s : plugin.getGame().getRed().getPlayers()) {
-							Player p = Bukkit.getPlayer(s);
-
-							p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-							p.teleport(spawn);
-							p.setAllowFlight(true);
-							p.setFlying(true);
+						if (plugin.getGame().getRed().getPlayers().size() == 0) {
+							plugin.getGame().getTeams().remove("red");
+							Bukkit.broadcastMessage(Battle.prefix() + "Team red has lost!");
 						}
 					}
 
-					if (plugin.getGame().getTeams().contains("blue")) {
-						Bukkit.broadcastMessage(Battle.prefix() + "Team blue has won the Battle!");
-						for (String s : plugin.getGame().getBlue().getPlayers()) {
-							Player p = Bukkit.getPlayer(s);
+					if (plugin.getGame().getBlue().getLifes() <= 0 && plugin.getGame().getTeams().contains("blue") && plugin.getGame().getBlue().getPlayers().contains(player.getName())) {
+						player.teleport(spawn);
+						player.setDisplayName(player.getName());
+						plugin.getGame().getPlayers().remove(player.getName());
+						plugin.getGame().getBlue().getPlayers().remove(player.getName());
+						Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the blue team has lost!");
 
-							p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-							p.teleport(spawn);
-							p.setAllowFlight(true);
-							p.setFlying(true);
+						if (plugin.getGame().getBlue().getPlayers().size() == 0) {
+							plugin.getGame().getTeams().remove("blue");
+							Bukkit.broadcastMessage(Battle.prefix() + "Team blue has lost!");
 						}
 					}
 
-					if (plugin.getGame().getTeams().contains("green")) {
-						Bukkit.broadcastMessage(Battle.prefix() + "Team green has won the Battle!");
-						for (String s : plugin.getGame().getGreen().getPlayers()) {
-							Player p = Bukkit.getPlayer(s);
+					if (plugin.getGame().getGreen().getLifes() <= 0 && plugin.getGame().getTeams().contains("green") && plugin.getGame().getGreen().getPlayers().contains(player.getName())) {
+						player.teleport(spawn);
+						player.setDisplayName(player.getName());
+						plugin.getGame().getPlayers().remove(player.getName());
+						plugin.getGame().getGreen().getPlayers().remove(player.getName());
+						Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the green team has lost!");
 
-							p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-							p.teleport(spawn);
-							p.setAllowFlight(true);
-							p.setFlying(true);
+						if (plugin.getGame().getGreen().getPlayers().size() == 0) {
+							plugin.getGame().getTeams().remove("green");
+							Bukkit.broadcastMessage(Battle.prefix() + "Team green has lost!");
 						}
 					}
 
-					if (plugin.getGame().getTeams().contains("yellow")) {
-						Bukkit.broadcastMessage(Battle.prefix() + "Team yellow has won the Battle!");
-						for (String s : plugin.getGame().getYellow().getPlayers()) {
-							Player p = Bukkit.getPlayer(s);
+					if (plugin.getGame().getYellow().getLifes() <= 0 && plugin.getGame().getTeams().contains("yellow") && plugin.getGame().getYellow().getPlayers().contains(player.getName())) {
+						player.teleport(spawn);
+						player.setDisplayName(player.getName());
+						plugin.getGame().getPlayers().remove(player.getName());
+						plugin.getGame().getYellow().getPlayers().remove(player.getName());
+						Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the yellow team has lost!");
 
-							p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-							p.teleport(spawn);
-							p.setAllowFlight(true);
-							p.setFlying(true);
+						if (plugin.getGame().getYellow().getPlayers().size() == 0) {
+							plugin.getGame().getTeams().remove("yellow");
+							Bukkit.broadcastMessage(Battle.prefix() + "Team yellow has lost!");
 						}
 					}
 
-					if (plugin.getGame().getTeams().contains("purple")) {
-						Bukkit.broadcastMessage(Battle.prefix() + "Team purple has won the Battle!");
-						for (String s : plugin.getGame().getPurple().getPlayers()) {
-							Player p = Bukkit.getPlayer(s);
+					if (plugin.getGame().getPurple().getLifes() <= 0 && plugin.getGame().getTeams().contains("purple") && plugin.getGame().getPurple().getPlayers().contains(player.getName())) {
+						player.teleport(spawn);
+						player.setDisplayName(player.getName());
+						plugin.getGame().getPlayers().remove(player.getName());
+						plugin.getGame().getPurple().getPlayers().remove(player.getName());
+						Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the purple team has lost!");
 
-							p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-							p.teleport(spawn);
-							p.setAllowFlight(true);
-							p.setFlying(true);
+						if (plugin.getGame().getPurple().getPlayers().size() == 0) {
+							plugin.getGame().getTeams().remove("purple");
+							Bukkit.broadcastMessage(Battle.prefix() + "Team purple has lost!");
 						}
 					}
 
-					if (plugin.getGame().getTeams().contains("cyan")) {
-						Bukkit.broadcastMessage(Battle.prefix() + "Team cyan has won the Battle!");
-						for (String s : plugin.getGame().getCyan().getPlayers()) {
-							Player p = Bukkit.getPlayer(s);
+					if (plugin.getGame().getCyan().getLifes() <= 0 && plugin.getGame().getTeams().contains("cyan") && plugin.getGame().getCyan().getPlayers().contains(player.getName())) {
+						player.teleport(spawn);
+						player.setDisplayName(player.getName());
+						plugin.getGame().getPlayers().remove(player.getName());
+						plugin.getGame().getCyan().getPlayers().remove(player.getName());
+						Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the cyan team has lost!");
 
-							p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-							p.teleport(spawn);
-							p.setAllowFlight(true);
-							p.setFlying(true);
+						if (plugin.getGame().getCyan().getPlayers().size() == 0) {
+							plugin.getGame().getTeams().remove("cyan");
+							Bukkit.broadcastMessage(Battle.prefix() + "Team cyan has lost!");
 						}
 					}
 
-					if (plugin.getGame().getTeams().contains("black")) {
-						Bukkit.broadcastMessage(Battle.prefix() + "Team black has won the Battle!");
-						for (String s : plugin.getGame().getBlack().getPlayers()) {
-							Player p = Bukkit.getPlayer(s);
+					if (plugin.getGame().getBlack().getLifes() <= 0 && plugin.getGame().getTeams().contains("black") && plugin.getGame().getBlack().getPlayers().contains(player.getName())) {
+						player.teleport(spawn);
+						player.setDisplayName(player.getName());
+						plugin.getGame().getPlayers().remove(player.getName());
+						plugin.getGame().getBlack().getPlayers().remove(player.getName());
+						Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the black team has lost!");
 
-							p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-							p.teleport(spawn);
-							p.setAllowFlight(true);
-							p.setFlying(true);
+						if (plugin.getGame().getBlack().getPlayers().size() == 0) {
+							plugin.getGame().getTeams().remove("black");
+							Bukkit.broadcastMessage(Battle.prefix() + "Team black has lost!");
 						}
 					}
 
-					if (plugin.getGame().getTeams().contains("white")) {
-						Bukkit.broadcastMessage(Battle.prefix() + "Team white has won the Battle!");
-						for (String s : plugin.getGame().getWhite().getPlayers()) {
-							Player p = Bukkit.getPlayer(s);
+					if (plugin.getGame().getWhite().getLifes() <= 0 && plugin.getGame().getTeams().contains("white") && plugin.getGame().getWhite().getPlayers().contains(player.getName())) {
+						player.teleport(spawn);
+						player.setDisplayName(player.getName());
+						plugin.getGame().getPlayers().remove(player.getName());
+						plugin.getGame().getWhite().getPlayers().remove(player.getName());
+						Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the white team has lost!");
 
-							p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-							p.teleport(spawn);
-							p.setAllowFlight(true);
-							p.setFlying(true);
+						if (plugin.getGame().getWhite().getPlayers().size() == 0) {
+							plugin.getGame().getTeams().remove("white");
+							Bukkit.broadcastMessage(Battle.prefix() + "Team white has lost!");
 						}
 					}
 
-					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new FireworkTimer(), 0, 80);
-					Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! Battle Plugin v" + plugin.getDescription().getVersion() + " made by EXSolo and Rene8888.");
+					if (plugin.getGame().getTeams().size() == 1) {
+						if (plugin.getGame().getTeams().contains("red")) {
+							Bukkit.broadcastMessage(Battle.prefix() + "Team red has won the Battle!");
+							for (String s : plugin.getGame().getRed().getPlayers()) {
+								Player p = Bukkit.getPlayer(s);
+
+								p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+								p.teleport(spawn);
+								p.setAllowFlight(true);
+								p.setFlying(true);
+							}
+						}
+
+						if (plugin.getGame().getTeams().contains("blue")) {
+							Bukkit.broadcastMessage(Battle.prefix() + "Team blue has won the Battle!");
+							for (String s : plugin.getGame().getBlue().getPlayers()) {
+								Player p = Bukkit.getPlayer(s);
+
+								p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+								p.teleport(spawn);
+								p.setAllowFlight(true);
+								p.setFlying(true);
+							}
+						}
+
+						if (plugin.getGame().getTeams().contains("green")) {
+							Bukkit.broadcastMessage(Battle.prefix() + "Team green has won the Battle!");
+							for (String s : plugin.getGame().getGreen().getPlayers()) {
+								Player p = Bukkit.getPlayer(s);
+
+								p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+								p.teleport(spawn);
+								p.setAllowFlight(true);
+								p.setFlying(true);
+							}
+						}
+
+						if (plugin.getGame().getTeams().contains("yellow")) {
+							Bukkit.broadcastMessage(Battle.prefix() + "Team yellow has won the Battle!");
+							for (String s : plugin.getGame().getYellow().getPlayers()) {
+								Player p = Bukkit.getPlayer(s);
+
+								p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+								p.teleport(spawn);
+								p.setAllowFlight(true);
+								p.setFlying(true);
+							}
+						}
+
+						if (plugin.getGame().getTeams().contains("purple")) {
+							Bukkit.broadcastMessage(Battle.prefix() + "Team purple has won the Battle!");
+							for (String s : plugin.getGame().getPurple().getPlayers()) {
+								Player p = Bukkit.getPlayer(s);
+
+								p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+								p.teleport(spawn);
+								p.setAllowFlight(true);
+								p.setFlying(true);
+							}
+						}
+
+						if (plugin.getGame().getTeams().contains("cyan")) {
+							Bukkit.broadcastMessage(Battle.prefix() + "Team cyan has won the Battle!");
+							for (String s : plugin.getGame().getCyan().getPlayers()) {
+								Player p = Bukkit.getPlayer(s);
+
+								p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+								p.teleport(spawn);
+								p.setAllowFlight(true);
+								p.setFlying(true);
+							}
+						}
+
+						if (plugin.getGame().getTeams().contains("black")) {
+							Bukkit.broadcastMessage(Battle.prefix() + "Team black has won the Battle!");
+							for (String s : plugin.getGame().getBlack().getPlayers()) {
+								Player p = Bukkit.getPlayer(s);
+
+								p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+								p.teleport(spawn);
+								p.setAllowFlight(true);
+								p.setFlying(true);
+							}
+						}
+
+						if (plugin.getGame().getTeams().contains("white")) {
+							Bukkit.broadcastMessage(Battle.prefix() + "Team white has won the Battle!");
+							for (String s : plugin.getGame().getWhite().getPlayers()) {
+								Player p = Bukkit.getPlayer(s);
+
+								p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+								p.teleport(spawn);
+								p.setAllowFlight(true);
+								p.setFlying(true);
+							}
+						}
+						
+						plugin.getGame().setStarted(false);
+						
+						FireworkTimer ft = new FireworkTimer();
+						int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ft, 0, 20L);
+						ft.setID(id);
+						Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! Battle Plugin v" + plugin.getDescription().getVersion() + " made by EXSolo and Rene8888.");
+					}
 				}
 			}
 		}
@@ -686,6 +705,7 @@ public class GameListener implements Listener, Serializable {
 			if (plugin.getGame().getRed().getPlayers().contains(player.getName()) || plugin.getGame().getBlue().getPlayers().contains(player.getName()) || plugin.getGame().getGreen().getPlayers().contains(player.getName())
 					|| plugin.getGame().getYellow().getPlayers().contains(player.getName()) || plugin.getGame().getPurple().getPlayers().contains(player.getName())) {
 				if (!player.getInventory().contains(Material.WOOL)) {
+					/* TODO zwischen Wolle für das jew Team unterscheiden */
 					player.sendMessage(Battle.prefix() + ChatColor.RED + "Your Inventory has to contain a wool of your colour!");
 				}
 			}

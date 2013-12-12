@@ -70,8 +70,12 @@ public class Cmd_battle_start {
 			if (plugin.getGame().getTeams().size() > 1) {
 				if (plugin.getGame().getSpawn() == null) {
 					plugin.getGame().setSpawn(new SerializableLocation(player.getLocation()));
-					plugin.getGame().getSpawn().getLocation().getWorld()
-							.setSpawnLocation((int) plugin.getGame().getSpawn().getLocation().getX(), (int) plugin.getGame().getSpawn().getLocation().getY(), (int) plugin.getGame().getSpawn().getLocation().getZ());
+					plugin.getGame()
+							.getSpawn()
+							.getLocation()
+							.getWorld()
+							.setSpawnLocation((int) plugin.getGame().getSpawn().getLocation().getX(),
+									(int) plugin.getGame().getSpawn().getLocation().getY(), (int) plugin.getGame().getSpawn().getLocation().getZ());
 
 					plugin.getConfig().set("saves.spawn.world", player.getLocation().getWorld().getName());
 					plugin.getConfig().set("saves.spawn.x", player.getLocation().getX());
@@ -109,6 +113,7 @@ public class Cmd_battle_start {
 
 					p.setHealth(20);
 					p.setFoodLevel(20);
+					p.setSaturation(20);
 
 					if (plugin.getGame().getRed().getPlayers().contains(p.getName())) {
 						p.getInventory().addItem(new ItemStack(Material.WOOL, 2, (short) 14));
@@ -166,7 +171,8 @@ public class Cmd_battle_start {
 				plugin.getGame().getWhite().getBlockPlaceTimer().setWools(plugin.getGame().getWhite().getPlayers().size());
 				plugin.getGame().getBlack().getBlockPlaceTimer().setWools(plugin.getGame().getBlack().getPlayers().size());
 
-				Bukkit.broadcastMessage(Battle.prefix() + "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
+				Bukkit.broadcastMessage(Battle.prefix()
+						+ "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
 
 				plugin.updateScoreboard();
 
@@ -176,7 +182,8 @@ public class Cmd_battle_start {
 
 				return true;
 			} else {
-				player.sendMessage(Battle.prefix() + "There have to be at least two teams with one or more Player(s) before the battle can be launched!");
+				player.sendMessage(Battle.prefix()
+						+ "There have to be at least two teams with one or more Player(s) before the battle can be launched!");
 			}
 		} else {
 			player.sendMessage(Battle.prefix() + "Battle has allready been started!");

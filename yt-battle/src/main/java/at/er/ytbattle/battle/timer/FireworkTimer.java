@@ -13,13 +13,34 @@ import org.bukkit.inventory.meta.FireworkMeta;
 
 public class FireworkTimer implements Runnable {
 
+	private int count = 0;
+	
+	private int id;
+	
+	public FireworkTimer() {
+		this.count = 0;
+	}
+	
+	public void setID(int id) {
+		this.id = id;
+	}
+	
 	public void run() {
-		for (World w : Bukkit.getWorlds()) {
-			w.setTime(18000);
-			w.setStorm(false);
+		count++;
+		if (count > 15) {
+			for (World w : Bukkit.getWorlds()) {
+				w.setTime(6000);
+				w.setStorm(false);
+			}
+			Bukkit.getScheduler().cancelTask(this.id);
+		} else {
+			for (World w : Bukkit.getWorlds()) {
+				w.setTime(18000);
+				w.setStorm(false);
+			}
+			shootFirework();
 		}
-
-		shootFirework();
+		
 	}
 
 	public void shootFirework() {
