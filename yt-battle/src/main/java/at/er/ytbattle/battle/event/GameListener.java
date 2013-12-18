@@ -350,12 +350,10 @@ public class GameListener implements Listener, Serializable {
 		Player player = event.getEntity();
 		if (plugin.getGame().isStarted()) {
 			Location spawn = plugin.getGame().getSpawn().getLocation();
-
+			
 			PacketPlayInClientCommand in = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN); // Gets the packet class
 			EntityPlayer cPlayer = ((CraftPlayer) player).getHandle();
 			cPlayer.playerConnection.a(in);
-
-
 
 			if (plugin.getGame().getPlayers().contains(player.getName())) {
 				if (plugin.getGame().isStarted()) {

@@ -33,10 +33,11 @@ public class Cmd_battle_leave {
 			}
 
 			player.sendMessage(Battle.prefix() + "You have left the Battle");
+			return true;
 		} else {
 			player.sendMessage(Battle.prefix() + "You havn't joined the Battle before");
+			return true;
 		}
-
-		return true;
+		
 	}
 }

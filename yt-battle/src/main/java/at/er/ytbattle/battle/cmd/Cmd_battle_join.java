@@ -91,5 +91,6 @@ public class Cmd_battle_join {
 			player.sendMessage(Battle.prefix() + "Battle has already started!");
 			return true;
 		}
+		
 	}
 }
