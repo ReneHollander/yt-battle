@@ -14,7 +14,7 @@ public class EditControl implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (true) {
+		if (view.checkForSave(e)) {
 			String l = view.getLifes().getText();
 			int lifes = 0;
 
@@ -25,8 +25,11 @@ public class EditControl implements ActionListener {
 				return;
 			}
 			
+			
 			view.getLifesLabel().setText(lifes + "");
 			view.getLifes().setText("");
+			
+			view.applyTeamData();
 		}
 	}
 }

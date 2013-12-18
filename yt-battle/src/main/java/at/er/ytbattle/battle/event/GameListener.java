@@ -148,6 +148,7 @@ public class GameListener implements Listener, Serializable {
 				if (plugin.getGame().getRed().getPlayers().contains(player.getName()) == false) {
 					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a red wool!");
 					plugin.getGame().getRed().getBlockPlaceTimer().setWools(plugin.getGame().getRed().getBlockPlaceTimer().getWools() + 1);
+					Bukkit.broadcastMessage(plugin.getGame().getRed().getBlockPlaceTimer().getWools() + "");
 				} else {
 					player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 					event.setCancelled(true);

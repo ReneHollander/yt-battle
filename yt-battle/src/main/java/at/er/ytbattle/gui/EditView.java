@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -12,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import at.er.ytbattle.battle.Team;
 
 public class EditView extends JFrame {
 
@@ -30,16 +33,15 @@ public class EditView extends JFrame {
 	private JButton edit;
 	private JButton del;
 	private JButton save;
-	private JButton saveLife;
 
 	private GUIView view;
 	private at.er.ytbattle.gui.TeamType type;
-
-	public EditView(GUIView v, at.er.ytbattle.gui.TeamType red) {
-		super("Edit Team " + red.getName());
+	
+	public EditView(GUIView v, at.er.ytbattle.gui.TeamType type) {
+		super("Edit Team " + type.getName());
 
 		this.view = v;
-		this.type = red;
+		this.type = type;
 		
 		l = new EditControl(this);
 		
@@ -53,9 +55,7 @@ public class EditView extends JFrame {
 		this.add = new JButton("Add Player to Team");
 		this.edit = new JButton("Edit Player");
 		this.del = new JButton("Remove Player from Team");
-		this.save = new JButton("Save Team Options");
-		
-		this.saveLife = new JButton("Save Lifes");
+		this.save = new JButton("Save");
 
 		playersModel = new DefaultListModel<String>();
 		players = new JList<String>(playersModel);
@@ -83,7 +83,7 @@ public class EditView extends JFrame {
 		buttonContainer.add(save);
 		
 		if (view.getGame() != null) {
-			switch(red.getId()) {
+			switch(type.getId()) {
 			case 1:
 				for (String player : view.getGame().getRed().getPlayers()) {
 					playersModel.addElement(player);
@@ -126,9 +126,8 @@ public class EditView extends JFrame {
 				break;
 			}
 			
-		}else JOptionPane.showMessageDialog(null, "null");
+		} else JOptionPane.showMessageDialog(view, "No data is loaded. Please load data from file.");
 		
-		buttonContainer.add(saveLife);
 		this.setLayout(new BorderLayout());
 
 		this.add(players, BorderLayout.CENTER);
@@ -136,6 +135,51 @@ public class EditView extends JFrame {
 		this.add(buttonContainer, BorderLayout.SOUTH);
 
 		this.setVisible(true);
+	}
+	
+	public void applyTeamData() {
+		Team t = getTeam();
+		
+		t.setPlayers(new ArrayList<String>());
+		
+		for (int i = 0; i < playersModel.size(); i++) {
+			t.getPlayers().add(playersModel.getElementAt(i));
+		}
+		
+		t.setLifes(Integer.parseInt(lifesLabel.getText()));
+	}
+	
+	public Team getTeam() {
+		Team t = null;
+		
+		switch(type.getId()) {
+		case 1:
+			t = view.getGame().getRed();
+			break;
+		case 2:
+			t = view.getGame().getBlue();
+			break;
+		case 3:
+			t = view.getGame().getGreen();
+			break;
+		case 4:
+			t = view.getGame().getYellow();
+			break;
+		case 5:
+			t = view.getGame().getPurple();
+			break;
+		case 6:
+			t = view.getGame().getCyan();
+			break;
+		case 7:
+			t = view.getGame().getBlack();
+			break;
+		case 8:
+			t = view.getGame().getWhite();
+			break;
+		}
+		
+		return t;
 	}
 
 	public boolean checkForAdd(ActionEvent e) {
@@ -160,13 +204,7 @@ public class EditView extends JFrame {
 		if (e.getSource() == save) return true;
 		return false;
 	}
-
-	public boolean checkForSaveLifes(ActionEvent e) {
-		if (e.getSource() == saveLife)
-			return true;
-		return false;
-	}
-
+	
 	public at.er.ytbattle.gui.TeamType getTeamType() {
 		return type;
 	}
