@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import net.minecraft.server.v1_7_R1.EntityPlayer;
+import net.minecraft.server.v1_7_R1.EnumClientCommand;
+import net.minecraft.server.v1_7_R1.PacketPlayInClientCommand;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -17,6 +21,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -345,26 +350,13 @@ public class GameListener implements Listener, Serializable {
 		Player player = event.getEntity();
 		if (plugin.getGame().isStarted()) {
 			Location spawn = plugin.getGame().getSpawn().getLocation();
-			/* TODO Spiel starten, reloaden sterben -> Team gewinnt nicht */
-	        /* TODO Fix auto respawn
-			try {
-	            Object nmsPlayer = player.getClass().getMethod("getHandle").invoke(player);
-	            Object packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
-	            Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
-	 
-	            for(Object ob : enumClass.getEnumConstants()){
-	                if(ob.toString().equals("PERFORM_RESPAWN")){
-	                    packet = packet.getClass().getConstructor(enumClass).newInstance(ob);
-	                }
-	            }
-	 
-	            Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
-	            con.getClass().getMethod("a", packet.getClass()).invoke(con, packet);
-	        }
-	        catch(Throwable t){
-	            t.printStackTrace();
-	        }
-	        */
+
+			PacketPlayInClientCommand in = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN); // Gets the packet class
+			EntityPlayer cPlayer = ((CraftPlayer) player).getHandle();
+			cPlayer.playerConnection.a(in);
+
+
+
 			if (plugin.getGame().getPlayers().contains(player.getName())) {
 				if (plugin.getGame().isStarted()) {
 
