@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.material.Wool;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -83,21 +87,19 @@ public class BlockPlaceTimer implements Runnable, Listener, Serializable {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
-		int blockID = event.getBlock().getTypeId();
-		int blockMeta = event.getBlock().getData();
 
 		Player player = (Player) event.getPlayer();
+		Block b = event.getBlock();
 
 		if (!team.getPlayers().contains(player))
 			return;
 
-		if (blockID == 35 && plugin.getGame().isStarted() && plugin.getGame().getPlayers().contains(player)) {
+		if (b.getType() == Material.WOOL && plugin.getGame().isStarted() && plugin.getGame().getPlayers().contains(player)) {
 
-			switch (blockMeta) {
-			case 0:
+			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
+			if (color == DyeColor.WHITE) {
 				if (plugin.getGame().getWhite().getPlayers().contains(player)) {
 					if (wools > 0) {
 						wools--;
@@ -110,8 +112,7 @@ public class BlockPlaceTimer implements Runnable, Listener, Serializable {
 						}
 					}
 				}
-				break;
-			case 4:
+			} else if (color == DyeColor.YELLOW) {
 				if (plugin.getGame().getYellow().getPlayers().contains(player)) {
 					if (wools > 0) {
 						wools--;
@@ -124,8 +125,7 @@ public class BlockPlaceTimer implements Runnable, Listener, Serializable {
 						}
 					}
 				}
-				break;
-			case 5:
+			} else if (color == DyeColor.GREEN) {
 				if (plugin.getGame().getGreen().getPlayers().contains(player)) {
 					if (wools > 0) {
 						wools--;
@@ -138,8 +138,7 @@ public class BlockPlaceTimer implements Runnable, Listener, Serializable {
 						}
 					}
 				}
-				break;
-			case 9:
+			} else if (color == DyeColor.CYAN) {
 				if (plugin.getGame().getCyan().getPlayers().contains(player)) {
 					if (wools > 0) {
 						wools--;
@@ -152,8 +151,7 @@ public class BlockPlaceTimer implements Runnable, Listener, Serializable {
 						}
 					}
 				}
-				break;
-			case 10:
+			} else if (color == DyeColor.PURPLE) {
 				if (plugin.getGame().getPurple().getPlayers().contains(player)) {
 					if (wools > 0) {
 						wools--;
@@ -166,8 +164,7 @@ public class BlockPlaceTimer implements Runnable, Listener, Serializable {
 						}
 					}
 				}
-				break;
-			case 11:
+			} else if (color == DyeColor.BLUE) {
 				if (plugin.getGame().getBlue().getPlayers().contains(player)) {
 					if (wools > 0) {
 						wools--;
@@ -180,8 +177,7 @@ public class BlockPlaceTimer implements Runnable, Listener, Serializable {
 						}
 					}
 				}
-				break;
-			case 14:
+			} else if (color == DyeColor.RED) {
 				if (plugin.getGame().getRed().getPlayers().contains(player)) {
 					if (wools > 0) {
 						wools--;
@@ -194,8 +190,7 @@ public class BlockPlaceTimer implements Runnable, Listener, Serializable {
 						}
 					}
 				}
-				break;
-			case 15:
+			} else if (color == DyeColor.BLACK) {
 				if (plugin.getGame().getBlack().getPlayers().contains(player)) {
 					if (wools > 0) {
 						wools--;
@@ -208,7 +203,6 @@ public class BlockPlaceTimer implements Runnable, Listener, Serializable {
 						}
 					}
 				}
-				break;
 			}
 		}
 	}
