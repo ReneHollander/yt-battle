@@ -34,18 +34,24 @@ public class Cmd_battle_border {
 						player.sendMessage(creator.build(radius));
 					} else {
 						player.sendMessage(Battle.prefix() + "Borderradius has to be greater than 0!");
+						return true;
 					}
 				} else {
 					player.sendMessage(Battle.prefix() + "Set the Battlespawn first: /battle setspawn");
+					return true;
 				}
 			} else {
 				player.sendMessage(Battle.prefix() + "WordEdit has to be installed, for creating the border!");
+				return true;
 			}
 
 		} else {
 			player.sendMessage(Battle.prefix() + "Correct usage: /battle border <borderradius>");
+			return true;
 		}
+		
+		return false;
 
-		return true;
+		
 	}
 }

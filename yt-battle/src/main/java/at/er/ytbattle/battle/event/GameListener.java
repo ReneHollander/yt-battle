@@ -344,7 +344,7 @@ public class GameListener implements Listener, Serializable {
 		Player player = event.getEntity();
 		if (plugin.getGame().isStarted()) {
 			Location spawn = plugin.getGame().getSpawn().getLocation();
-			/* TODO Spiel starten, reloaden sterben -> Team gewinnt nicht */
+			
 	        /* TODO Fix auto respawn
 			try {
 	            Object nmsPlayer = player.getClass().getMethod("getHandle").invoke(player);
