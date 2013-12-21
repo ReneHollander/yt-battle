@@ -23,6 +23,8 @@ public class EditView extends JFrame {
 	private JList<String> players;
 	private DefaultListModel<String> playersModel;
 	
+	private Team data;
+	
 	private EditControl l;
 	
 	private JTextField lifes;
@@ -30,7 +32,6 @@ public class EditView extends JFrame {
 	private JLabel lifesLabel;
 
 	private JButton add;
-	private JButton edit;
 	private JButton del;
 	private JButton save;
 
@@ -45,17 +46,15 @@ public class EditView extends JFrame {
 		
 		l = new EditControl(this);
 		
-		this.setSize(1000, 250);
-
 		this.setSize(500, 250);
+
 		this.setLocationRelativeTo(null);
 
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		this.add = new JButton("Add Player to Team");
-		this.edit = new JButton("Edit Player");
 		this.del = new JButton("Remove Player from Team");
-		this.save = new JButton("Save");
+		this.save = new JButton("Save and close");
 
 		playersModel = new DefaultListModel<String>();
 		players = new JList<String>(playersModel);
@@ -73,12 +72,10 @@ public class EditView extends JFrame {
 		buttonContainer.setLayout(new FlowLayout());
 
 		add.addActionListener(l);
-		edit.addActionListener(l);
 		del.addActionListener(l);
 		save.addActionListener(l);
 
 		buttonContainer.add(add);
-		buttonContainer.add(edit);
 		buttonContainer.add(del);
 		buttonContainer.add(save);
 		
@@ -88,45 +85,64 @@ public class EditView extends JFrame {
 				for (String player : view.getGame().getRed().getPlayers()) {
 					playersModel.addElement(player);
 				}
+				
+				lifes.setText("" + view.getGame().getRed().getLifes());
 				break;
 			case 2:
 				for (String player : view.getGame().getBlue().getPlayers()) {
 					playersModel.addElement(player);
 				}
+				
+				lifes.setText("" + view.getGame().getBlue().getLifes());
 				break;
 			case 3:
 				for (String player : view.getGame().getGreen().getPlayers()) {
 					playersModel.addElement(player);
 				}
+				
+				lifes.setText("" + view.getGame().getGreen().getLifes());
 				break;
 			case 4:
 				for (String player : view.getGame().getYellow().getPlayers()) {
 					playersModel.addElement(player);
 				}
+				
+				lifes.setText("" + view.getGame().getYellow().getLifes());
 				break;
 			case 5:
 				for (String player : view.getGame().getPurple().getPlayers()) {
 					playersModel.addElement(player);
 				}
+				
+				lifes.setText("" + view.getGame().getPurple().getLifes());
 				break;
 			case 6:
 				for (String player : view.getGame().getCyan().getPlayers()) {
 					playersModel.addElement(player);
 				}
+				
+				lifes.setText("" + view.getGame().getCyan().getLifes());
 				break;
 			case 7:
 				for (String player : view.getGame().getBlack().getPlayers()) {
 					playersModel.addElement(player);
 				}
+				
+				lifes.setText("" + view.getGame().getBlack().getLifes());
 				break;
 			case 8:
 				for (String player : view.getGame().getWhite().getPlayers()) {
 					playersModel.addElement(player);
 				}
+				
+				lifes.setText("" + view.getGame().getWhite().getLifes());
 				break;
 			}
 			
-		} else JOptionPane.showMessageDialog(view, "No data is loaded. Please load data from file.");
+		} else {
+			JOptionPane.showMessageDialog(view, "No game data was found. Please load data from a file first.");
+			return;
+		}
 		
 		this.setLayout(new BorderLayout());
 
@@ -184,12 +200,6 @@ public class EditView extends JFrame {
 
 	public boolean checkForAdd(ActionEvent e) {
 		if (e.getSource() == add)
-			return true;
-		return false;
-	}
-
-	public boolean checkForEdit(ActionEvent e) {
-		if (e.getSource() == edit)
 			return true;
 		return false;
 	}

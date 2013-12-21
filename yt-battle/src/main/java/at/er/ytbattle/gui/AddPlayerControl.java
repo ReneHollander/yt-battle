@@ -14,6 +14,7 @@ public class AddPlayerControl implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (view.checkForAdd(e)) {
 			view.getView().getPlayersModel().addElement(view.getNameField().getText());
+			view.dispose();
 		}
 	}
 }

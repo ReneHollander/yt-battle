@@ -387,7 +387,7 @@ public class GameListener implements Listener, Serializable {
 					if (plugin.getGame().getRed().getPlayers().contains(player.getName()) && plugin.getGame().getRed().getLifes() > 0)
 						plugin.getGame().getRed().setLifes(plugin.getGame().getRed().getLifes() - 1);
 					if (plugin.getGame().getBlue().getPlayers().contains(player.getName()) && plugin.getGame().getBlue().getLifes() > 0)
-						plugin.getGame().getBlue().setLifes(plugin.getGame().getRed().getLifes() - 1);
+						plugin.getGame().getBlue().setLifes(plugin.getGame().getBlue().getLifes() - 1);
 					if (plugin.getGame().getGreen().getPlayers().contains(player.getName()) && plugin.getGame().getGreen().getLifes() > 0)
 						plugin.getGame().getGreen().setLifes(plugin.getGame().getGreen().getLifes() - 1);
 					if (plugin.getGame().getYellow().getPlayers().contains(player.getName()) && plugin.getGame().getYellow().getLifes() > 0)

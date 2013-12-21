@@ -16,13 +16,17 @@ public class AddPlayerView extends JFrame {
 	private JButton add;
 
 	public AddPlayerView(EditView v) {
+		super("Add Player to Team");
+		
 		view = v;
 		name = new JTextField(10);
 		add = new JButton("Add Player");
+		
+		add.addActionListener(new AddPlayerControl(this));
 
-		this.setSize(100, 50);
+		this.setSize(320, 100);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 
 		this.add(name, BorderLayout.CENTER);
