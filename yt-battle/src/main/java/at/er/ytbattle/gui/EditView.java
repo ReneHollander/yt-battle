@@ -162,7 +162,7 @@ public class EditView extends JFrame {
 			t.getPlayers().add(playersModel.getElementAt(i));
 		}
 		
-		t.setLifes(Integer.parseInt(lifesLabel.getText()));
+		t.setLifes(Integer.parseInt(lifes.getText()));
 	}
 	
 	public Team getTeam() {
@@ -253,6 +253,14 @@ public class EditView extends JFrame {
 
 	public void setLifesLabel(JLabel lifesLabel) {
 		this.lifesLabel = lifesLabel;
+	}
+	
+	public JList<String> getPlayers() {
+		return this.players;
+	}
+	
+	public DefaultListModel<String> getPlayerModel() {
+		return playersModel;
 	}
 
 	public enum TeamType {

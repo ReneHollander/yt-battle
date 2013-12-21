@@ -3,6 +3,8 @@ package at.er.ytbattle.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 public class AddPlayerControl implements ActionListener {
 
 	private AddPlayerView view;
@@ -13,7 +15,18 @@ public class AddPlayerControl implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (view.checkForAdd(e)) {
-			view.getView().getPlayersModel().addElement(view.getNameField().getText());
+			String name = view.getNameField().getText();
+			
+			for (int i = 0; i < view.getView().getPlayerModel().getSize(); i++) {
+				String s = view.getView().getPlayerModel().get(i);
+				
+				if (s.equalsIgnoreCase(name)) {
+					JOptionPane.showMessageDialog(view, "Name was already used!");
+					return;
+				}
+			}
+			
+			view.getView().getPlayersModel().addElement(name);
 			view.dispose();
 		}
 	}
