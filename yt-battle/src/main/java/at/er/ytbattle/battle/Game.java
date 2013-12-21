@@ -3,6 +3,8 @@ package at.er.ytbattle.battle;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.bukkit.DyeColor;
+
 import at.er.ytbattle.battle.timer.GraceTimer;
 import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.SerializableLocation;
@@ -35,15 +37,15 @@ public class Game implements Serializable {
 
 	public Game(Battle b) {
 		plugin = b;
-
-		red = new Team(plugin);
-		blue = new Team(plugin);
-		green = new Team(plugin);
-		yellow = new Team(plugin);
-		purple = new Team(plugin);
-		cyan = new Team(plugin);
-		black = new Team(plugin);
-		white = new Team(plugin);
+		
+		red = new Team(plugin, DyeColor.RED);
+		blue = new Team(plugin, DyeColor.BLUE);
+		yellow = new Team(plugin, DyeColor.YELLOW);
+		purple = new Team(plugin, DyeColor.PURPLE);
+		cyan = new Team(plugin, DyeColor.CYAN);
+		black = new Team(plugin, DyeColor.BLACK);
+		white = new Team(plugin, DyeColor.WHITE);
+		green = new Team(plugin, DyeColor.LIME);
 
 		players = new ArrayList<String>();
 		spectators = new ArrayList<String>();

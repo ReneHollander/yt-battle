@@ -13,6 +13,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.timer.BlockPlaceTimer;
 import at.er.ytbattle.battle.timer.GraceTimer;
 import at.er.ytbattle.util.SerializableLocation;
 
@@ -162,20 +163,20 @@ public class Cmd_battle_start {
 					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, plugin.getGame().getRemindTimer(), 0L, 1200L);
 				}
 
-				plugin.getGame().getRed().getBlockPlaceTimer().setWools(plugin.getGame().getRed().getPlayers().size());
-				plugin.getGame().getBlue().getBlockPlaceTimer().setWools(plugin.getGame().getBlue().getPlayers().size());
-				plugin.getGame().getGreen().getBlockPlaceTimer().setWools(plugin.getGame().getGreen().getPlayers().size());
-				plugin.getGame().getYellow().getBlockPlaceTimer().setWools(plugin.getGame().getYellow().getPlayers().size());
-				plugin.getGame().getPurple().getBlockPlaceTimer().setWools(plugin.getGame().getPurple().getPlayers().size());
-				plugin.getGame().getCyan().getBlockPlaceTimer().setWools(plugin.getGame().getCyan().getPlayers().size());
-				plugin.getGame().getWhite().getBlockPlaceTimer().setWools(plugin.getGame().getWhite().getPlayers().size());
-				plugin.getGame().getBlack().getBlockPlaceTimer().setWools(plugin.getGame().getBlack().getPlayers().size());
-
 				Bukkit.broadcastMessage(Battle.prefix()
 						+ "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
 
 				plugin.updateScoreboard();
 
+				plugin.getGame().getRed().setupInitialWool();
+				plugin.getGame().getBlue().setupInitialWool();
+				plugin.getGame().getGreen().setupInitialWool();
+				plugin.getGame().getYellow().setupInitialWool();
+				plugin.getGame().getPurple().setupInitialWool();
+				plugin.getGame().getCyan().setupInitialWool();
+				plugin.getGame().getBlack().setupInitialWool();
+				plugin.getGame().getWhite().setupInitialWool();
+				
 				plugin.getGame().setStarted(true);
 
 				plugin.setTags();

@@ -6,10 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import net.minecraft.server.v1_7_R1.EntityPlayer;
-import net.minecraft.server.v1_7_R1.EnumClientCommand;
-import net.minecraft.server.v1_7_R1.PacketPlayInClientCommand;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -21,7 +17,6 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -54,25 +49,25 @@ import at.er.ytbattle.battle.timer.InvincibilityTimer;
 import at.er.ytbattle.util.PlayerArmor;
 
 /*
-DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
-if (color == DyeColor.WHITE) {
-	
-} else if (color == DyeColor.YELLOW) {
-	
-} else if (color == DyeColor.GREEN) {
-	
-} else if (color == DyeColor.CYAN) {
-	
-} else if (color == DyeColor.PURPLE) {
-	
-} else if (color == DyeColor.BLUE) {
-	
-} else if (color == DyeColor.RED) {
-	
-} else if (color == DyeColor.BLACK) {
-	
-}
-*/
+ DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
+ if (color == DyeColor.WHITE) {
+
+ } else if (color == DyeColor.YELLOW) {
+
+ } else if (color == DyeColor.LIME) {
+
+ } else if (color == DyeColor.CYAN) {
+
+ } else if (color == DyeColor.PURPLE) {
+
+ } else if (color == DyeColor.BLUE) {
+
+ } else if (color == DyeColor.RED) {
+
+ } else if (color == DyeColor.BLACK) {
+
+ }
+ */
 
 public class GameListener implements Listener, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -96,15 +91,14 @@ public class GameListener implements Listener, Serializable {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onBlockBreak(BlockBreakEvent event) {
 		Player player = (Player) event.getPlayer();
-		
+
 		if (event.getBlock().getType() == Material.WOOL && plugin.getGame().isStarted() && plugin.getGame().getPlayers().contains(player.getName())) {
-			
+
 			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
-			
+
 			if (color == DyeColor.WHITE) {
 				if (plugin.getGame().getWhite().getPlayers().contains(player.getName()) == false) {
 					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a white wool!");
-					plugin.getGame().getWhite().getBlockPlaceTimer().setWools(plugin.getGame().getWhite().getBlockPlaceTimer().getWools() + 1);
 				} else {
 					player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 					event.setCancelled(true);
@@ -112,15 +106,13 @@ public class GameListener implements Listener, Serializable {
 			} else if (color == DyeColor.YELLOW) {
 				if (plugin.getGame().getYellow().getPlayers().contains(player.getName()) == false) {
 					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a yellow wool!");
-					plugin.getGame().getYellow().getBlockPlaceTimer().setWools(plugin.getGame().getYellow().getBlockPlaceTimer().getWools() + 1);
 				} else {
 					player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 					event.setCancelled(true);
 				}
-			} else if (color == DyeColor.GREEN) {
+			} else if (color == DyeColor.LIME) {
 				if (plugin.getGame().getGreen().getPlayers().contains(player.getName()) == false) {
 					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a green wool!");
-					plugin.getGame().getGreen().getBlockPlaceTimer().setWools(plugin.getGame().getGreen().getBlockPlaceTimer().getWools() + 1);
 				} else {
 					player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 					event.setCancelled(true);
@@ -128,7 +120,6 @@ public class GameListener implements Listener, Serializable {
 			} else if (color == DyeColor.CYAN) {
 				if (plugin.getGame().getCyan().getPlayers().contains(player.getName()) == false) {
 					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a cyan wool!");
-					plugin.getGame().getCyan().getBlockPlaceTimer().setWools(plugin.getGame().getCyan().getBlockPlaceTimer().getWools() + 1);
 				} else {
 					player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 					event.setCancelled(true);
@@ -136,7 +127,6 @@ public class GameListener implements Listener, Serializable {
 			} else if (color == DyeColor.PURPLE) {
 				if (plugin.getGame().getPurple().getPlayers().contains(player.getName()) == false) {
 					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a purple wool!");
-					plugin.getGame().getPurple().getBlockPlaceTimer().setWools(plugin.getGame().getPurple().getBlockPlaceTimer().getWools() + 1);
 				} else {
 					player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 					event.setCancelled(true);
@@ -144,7 +134,6 @@ public class GameListener implements Listener, Serializable {
 			} else if (color == DyeColor.BLUE) {
 				if (plugin.getGame().getBlue().getPlayers().contains(player.getName()) == false) {
 					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a blue wool!");
-					plugin.getGame().getBlue().getBlockPlaceTimer().setWools(plugin.getGame().getBlue().getBlockPlaceTimer().getWools() + 1);
 				} else {
 					player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 					event.setCancelled(true);
@@ -152,8 +141,6 @@ public class GameListener implements Listener, Serializable {
 			} else if (color == DyeColor.RED) {
 				if (plugin.getGame().getRed().getPlayers().contains(player.getName()) == false) {
 					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a red wool!");
-					plugin.getGame().getRed().getBlockPlaceTimer().setWools(plugin.getGame().getRed().getBlockPlaceTimer().getWools() + 1);
-					Bukkit.broadcastMessage(plugin.getGame().getRed().getBlockPlaceTimer().getWools() + "");
 				} else {
 					player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 					event.setCancelled(true);
@@ -161,7 +148,6 @@ public class GameListener implements Listener, Serializable {
 			} else if (color == DyeColor.BLACK) {
 				if (plugin.getGame().getBlack().getPlayers().contains(player.getName()) == false) {
 					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a black wool!");
-					plugin.getGame().getBlack().getBlockPlaceTimer().setWools(plugin.getGame().getBlack().getBlockPlaceTimer().getWools() + 1);
 				} else {
 					player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 					event.setCancelled(true);
@@ -175,7 +161,7 @@ public class GameListener implements Listener, Serializable {
 				player.sendMessage(Battle.prefix() + "You have reached the Battleborder!");
 			}
 		}
-		
+
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
@@ -197,7 +183,7 @@ public class GameListener implements Listener, Serializable {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
-		
+
 		/* TODO Validata wool block palce by remove blocks in a 3x3x3 */
 
 		if (event.getBlock().getType() == Material.GLASS && player.getWorld() == plugin.getGame().getSpawn().getLocation().getWorld() && plugin.getGame().isStarted()) {
@@ -208,7 +194,7 @@ public class GameListener implements Listener, Serializable {
 		if (event.getBlock().getType() == Material.WOOL && plugin.getGame().isStarted() && plugin.getGame().getPlayers().contains(player.getName())) {
 
 			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
-			
+
 			if (color == DyeColor.WHITE) {
 				if (plugin.getGame().getWhite().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
@@ -219,7 +205,7 @@ public class GameListener implements Listener, Serializable {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
 				}
-			} else if (color == DyeColor.GREEN) {
+			} else if (color == DyeColor.LIME) {
 				if (plugin.getGame().getGreen().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
@@ -250,7 +236,7 @@ public class GameListener implements Listener, Serializable {
 					event.setCancelled(true);
 				}
 			}
-			
+
 		}
 
 		// create Base
@@ -350,10 +336,6 @@ public class GameListener implements Listener, Serializable {
 		Player player = event.getEntity();
 		if (plugin.getGame().isStarted()) {
 			Location spawn = plugin.getGame().getSpawn().getLocation();
-			
-			PacketPlayInClientCommand in = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN); // Gets the packet class
-			EntityPlayer cPlayer = ((CraftPlayer) player).getHandle();
-			cPlayer.playerConnection.a(in);
 
 			if (plugin.getGame().getPlayers().contains(player.getName())) {
 				if (plugin.getGame().isStarted()) {
@@ -398,7 +380,7 @@ public class GameListener implements Listener, Serializable {
 						while (bit.hasNext())
 							boots.removeEnchantment((Enchantment) ((Map.Entry) bit.next()).getKey());
 					}
-					
+
 					PlayerArmor armor = new PlayerArmor(helmet, chestplate, leggings, boots);
 					this.playerAmror.put(player, armor);
 
@@ -621,9 +603,9 @@ public class GameListener implements Listener, Serializable {
 								p.setFlying(true);
 							}
 						}
-						
+
 						plugin.getGame().setStarted(false);
-						
+
 						FireworkTimer ft = new FireworkTimer();
 						int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ft, 0, 20L);
 						ft.setID(id);
@@ -683,6 +665,14 @@ public class GameListener implements Listener, Serializable {
 			if (plugin.getGame().getWhite().getPlayers().contains(player.getName())) {
 				player.getInventory().addItem(new ItemStack(Material.WOOL));
 			}
+			/*
+			 * TODO Fix auto respawn, so the game doesn't crash
+			 * 
+			 * PacketPlayInClientCommand in = new
+			 * PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN);
+			 * EntityPlayer cPlayer = ((CraftPlayer) player).getHandle();
+			 * cPlayer.playerConnection.a(in);
+			 */
 
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 2));
 		}

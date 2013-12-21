@@ -3,7 +3,9 @@ package at.er.ytbattle.battle;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import at.er.ytbattle.battle.timer.BlockPlaceTimer;
+import org.bukkit.DyeColor;
+
+import at.er.ytbattle.battle.timer.BlockPlaceTimerManager;
 
 public class Team implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -13,27 +15,36 @@ public class Team implements Serializable {
 	private ArrayList<String> players;
 	private int lifes;
 
-	private BlockPlaceTimer bpt;
+	private BlockPlaceTimerManager bptm;
 
-	public Team(Battle b, ArrayList<String> players, int lifes) {
+	private DyeColor color;
+
+	public Team(Battle b, ArrayList<String> players, int lifes, DyeColor color) {
+		this.color = color;
 		this.plugin = b;
 		this.players = players;
 		this.lifes = lifes;
-		this.bpt = new BlockPlaceTimer(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60, 0);
+		this.bptm = new BlockPlaceTimerManager(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60);
 	}
 
-	public Team(Battle b, ArrayList<String> players) {
+	public Team(Battle b, ArrayList<String> players, DyeColor color) {
+		this.color = color;
 		this.plugin = b;
 		this.players = players;
 		this.lifes = 0;
-		this.bpt = new BlockPlaceTimer(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60, 0);
+		this.bptm = new BlockPlaceTimerManager(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60);
 	}
 
-	public Team(Battle b) {
+	public Team(Battle b, DyeColor color) {
+		this.color = color;
 		this.plugin = b;
 		this.players = new ArrayList<String>();
 		this.lifes = 0;
-		this.bpt = new BlockPlaceTimer(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60, 0);
+		this.bptm = new BlockPlaceTimerManager(plugin, this, plugin.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60);
+	}
+	
+	public void setupInitialWool() {
+		this.bptm.setupInitialWool();
 	}
 
 	public Battle getPlugin() {
@@ -59,13 +70,13 @@ public class Team implements Serializable {
 	public void setLifes(int lifes) {
 		this.lifes = lifes;
 	}
-
-	public BlockPlaceTimer getBlockPlaceTimer() {
-		return bpt;
+	
+	public int getWoolsToPlace() {
+		return this.bptm.getRemainingWoolCount();
 	}
 
-	public void setBlockPlaceTimer(BlockPlaceTimer bpt) {
-		this.bpt = bpt;
+	public DyeColor getColor() {
+		return this.color;
 	}
 
 }

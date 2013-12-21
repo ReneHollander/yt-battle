@@ -206,10 +206,6 @@ public class Battle extends JavaPlugin implements Serializable {
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "by")).setScore(6);
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "EXSolo")).setScore(5);
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Rene8888")).setScore(4);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(3);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Beta Testers:")).setScore(2);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Evoferry")).setScore(1);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Lolmixer")).setScore(0);
 		}
 
 		for (Player p : Bukkit.getOnlinePlayers()) {

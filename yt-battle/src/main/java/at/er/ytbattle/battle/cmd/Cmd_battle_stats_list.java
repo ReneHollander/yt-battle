@@ -33,7 +33,7 @@ public class Cmd_battle_stats_list {
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
 					player.sendMessage(ChatColor.DARK_RED + "Red Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + plugin.getGame().getRed().getLifes() + "\n" + "Wools: "
-							+ plugin.getGame().getRed().getBlockPlaceTimer().getWools());
+							+ plugin.getGame().getRed().getWoolsToPlace());
 				}
 				if (args[1].equalsIgnoreCase("blue")) {
 					for (int i = 0; i < plugin.getGame().getBlue().getPlayers().size(); i++) {
@@ -42,7 +42,7 @@ public class Cmd_battle_stats_list {
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
 					player.sendMessage(ChatColor.DARK_BLUE + "Blue Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + plugin.getGame().getBlue().getLifes() + "\n" + "Wools: "
-							+ plugin.getGame().getBlue().getBlockPlaceTimer().getWools());
+							+ plugin.getGame().getBlue().getWoolsToPlace());
 				}
 				if (args[1].equalsIgnoreCase("green")) {
 					for (int i = 0; i < plugin.getGame().getGreen().getPlayers().size(); i++) {
@@ -51,7 +51,7 @@ public class Cmd_battle_stats_list {
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
 					player.sendMessage(ChatColor.GREEN + "Green Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + plugin.getGame().getGreen().getLifes() + "\n" + "Wools: "
-							+ plugin.getGame().getGreen().getBlockPlaceTimer().getWools());
+							+ plugin.getGame().getGreen().getWoolsToPlace());
 				}
 				if (args[1].equalsIgnoreCase("yellow")) {
 					for (int i = 0; i < plugin.getGame().getYellow().getPlayers().size(); i++) {
@@ -60,7 +60,7 @@ public class Cmd_battle_stats_list {
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
 					player.sendMessage(ChatColor.YELLOW + "Yellow Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + plugin.getGame().getYellow().getLifes() + "\n" + "Wools: "
-							+ plugin.getGame().getYellow().getBlockPlaceTimer().getWools());
+							+ plugin.getGame().getYellow().getWoolsToPlace());
 				}
 				if (args[1].equalsIgnoreCase("purple")) {
 					for (int i = 0; i < plugin.getGame().getPurple().getPlayers().size(); i++) {
@@ -69,7 +69,7 @@ public class Cmd_battle_stats_list {
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
 					player.sendMessage(ChatColor.DARK_PURPLE + "Purple Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + plugin.getGame().getPurple().getLifes() + "\n" + "Wools: "
-							+ plugin.getGame().getPurple().getBlockPlaceTimer().getWools());
+							+ plugin.getGame().getPurple().getWoolsToPlace());
 				}
 				if (args[1].equalsIgnoreCase("cyan")) {
 					for (int i = 0; i < plugin.getGame().getCyan().getPlayers().size(); i++) {
@@ -78,7 +78,7 @@ public class Cmd_battle_stats_list {
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
 					player.sendMessage(ChatColor.DARK_AQUA + "Cyan Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + plugin.getGame().getCyan().getLifes() + "\n" + "Wools: "
-							+ plugin.getGame().getCyan().getBlockPlaceTimer().getWools());
+							+ plugin.getGame().getCyan().getWoolsToPlace());
 				}
 				if (args[1].equalsIgnoreCase("black")) {
 					for (int i = 0; i < plugin.getGame().getBlack().getPlayers().size(); i++) {
@@ -87,7 +87,7 @@ public class Cmd_battle_stats_list {
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
 					player.sendMessage(ChatColor.BLACK + "Black Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + plugin.getGame().getBlack().getLifes() + "\n" + "Wools: "
-							+ plugin.getGame().getBlack().getBlockPlaceTimer().getWools());
+							+ plugin.getGame().getBlack().getWoolsToPlace());
 				}
 				if (args[1].equalsIgnoreCase("white")) {
 					for (int i = 0; i < plugin.getGame().getWhite().getPlayers().size(); i++) {
@@ -96,7 +96,7 @@ public class Cmd_battle_stats_list {
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
 					player.sendMessage(ChatColor.BOLD + "White Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + plugin.getGame().getWhite().getLifes() + "\n" + "Wools: "
-							+ plugin.getGame().getWhite().getBlockPlaceTimer().getWools());
+							+ plugin.getGame().getWhite().getWoolsToPlace());
 				}
 			} else {
 				winners = plugin.getGame().getTeams().get(0);
