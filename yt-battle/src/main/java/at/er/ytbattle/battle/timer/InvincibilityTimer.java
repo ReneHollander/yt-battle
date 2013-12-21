@@ -7,6 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 import at.er.ytbattle.battle.Battle;
 
@@ -36,6 +37,14 @@ public class InvincibilityTimer implements Runnable, Listener {
 		if (time > 0) {
 			Bukkit.getPlayer(player).sendMessage(Battle.prefix() + "Your invincibility ends in " + time + " minutes!");
 			time--;
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		if (event.getEntity().getName() == this.player) {
+			HandlerList.unregisterAll(this);
+			Bukkit.getScheduler().cancelTask(handle);
 		}
 	}
 

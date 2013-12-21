@@ -13,7 +13,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import at.er.ytbattle.battle.Battle;
-import at.er.ytbattle.battle.timer.BlockPlaceTimer;
 import at.er.ytbattle.battle.timer.GraceTimer;
 import at.er.ytbattle.util.SerializableLocation;
 
