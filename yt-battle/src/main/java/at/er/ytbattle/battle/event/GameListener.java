@@ -267,8 +267,6 @@ public class GameListener implements Listener, Serializable {
 	@SuppressWarnings("deprecation")
 	public void placeWool(BlockPlaceEvent e, DyeColor color) {
 
-		/* TODO change radius based on config */
-		
 		Location l = e.getBlock().getLocation();
 
 		boolean valid = true;
@@ -288,9 +286,11 @@ public class GameListener implements Listener, Serializable {
 		if (valid) {
 			World w = l.getWorld();
 
-			for (int x = -1; x <= 1; x++) {
-				for (int y = -1; y <= 1; y++) {
-					for (int z = -1; z <= 1; z++) {
+			int rad = this.plugin.getConfig().getInt("config.wool-place-remove-radius");
+
+			for (int x = -rad; x <= rad; x++) {
+				for (int y = -rad; y <= rad; y++) {
+					for (int z = -rad; z <= rad; z++) {
 						Block b = w.getBlockAt((int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z);
 						if ((b.getType() != Material.WOOL) && (b.getType() != Material.BEDROCK) && (b.getType() != Material.GLASS)) {
 							w.getBlockAt((int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z).setType(Material.AIR);
@@ -306,6 +306,7 @@ public class GameListener implements Listener, Serializable {
 		} else {
 			e.getPlayer().sendMessage(Battle.prefix() + "Invalid Wool Location!");
 			e.setCancelled(true);
+			e.getPlayer().updateInventory();
 		}
 	}
 

@@ -93,6 +93,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.getConfig().addDefault("config.enable-base-block", true);
 		this.getConfig().addDefault("config.lifes-at-start", 10);
 		this.getConfig().addDefault("config.minutes-till-broken-wool-effects-appears", 15);
+		this.getConfig().addDefault("config.wool-place-remove-radius", 2);
 		this.getConfig().addDefault("config.base-block-chest-content", defaultChestContent);
 
 		this.getConfig().addDefault("saves.spawn.world", "");
@@ -368,5 +369,4 @@ public class Battle extends JavaPlugin implements Serializable {
 			return null;
 		}
 	}
-
 }
