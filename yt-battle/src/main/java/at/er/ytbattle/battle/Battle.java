@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,6 +20,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+
+import com.google.common.base.Functions;
+import com.google.common.collect.Lists;
 
 import at.er.ytbattle.battle.cmd.Cmd_battle;
 import at.er.ytbattle.battle.event.GameListener;
@@ -35,6 +40,8 @@ public class Battle extends JavaPlugin implements Serializable {
 	public SpectatorListener sl;
 	private HashMap<String, ItemStack[]> inventories;
 	private HashMap<String, ItemStack[]> armor;
+
+	private Inventory chestInventory;
 
 	public void onEnable() {
 
@@ -58,6 +65,9 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.setDisplayNames();
 		this.setTags();
 		this.updateScoreboard();
+
+		this.loadChestInventory();
+
 	}
 
 	public void onDisable() {
@@ -313,10 +323,42 @@ public class Battle extends JavaPlugin implements Serializable {
 	public void setGame(Game game) {
 		this.game = game;
 	}
-	
+
 	public void setDisplayNames() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setDisplayName(p.getName());
 		}
 	}
+
+	@SuppressWarnings("deprecation")
+	public void loadChestInventory() {
+		List<?> confList = this.getConfig().getList("config.base-block-chest-content");
+
+		try {
+
+			List<String> itemIDs = Lists.transform(confList, Functions.toStringFunction());
+
+			for (String s : itemIDs) {
+				String[] cont = s.split(":");
+
+				if (cont.length > 1) {
+					ItemStack item = new ItemStack(Integer.parseInt(cont[0]), Integer.parseInt(cont[1]));
+
+					this.chestInventory.addItem(item);
+				} else if (cont.length > 0) {
+					ItemStack item = new ItemStack(Integer.parseInt(cont[0]));
+
+					this.chestInventory.addItem(item);
+				}
+			}
+		} catch (Exception ex) {
+			System.err.println("Error occured while loading base block chest content from config");
+			this.chestInventory = null;
+		}
+	}
+
+	public Inventory getChestContent() {
+		return this.chestInventory;
+	}
+
 }

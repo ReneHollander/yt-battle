@@ -55,7 +55,7 @@ public class BlockPlaceTimerManager implements Listener {
 
 	@EventHandler
 	public void woolBreak(BlockBreakEvent e) {
-		if ((this.plugin.getGame().isStarted()) && (e.getBlock().getType() == Material.WOOL)) {
+		if ((this.plugin.getGame().isStarted()) && (e.getBlock().getType() == Material.WOOL) && (!this.team.getPlayers().contains(e.getPlayer().getName()))) {
 			DyeColor color = ((Wool) e.getBlock().getState().getData()).getColor();
 			if (color == this.team.getColor()) {
 				BlockPlaceTimer bpt = new BlockPlaceTimer(this.plugin, this.team, this.timetoplace);

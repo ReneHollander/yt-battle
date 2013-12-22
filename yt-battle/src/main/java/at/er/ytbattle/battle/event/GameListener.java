@@ -88,7 +88,7 @@ public class GameListener implements Listener, Serializable {
 		plugin.updateScoreboard();
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
 		Player player = (Player) event.getPlayer();
 
@@ -180,11 +180,9 @@ public class GameListener implements Listener, Serializable {
 		event.setCancelled(true);
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
-
-		/* TODO Validata wool block palce by remove blocks in a 3x3x3 */
 
 		if (event.getBlock().getType() == Material.GLASS && player.getWorld() == plugin.getGame().getSpawn().getLocation().getWorld() && plugin.getGame().isStarted()) {
 			event.setCancelled(true);
@@ -199,44 +197,59 @@ public class GameListener implements Listener, Serializable {
 				if (plugin.getGame().getWhite().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
+				} else {
+					this.placeWool(event, color);
 				}
 			} else if (color == DyeColor.YELLOW) {
 				if (plugin.getGame().getYellow().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
+				} else {
+					this.placeWool(event, color);
 				}
 			} else if (color == DyeColor.LIME) {
 				if (plugin.getGame().getGreen().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
+				} else {
+					this.placeWool(event, color);
 				}
 			} else if (color == DyeColor.CYAN) {
 				if (plugin.getGame().getCyan().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
+				} else {
+					this.placeWool(event, color);
 				}
 			} else if (color == DyeColor.PURPLE) {
 				if (plugin.getGame().getCyan().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
+				} else {
+					this.placeWool(event, color);
 				}
 			} else if (color == DyeColor.BLUE) {
 				if (plugin.getGame().getBlue().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
+				} else {
+					this.placeWool(event, color);
 				}
 			} else if (color == DyeColor.RED) {
 				if (plugin.getGame().getRed().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
+				} else {
+					this.placeWool(event, color);
 				}
 			} else if (color == DyeColor.BLACK) {
 				if (plugin.getGame().getBlack().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
+				} else {
+					this.placeWool(event, color);
 				}
 			}
-
 		}
 
 		// create Base
@@ -248,6 +261,49 @@ public class GameListener implements Listener, Serializable {
 			} else {
 				player.getInventory().setItemInHand(new ItemStack(Material.AIR));
 			}
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public void placeWool(BlockPlaceEvent e, DyeColor color) {
+
+		Location l = e.getBlock().getLocation();
+
+		boolean valid = true;
+
+		for (int i = l.getBlockY() + 1; i <= 255; i++) {
+			Location now = (Location) l.clone();
+			now.setY(i);
+			Block b = now.getWorld().getBlockAt(now);
+			if (b != null) {
+				if (b.getType() != Material.AIR) {
+					valid = false;
+					break;
+				}
+			}
+		}
+
+		if (valid) {
+			World w = l.getWorld();
+
+			for (int x = -1; x <= 1; x++) {
+				for (int y = -1; y <= 1; y++) {
+					for (int z = -1; z <= 1; z++) {
+						Block b = w.getBlockAt((int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z);
+						if ((b.getType() != Material.WOOL) && (b.getType() != Material.BEDROCK) && (b.getType() != Material.GLASS)) {
+							w.getBlockAt((int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z).setType(Material.AIR);
+							w.playEffect(new Location(l.getWorld(), (int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z), Effect.MOBSPAWNER_FLAMES, 0);
+						}
+					}
+				}
+			}
+
+			w.getBlockAt(l).setType(Material.WOOL);
+			w.getBlockAt(l).setData(color.getData());
+
+		} else {
+			e.getPlayer().sendMessage(Battle.prefix() + "Invalid Wool Location!");
+			e.setCancelled(true);
 		}
 	}
 
@@ -630,12 +686,6 @@ public class GameListener implements Listener, Serializable {
 				player.getInventory().setLeggings(armor.getLeggings());
 				player.getInventory().setBoots(armor.getBoots());
 				this.playerAmror.remove(player);
-			} else {
-				player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
-				player.getInventory().setHelmet(new ItemStack(Material.IRON_SWORD));
-				player.getInventory().setChestplate(new ItemStack(Material.IRON_SWORD));
-				player.getInventory().setLeggings(new ItemStack(Material.IRON_SWORD));
-				player.getInventory().setBoots(new ItemStack(Material.IRON_SWORD));
 			}
 
 			new InvincibilityTimer(plugin, player.getName(), 10);
@@ -665,14 +715,6 @@ public class GameListener implements Listener, Serializable {
 			if (plugin.getGame().getWhite().getPlayers().contains(player.getName())) {
 				player.getInventory().addItem(new ItemStack(Material.WOOL));
 			}
-			/*
-			 * TODO Fix auto respawn, so the game doesn't crash
-			 * 
-			 * PacketPlayInClientCommand in = new
-			 * PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN);
-			 * EntityPlayer cPlayer = ((CraftPlayer) player).getHandle();
-			 * cPlayer.playerConnection.a(in);
-			 */
 
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 2));
 		}
@@ -684,9 +726,48 @@ public class GameListener implements Listener, Serializable {
 
 		if (plugin.getGame().isStarted()) {
 			if (plugin.getGame().getRed().getPlayers().contains(player.getName()) || plugin.getGame().getBlue().getPlayers().contains(player.getName()) || plugin.getGame().getGreen().getPlayers().contains(player.getName())
-					|| plugin.getGame().getYellow().getPlayers().contains(player.getName()) || plugin.getGame().getPurple().getPlayers().contains(player.getName())) {
-				if (!player.getInventory().contains(Material.WOOL)) {
-					/* TODO zwischen Wolle für das jew Team unterscheiden */
+					|| plugin.getGame().getYellow().getPlayers().contains(player.getName()) || plugin.getGame().getPurple().getPlayers().contains(player.getName()) || plugin.getGame().getCyan().getPlayers().contains(player.getName())
+					|| plugin.getGame().getBlack().getPlayers().contains(player.getName()) || plugin.getGame().getWhite().getPlayers().contains(player.getName())
+
+			) {
+				if (player.getInventory().contains(Material.WOOL)) {
+
+					DyeColor color = DyeColor.WHITE;
+
+					if (plugin.getGame().getRed().getPlayers().contains(player.getName())) {
+						color = plugin.getGame().getRed().getColor();
+					} else if (plugin.getGame().getBlue().getPlayers().contains(player.getName())) {
+						color = plugin.getGame().getBlue().getColor();
+					} else if (plugin.getGame().getGreen().getPlayers().contains(player.getName())) {
+						color = plugin.getGame().getGreen().getColor();
+					} else if (plugin.getGame().getYellow().getPlayers().contains(player.getName())) {
+						color = plugin.getGame().getYellow().getColor();
+					} else if (plugin.getGame().getPurple().getPlayers().contains(player.getName())) {
+						color = plugin.getGame().getPurple().getColor();
+					} else if (plugin.getGame().getCyan().getPlayers().contains(player.getName())) {
+						color = plugin.getGame().getCyan().getColor();
+					} else if (plugin.getGame().getBlack().getPlayers().contains(player.getName())) {
+						color = plugin.getGame().getBlack().getColor();
+					} else if (plugin.getGame().getWhite().getPlayers().contains(player.getName())) {
+						color = plugin.getGame().getWhite().getColor();
+					}
+
+					boolean found = false;
+
+					for (ItemStack is : player.getInventory().getContents()) {
+						if (is != null) {
+							if (is.getType() == Material.WOOL) {
+								DyeColor curr = ((Wool) is.getData()).getColor();
+								if (curr == color) {
+									found = true;
+								}
+							}
+						}
+					}
+					if (!found) {
+						player.sendMessage(Battle.prefix() + ChatColor.RED + "Your Inventory has to contain a wool of your colour!");
+					}
+				} else {
 					player.sendMessage(Battle.prefix() + ChatColor.RED + "Your Inventory has to contain a wool of your colour!");
 				}
 			}
@@ -838,10 +919,8 @@ public class GameListener implements Listener, Serializable {
 
 		Chest c = (Chest) w.getBlockAt(tmp).getState();
 
-		c.getInventory().addItem(new ItemStack(Material.POTATO_ITEM, 16));
-		c.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
-		c.getInventory().addItem(new ItemStack(Material.STONE_PICKAXE));
-		c.getInventory().addItem(new ItemStack(Material.STONE_AXE));
-		c.getInventory().addItem(new ItemStack(Material.STONE_SPADE));
+		if (this.plugin.getChestContent() != null) {
+			c.getInventory().setContents(this.plugin.getChestContent().getContents());
+		}
 	}
 }
