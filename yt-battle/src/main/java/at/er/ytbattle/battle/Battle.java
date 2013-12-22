@@ -22,14 +22,14 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import com.google.common.base.Functions;
-import com.google.common.collect.Lists;
-
 import at.er.ytbattle.battle.cmd.Cmd_battle;
 import at.er.ytbattle.battle.event.GameListener;
 import at.er.ytbattle.battle.event.SpectatorListener;
 import at.rene8888.serilib.Deserialize;
 import at.rene8888.serilib.Serialize;
+
+import com.google.common.base.Functions;
+import com.google.common.collect.Lists;
 
 public class Battle extends JavaPlugin implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -41,8 +41,6 @@ public class Battle extends JavaPlugin implements Serializable {
 	public SpectatorListener sl;
 	private HashMap<String, ItemStack[]> inventories;
 	private HashMap<String, ItemStack[]> armor;
-
-	private Inventory chestInventory;
 
 	public void onEnable() {
 
@@ -67,8 +65,6 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.setTags();
 		this.updateScoreboard();
 
-		this.loadChestInventory();
-
 	}
 
 	public void onDisable() {
@@ -83,13 +79,13 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	public void loadConfig() {
 		ArrayList<String> defaultChestContent = new ArrayList<String>();
-		
+
 		defaultChestContent.add("392:16");
 		defaultChestContent.add("272");
 		defaultChestContent.add("273");
 		defaultChestContent.add("274");
 		defaultChestContent.add("275");
-		
+
 		this.getConfig().addDefault("config.enable-remind-scheduler", true);
 
 		this.getConfig().addDefault("config.enable-automatic-save", true);
@@ -98,7 +94,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.getConfig().addDefault("config.lifes-at-start", 10);
 		this.getConfig().addDefault("config.minutes-till-broken-wool-effects-appears", 15);
 		this.getConfig().addDefault("config.base-block-chest-content", defaultChestContent);
-		
+
 		this.getConfig().addDefault("saves.spawn.world", "");
 		this.getConfig().addDefault("saves.spawn.x", 0);
 		this.getConfig().addDefault("saves.spawn.y", 0);
@@ -341,7 +337,9 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void loadChestInventory() {
+	public Inventory getChestContent() {
+		Inventory inv = Bukkit.createInventory(null, 54);
+
 		List<?> confList = this.getConfig().getList("config.base-block-chest-content");
 
 		try {
@@ -349,26 +347,26 @@ public class Battle extends JavaPlugin implements Serializable {
 			List<String> itemIDs = Lists.transform(confList, Functions.toStringFunction());
 
 			for (String s : itemIDs) {
+
 				String[] cont = s.split(":");
 
 				if (cont.length > 1) {
 					ItemStack item = new ItemStack(Integer.parseInt(cont[0]), Integer.parseInt(cont[1]));
 
-					this.chestInventory.addItem(item);
+					inv.addItem(item);
 				} else if (cont.length > 0) {
 					ItemStack item = new ItemStack(Integer.parseInt(cont[0]));
 
-					this.chestInventory.addItem(item);
+					inv.addItem(item);
 				}
 			}
+
+			return inv;
+
 		} catch (Exception ex) {
 			System.err.println("Error occured while loading base block chest content from config");
-			this.chestInventory = null;
+			return null;
 		}
-	}
-
-	public Inventory getChestContent() {
-		return this.chestInventory;
 	}
 
 }

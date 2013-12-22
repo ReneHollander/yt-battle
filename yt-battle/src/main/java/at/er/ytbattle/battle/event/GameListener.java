@@ -267,6 +267,8 @@ public class GameListener implements Listener, Serializable {
 	@SuppressWarnings("deprecation")
 	public void placeWool(BlockPlaceEvent e, DyeColor color) {
 
+		/* TODO change radius based on config */
+		
 		Location l = e.getBlock().getLocation();
 
 		boolean valid = true;

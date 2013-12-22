@@ -1,5 +1,6 @@
 package at.er.ytbattle.battle.timer;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 import org.bukkit.Bukkit;
@@ -16,8 +17,12 @@ import org.bukkit.material.Wool;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 
-public class BlockPlaceTimerManager implements Listener {
+public class BlockPlaceTimerManager implements Listener, Serializable {
 
+	
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Battle plugin;
 	private Team team;
 	private int timetoplace;
