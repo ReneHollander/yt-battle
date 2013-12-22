@@ -3,6 +3,7 @@ package at.er.ytbattle.battle;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -70,6 +71,14 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public void loadConfig() {
+		ArrayList<String> defaultChestContent = new ArrayList<String>();
+		
+		defaultChestContent.add("392:16");
+		defaultChestContent.add("272");
+		defaultChestContent.add("273");
+		defaultChestContent.add("274");
+		defaultChestContent.add("275");
+		
 		this.getConfig().addDefault("config.enable-remind-scheduler", true);
 
 		this.getConfig().addDefault("config.enable-automatic-save", true);
@@ -77,7 +86,8 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.getConfig().addDefault("config.enable-base-block", true);
 		this.getConfig().addDefault("config.lifes-at-start", 10);
 		this.getConfig().addDefault("config.minutes-till-broken-wool-effects-appears", 15);
-
+		this.getConfig().addDefault("config.base-block-chest-content", defaultChestContent);
+		
 		this.getConfig().addDefault("saves.spawn.world", "");
 		this.getConfig().addDefault("saves.spawn.x", 0);
 		this.getConfig().addDefault("saves.spawn.y", 0);

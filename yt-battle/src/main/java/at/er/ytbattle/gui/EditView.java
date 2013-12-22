@@ -23,8 +23,6 @@ public class EditView extends JFrame {
 	private JList<String> players;
 	private DefaultListModel<String> playersModel;
 	
-	private Team data;
-	
 	private EditControl l;
 	
 	private JTextField lifes;
