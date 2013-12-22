@@ -26,6 +26,7 @@ public class EditControl implements ActionListener {
 		
 		if (view.checkForSave(e)) {
 			String l = view.getLifes().getText();
+			@SuppressWarnings("unused")
 			int lifes = 0;
 
 			try {
