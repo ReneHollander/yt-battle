@@ -199,6 +199,7 @@ public class GameListener implements Listener, Serializable {
 					event.setCancelled(true);
 				} else {
 					this.placeWool(event, color);
+					plugin.getGame().getWhite().getManager().woolPlace(event);
 				}
 			} else if (color == DyeColor.YELLOW) {
 				if (plugin.getGame().getYellow().getPlayers().contains(player.getName()) == false) {
@@ -206,6 +207,7 @@ public class GameListener implements Listener, Serializable {
 					event.setCancelled(true);
 				} else {
 					this.placeWool(event, color);
+					plugin.getGame().getYellow().getManager().woolPlace(event);
 				}
 			} else if (color == DyeColor.LIME) {
 				if (plugin.getGame().getGreen().getPlayers().contains(player.getName()) == false) {
@@ -213,6 +215,7 @@ public class GameListener implements Listener, Serializable {
 					event.setCancelled(true);
 				} else {
 					this.placeWool(event, color);
+					plugin.getGame().getGreen().getManager().woolPlace(event);
 				}
 			} else if (color == DyeColor.CYAN) {
 				if (plugin.getGame().getCyan().getPlayers().contains(player.getName()) == false) {
@@ -220,13 +223,15 @@ public class GameListener implements Listener, Serializable {
 					event.setCancelled(true);
 				} else {
 					this.placeWool(event, color);
+					plugin.getGame().getCyan().getManager().woolPlace(event);
 				}
 			} else if (color == DyeColor.PURPLE) {
-				if (plugin.getGame().getCyan().getPlayers().contains(player.getName()) == false) {
+				if (plugin.getGame().getPurple().getPlayers().contains(player.getName()) == false) {
 					player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 					event.setCancelled(true);
 				} else {
 					this.placeWool(event, color);
+					plugin.getGame().getPurple().getManager().woolPlace(event);
 				}
 			} else if (color == DyeColor.BLUE) {
 				if (plugin.getGame().getBlue().getPlayers().contains(player.getName()) == false) {
@@ -234,6 +239,7 @@ public class GameListener implements Listener, Serializable {
 					event.setCancelled(true);
 				} else {
 					this.placeWool(event, color);
+					plugin.getGame().getBlue().getManager().woolPlace(event);
 				}
 			} else if (color == DyeColor.RED) {
 				if (plugin.getGame().getRed().getPlayers().contains(player.getName()) == false) {
@@ -241,6 +247,7 @@ public class GameListener implements Listener, Serializable {
 					event.setCancelled(true);
 				} else {
 					this.placeWool(event, color);
+					plugin.getGame().getRed().getManager().woolPlace(event);
 				}
 			} else if (color == DyeColor.BLACK) {
 				if (plugin.getGame().getBlack().getPlayers().contains(player.getName()) == false) {
@@ -248,6 +255,7 @@ public class GameListener implements Listener, Serializable {
 					event.setCancelled(true);
 				} else {
 					this.placeWool(event, color);
+					plugin.getGame().getBlack().getManager().woolPlace(event);
 				}
 			}
 		}

@@ -78,5 +78,9 @@ public class Team implements Serializable {
 	public DyeColor getColor() {
 		return this.color;
 	}
+	
+	public BlockPlaceTimerManager getManager() {
+		return this.bptm;
+	}
 
 }

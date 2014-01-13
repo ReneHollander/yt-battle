@@ -19,8 +19,6 @@ import at.er.ytbattle.battle.Team;
 
 public class BlockPlaceTimerManager implements Listener, Serializable {
 
-	
-	
 	private static final long serialVersionUID = 1L;
 	
 	private Battle plugin;
@@ -39,19 +37,20 @@ public class BlockPlaceTimerManager implements Listener, Serializable {
 
 	}
 
-	@EventHandler
 	public void woolPlace(BlockPlaceEvent e) {
-		if ((this.plugin.getGame().isStarted()) && (e.getBlock().getType() == Material.WOOL)) {
-			DyeColor color = ((Wool) e.getBlock().getState().getData()).getColor();
-			if (color == this.team.getColor()) {
-				if (this.timers.size() > 0) {
-					BlockPlaceTimer bpt = this.findFirstTimer();
-					bpt.stopCountdown();
-					this.timers.remove(bpt);
-					for (String s : team.getPlayers()) {
-						Player p = Bukkit.getPlayer(s);
-						p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
-						p.sendMessage(Battle.prefix() + "Wool was placed. Place " + this.getRemainingWoolCount() + " more to disable the timer.");
+		if (!e.isCancelled()) {
+			if ((this.plugin.getGame().isStarted()) && (e.getBlock().getType() == Material.WOOL)) {
+				DyeColor color = ((Wool) e.getBlock().getState().getData()).getColor();
+				if (color == this.team.getColor()) {
+					if (this.timers.size() > 0) {
+						BlockPlaceTimer bpt = this.findFirstTimer();
+						bpt.stopCountdown();
+						this.timers.remove(bpt);
+						for (String s : team.getPlayers()) {
+							Player p = Bukkit.getPlayer(s);
+							p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
+							p.sendMessage(Battle.prefix() + "Wool was placed. Place " + this.getRemainingWoolCount() + " more to disable the timer.");
+						}
 					}
 				}
 			}
