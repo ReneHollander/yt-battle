@@ -1,3 +1,4 @@
+/*
 package at.er.ytbattle.battle.event;
 
 import java.io.Serializable;
@@ -68,3 +69,4 @@ public class SpectatorListener implements Listener, Serializable {
 		}
 	}
 }
+*/

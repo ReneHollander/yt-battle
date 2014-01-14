@@ -6,11 +6,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import at.er.ytbattle.battle.Game;
+import at.er.ytbattle.battle.TeamColor;
 import at.rene8888.serilib.Deserialize;
 import at.rene8888.serilib.Serialize;
 
@@ -23,35 +25,16 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 	}
 
 	public void valueChanged(ListSelectionEvent e) {
+		
 		if (!e.getValueIsAdjusting())
 			return;
 
 		if (e.getSource() == view.getTeams()) {
-			switch (view.getTeams().getSelectedValue()) {
-			case "Team Red":
-				new EditView(view, TeamType.RED);
-				break;
-			case "Team Blue":
-				new EditView(view, TeamType.BLUE);
-				break;
-			case "Team Green":
-				new EditView(view, TeamType.GREEN);
-				break;
-			case "Team Yellow":
-				new EditView(view, TeamType.YELLOW);
-				break;
-			case "Team Purple":
-				new EditView(view, TeamType.PURPLE);
-				break;
-			case "Team Cyan":
-				new EditView(view, TeamType.CYAN);
-				break;
-			case "Team Black":
-				new EditView(view, TeamType.BLACK);
-				break;
-			case "Team White":
-				new EditView(view, TeamType.WHITE);
-				break;
+			if (view.getGame() == null) {
+				JOptionPane.showMessageDialog(null, "No Game Data found!");
+			} else {
+				String color = view.getTeams().getSelectedValue().split(" ")[1];
+				new EditView(view, view.getGame().getTeamManager().getTeam(TeamColor.getTeamByLongName(color)));
 			}
 		}
 	}

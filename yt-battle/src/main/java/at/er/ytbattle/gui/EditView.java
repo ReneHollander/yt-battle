@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import at.er.ytbattle.battle.Team;
@@ -19,12 +18,12 @@ import at.er.ytbattle.battle.Team;
 public class EditView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JList<String> players;
 	private DefaultListModel<String> playersModel;
-	
+
 	private EditControl l;
-	
+
 	private JTextField lifes;
 
 	private JLabel lifesLabel;
@@ -34,16 +33,18 @@ public class EditView extends JFrame {
 	private JButton save;
 
 	private GUIView view;
-	private at.er.ytbattle.gui.TeamType type;
+
+	private Team t;
 	
-	public EditView(GUIView v, at.er.ytbattle.gui.TeamType type) {
-		super("Edit Team " + type.getName());
+	public EditView(GUIView v, Team t) {
+		super("Edit Team " + t.getTeamColor().getLongName());
 
 		this.view = v;
-		this.type = type;
+
+		this.t = t;
 		
 		l = new EditControl(this);
-		
+
 		this.setSize(500, 250);
 
 		this.setLocationRelativeTo(null);
@@ -76,72 +77,12 @@ public class EditView extends JFrame {
 		buttonContainer.add(add);
 		buttonContainer.add(del);
 		buttonContainer.add(save);
-		
-		if (view.getGame() != null) {
-			switch(type.getId()) {
-			case 1:
-				for (String player : view.getGame().getRed().getPlayers()) {
-					playersModel.addElement(player);
-				}
-				
-				lifes.setText("" + view.getGame().getRed().getLifes());
-				break;
-			case 2:
-				for (String player : view.getGame().getBlue().getPlayers()) {
-					playersModel.addElement(player);
-				}
-				
-				lifes.setText("" + view.getGame().getBlue().getLifes());
-				break;
-			case 3:
-				for (String player : view.getGame().getGreen().getPlayers()) {
-					playersModel.addElement(player);
-				}
-				
-				lifes.setText("" + view.getGame().getGreen().getLifes());
-				break;
-			case 4:
-				for (String player : view.getGame().getYellow().getPlayers()) {
-					playersModel.addElement(player);
-				}
-				
-				lifes.setText("" + view.getGame().getYellow().getLifes());
-				break;
-			case 5:
-				for (String player : view.getGame().getPurple().getPlayers()) {
-					playersModel.addElement(player);
-				}
-				
-				lifes.setText("" + view.getGame().getPurple().getLifes());
-				break;
-			case 6:
-				for (String player : view.getGame().getCyan().getPlayers()) {
-					playersModel.addElement(player);
-				}
-				
-				lifes.setText("" + view.getGame().getCyan().getLifes());
-				break;
-			case 7:
-				for (String player : view.getGame().getBlack().getPlayers()) {
-					playersModel.addElement(player);
-				}
-				
-				lifes.setText("" + view.getGame().getBlack().getLifes());
-				break;
-			case 8:
-				for (String player : view.getGame().getWhite().getPlayers()) {
-					playersModel.addElement(player);
-				}
-				
-				lifes.setText("" + view.getGame().getWhite().getLifes());
-				break;
-			}
-			
-		} else {
-			JOptionPane.showMessageDialog(view, "No game data was found. Please load data from a file first.");
-			return;
+
+		for (String player : t.getPlayers()) {
+			playersModel.addElement(player);
 		}
-		
+		lifes.setText("" + t.getLifes());
+
 		this.setLayout(new BorderLayout());
 
 		this.add(players, BorderLayout.CENTER);
@@ -150,50 +91,21 @@ public class EditView extends JFrame {
 
 		this.setVisible(true);
 	}
-	
+
 	public void applyTeamData() {
 		Team t = getTeam();
-		
+
 		t.setPlayers(new ArrayList<String>());
-		
+
 		for (int i = 0; i < playersModel.size(); i++) {
 			t.getPlayers().add(playersModel.getElementAt(i));
 		}
-		
+
 		t.setLifes(Integer.parseInt(lifes.getText()));
 	}
-	
+
 	public Team getTeam() {
-		Team t = null;
-		
-		switch(type.getId()) {
-		case 1:
-			t = view.getGame().getRed();
-			break;
-		case 2:
-			t = view.getGame().getBlue();
-			break;
-		case 3:
-			t = view.getGame().getGreen();
-			break;
-		case 4:
-			t = view.getGame().getYellow();
-			break;
-		case 5:
-			t = view.getGame().getPurple();
-			break;
-		case 6:
-			t = view.getGame().getCyan();
-			break;
-		case 7:
-			t = view.getGame().getBlack();
-			break;
-		case 8:
-			t = view.getGame().getWhite();
-			break;
-		}
-		
-		return t;
+		return this.t;
 	}
 
 	public boolean checkForAdd(ActionEvent e) {
@@ -209,16 +121,9 @@ public class EditView extends JFrame {
 	}
 
 	public boolean checkForSave(ActionEvent e) {
-		if (e.getSource() == save) return true;
+		if (e.getSource() == save)
+			return true;
 		return false;
-	}
-	
-	public at.er.ytbattle.gui.TeamType getTeamType() {
-		return type;
-	}
-
-	public void setTeamType(at.er.ytbattle.gui.TeamType type) {
-		this.type = type;
 	}
 
 	public JTextField getLifes() {
@@ -252,30 +157,30 @@ public class EditView extends JFrame {
 	public void setLifesLabel(JLabel lifesLabel) {
 		this.lifesLabel = lifesLabel;
 	}
-	
+
 	public JList<String> getPlayers() {
 		return this.players;
 	}
-	
+
 	public DefaultListModel<String> getPlayerModel() {
 		return playersModel;
 	}
 
 	public enum TeamType {
 		RED(1, "Red"), BLUE(2, "Blue"), GREEN(3, "Green"), YELLOW(4, "Yellow"), PURPLE(5, "Purple"), CYAN(6, "Cyan"), BLACK(7, "Black"), WHITE(8, "White");
-		
+
 		private int id;
 		private String name;
-		
+
 		private TeamType(int id, String name) {
 			this.id = id;
 			this.name = name;
 		}
-		
+
 		public int getId() {
 			return id;
 		}
-		
+
 		public String getName() {
 			return name;
 		}

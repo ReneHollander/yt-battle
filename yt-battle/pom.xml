@@ -132,6 +132,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
+							<excludeArtifactIds>worldedit</excludeArtifactIds>
 							<excludeGroupIds>org.bukkit,org.com.sk89q</excludeGroupIds>
 							<outputDirectory>${basedir}/final/lib</outputDirectory>
 						</configuration>
@@ -143,6 +144,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
+							<excludeArtifactIds>worldedit</excludeArtifactIds>
 							<excludeGroupIds>org.bukkit,com.sk89q</excludeGroupIds>
 							<outputDirectory>${basedir}/bukkit/plugins/lib</outputDirectory>
 						</configuration>

@@ -17,7 +17,6 @@ public class Cmd_battle implements CommandExecutor {
 	private Cmd_battle_leave leave;
 	private Cmd_battle_life life;
 	private Cmd_battle_spawn_setspawn spawn_setspawn;
-	private Cmd_battle_spectate spectate;
 	private Cmd_battle_start start;
 	private Cmd_battle_stats_list stats_list;
 
@@ -30,7 +29,6 @@ public class Cmd_battle implements CommandExecutor {
 		this.leave = new Cmd_battle_leave(this);
 		this.life = new Cmd_battle_life(this);
 		this.spawn_setspawn = new Cmd_battle_spawn_setspawn(this);
-		this.spectate = new Cmd_battle_spectate(this);
 		this.start = new Cmd_battle_start(this);
 		this.stats_list = new Cmd_battle_stats_list(this);
 	}
@@ -77,10 +75,6 @@ public class Cmd_battle implements CommandExecutor {
 
 				if (args[0].equalsIgnoreCase("spawn")) {
 					return spawn_setspawn.onCmdSpawn(args, player);
-				}
-
-				if (args[0].equalsIgnoreCase("spectate")) {
-					return spectate.onCmdSpectate(args, player);
 				}
 
 				if (args[0].equalsIgnoreCase("start")) {

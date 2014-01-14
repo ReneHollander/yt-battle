@@ -1,3 +1,5 @@
+/*
+
 package at.er.ytbattle.battle.cmd;
 
 import org.bukkit.Bukkit;
@@ -121,3 +123,5 @@ public class Cmd_battle_spectate {
 		return false;
 	}
 }
+
+*/

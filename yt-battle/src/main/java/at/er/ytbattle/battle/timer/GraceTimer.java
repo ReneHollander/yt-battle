@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.Team;
 
 public class GraceTimer implements Runnable, Serializable {
 
@@ -46,10 +47,11 @@ public class GraceTimer implements Runnable, Serializable {
 
 		if (time == 0) {
 			plugin.getGame().getSpawn().getLocation().getWorld().setPVP(true);
-			for (String s : plugin.getGame().getPlayers()) {
-				Player player = Bukkit.getPlayer(s);
-
-				player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 10, 1);
+			for (Team t : this.plugin.getGame().getTeamManager().getTeams()) {
+				for (String p : t.getPlayers()) {
+					Player player = Bukkit.getPlayer(p);
+					player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 10, 1);
+				}
 			}
 			Bukkit.broadcastMessage(Battle.prefix() + "The grace period has ended!");
 		}
@@ -60,10 +62,11 @@ public class GraceTimer implements Runnable, Serializable {
 	}
 
 	private void note() {
-		for (String s : plugin.getGame().getPlayers()) {
-			Player player = Bukkit.getPlayer(s);
-
-			player.playSound(player.getLocation(), Sound.NOTE_SNARE_DRUM, 10, 1);
+		for (Team t : this.plugin.getGame().getTeamManager().getTeams()) {
+			for (String p : t.getPlayers()) {
+				Player player = Bukkit.getPlayer(p);
+				player.playSound(player.getLocation(), Sound.NOTE_SNARE_DRUM, 10, 1);
+			}
 		}
 	}
 

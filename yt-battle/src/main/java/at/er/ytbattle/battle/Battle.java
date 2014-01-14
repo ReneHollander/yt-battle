@@ -24,7 +24,6 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import at.er.ytbattle.battle.cmd.Cmd_battle;
 import at.er.ytbattle.battle.event.GameListener;
-import at.er.ytbattle.battle.event.SpectatorListener;
 import at.rene8888.serilib.Deserialize;
 import at.rene8888.serilib.Serialize;
 
@@ -38,7 +37,6 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	private Game game;
 	public GameListener gl;
-	public SpectatorListener sl;
 	private HashMap<String, ItemStack[]> inventories;
 	private HashMap<String, ItemStack[]> armor;
 
@@ -50,7 +48,6 @@ public class Battle extends JavaPlugin implements Serializable {
 
 		this.game = new Game(this);
 		this.gl = new GameListener(this);
-		this.sl = new SpectatorListener(this);
 		this.inventories = new HashMap<String, ItemStack[]>();
 		this.armor = new HashMap<String, ItemStack[]>();
 
@@ -74,7 +71,6 @@ public class Battle extends JavaPlugin implements Serializable {
 	public void registerEvents() {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.gl, this); // game
-		pm.registerEvents(this.sl, this); // spectator
 	}
 
 	public void loadConfig() {
@@ -179,9 +175,7 @@ public class Battle extends JavaPlugin implements Serializable {
 			if (game.isStarted()) {
 				try {
 					for (Player p : Bukkit.getOnlinePlayers()) {
-						if (game.getPlayers().contains(p.getName())) {
-							p.setDisplayName(p.getName());
-						}
+						p.setDisplayName(p.getName());
 					}
 					File file = new File(getDataFolder(), "battle.save");
 					game.setSaved(true);
@@ -201,23 +195,10 @@ public class Battle extends JavaPlugin implements Serializable {
 		lifes.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
 		lifes.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-		if (game.getRed().getLifes() > 0)
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Team Red")).setScore(game.getRed().getLifes());
-		if (game.getBlue().getLifes() > 0)
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_BLUE + "Team Blue")).setScore(game.getBlue().getLifes());
-		if (game.getGreen().getLifes() > 0)
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.GREEN + "Team Green")).setScore(game.getGreen().getLifes());
-		if (game.getYellow().getLifes() > 0)
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Team Yellow")).setScore(game.getYellow().getLifes());
-		if (game.getPurple().getLifes() > 0)
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_PURPLE + "Team Purple")).setScore(game.getPurple().getLifes());
-		if (game.getCyan().getLifes() > 0)
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.AQUA + "Team Cyan")).setScore(game.getCyan().getLifes());
-		if (game.getBlack().getLifes() > 0)
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.BLACK + "Team Black")).setScore(game.getBlack().getLifes());
-		if (game.getWhite().getLifes() > 0)
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.WHITE + "Team White")).setScore(game.getWhite().getLifes());
-
+		for (Team t : this.game.getTeamManager().getTeams()) {
+			lifes.getScore(Bukkit.getOfflinePlayer(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName())).setScore(t.getLifes());
+		}
+		
 		if (sb.getPlayers().size() == 0) {
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(8);
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(7);
@@ -232,16 +213,9 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public void removeFromLists(Player player) {
-		game.getRed().getPlayers().remove(player.getName());
-		game.getBlue().getPlayers().remove(player.getName());
-		game.getGreen().getPlayers().remove(player.getName());
-		game.getYellow().getPlayers().remove(player.getName());
-		game.getPurple().getPlayers().remove(player.getName());
-		game.getCyan().getPlayers().remove(player.getName());
-		game.getBlack().getPlayers().remove(player.getName());
-		game.getWhite().getPlayers().remove(player.getName());
+		this.game.getTeamManager().getTeamByPlayer(player).removePlayer(player.getName());
 	}
-
+		
 	public void saveInventory(Player p) {
 		ItemStack[] inv = p.getInventory().getContents();
 		ItemStack[] arm = p.getInventory().getArmorContents();
@@ -263,58 +237,13 @@ public class Battle extends JavaPlugin implements Serializable {
 				p.setPlayerListName(p.getName());
 			}
 		}
-
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			String name = p.getName();
-
-			if (game.getRed().getPlayers().contains(name)) {
-				String s = ChatColor.DARK_RED + p.getName();
-				if (s.length() > 16) {
-					s = s.substring(0, 16);
+		for (Team t : this.game.getTeamManager().getTeams()) {
+			for (String player : t.getPlayers()) {
+				String display = t.getTeamColor().getChatColor() + player;
+				if (display.length() > 16) {
+					display = display.substring(0, 16);
 				}
-				p.setPlayerListName(s);
-			} else if (game.getBlue().getPlayers().contains(name)) {
-				String s = ChatColor.DARK_BLUE + p.getName();
-				if (s.length() > 16) {
-					s = s.substring(0, 16);
-				}
-				p.setPlayerListName(s);
-			} else if (game.getGreen().getPlayers().contains(name)) {
-				String s = ChatColor.DARK_GREEN + p.getName();
-				if (s.length() > 16) {
-					s = s.substring(0, 16);
-				}
-				p.setPlayerListName(s);
-			} else if (game.getYellow().getPlayers().contains(name)) {
-				String s = ChatColor.YELLOW + p.getName();
-				if (s.length() > 16) {
-					s = s.substring(0, 16);
-				}
-				p.setPlayerListName(s);
-			} else if (game.getPurple().getPlayers().contains(name)) {
-				String s = ChatColor.DARK_PURPLE + p.getName();
-				if (s.length() > 16) {
-					s = s.substring(0, 16);
-				}
-				p.setPlayerListName(s);
-			} else if (game.getCyan().getPlayers().contains(name)) {
-				String s = ChatColor.DARK_AQUA + p.getName();
-				if (s.length() > 16) {
-					s = s.substring(0, 16);
-				}
-				p.setPlayerListName(s);
-			} else if (game.getBlack().getPlayers().contains(name)) {
-				String s = ChatColor.BLACK + p.getName();
-				if (s.length() > 16) {
-					s = s.substring(0, 16);
-				}
-				p.setPlayerListName(s);
-			} else if (game.getWhite().getPlayers().contains(name)) {
-				String s = ChatColor.WHITE + p.getName();
-				if (s.length() > 16) {
-					s = s.substring(0, 16);
-				}
-				p.setPlayerListName(s);
+				this.getServer().getPlayerExact(player).setPlayerListName(display); 
 			}
 		}
 	}

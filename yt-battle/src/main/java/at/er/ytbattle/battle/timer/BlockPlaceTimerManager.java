@@ -33,15 +33,13 @@ public class BlockPlaceTimerManager implements Listener, Serializable {
 		this.timetoplace = timetoplace;
 		this.timers = new HashSet<BlockPlaceTimer>();
 		this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
-		
-
 	}
 
 	public void woolPlace(BlockPlaceEvent e) {
 		if (!e.isCancelled()) {
 			if ((this.plugin.getGame().isStarted()) && (e.getBlock().getType() == Material.WOOL)) {
 				DyeColor color = ((Wool) e.getBlock().getState().getData()).getColor();
-				if (color == this.team.getColor()) {
+				if (color == this.team.getTeamColor().getDyeColor()) {
 					if (this.timers.size() > 0) {
 						BlockPlaceTimer bpt = this.findFirstTimer();
 						bpt.stopCountdown();
@@ -61,7 +59,7 @@ public class BlockPlaceTimerManager implements Listener, Serializable {
 	public void woolBreak(BlockBreakEvent e) {
 		if ((this.plugin.getGame().isStarted()) && (e.getBlock().getType() == Material.WOOL) && (!this.team.getPlayers().contains(e.getPlayer().getName()))) {
 			DyeColor color = ((Wool) e.getBlock().getState().getData()).getColor();
-			if (color == this.team.getColor()) {
+			if (color == this.team.getTeamColor().getDyeColor()) {
 				BlockPlaceTimer bpt = new BlockPlaceTimer(this.plugin, this.team, this.timetoplace);
 				this.timers.add(bpt);
 			}
