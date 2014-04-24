@@ -3,7 +3,6 @@ package at.er.ytbattle.battle;
 import java.io.Serializable;
 
 import at.er.ytbattle.battle.timer.GraceTimer;
-import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.SerializableLocation;
 
 public class Game implements Serializable {
@@ -18,7 +17,6 @@ public class Game implements Serializable {
 	private boolean saved;
 
 	private GraceTimer graceTimer;
-	private RemindTimer remindTimer;
 
 	public Game(Battle battle, TeamManager tm) {
 		this.teamManager = tm;
@@ -26,14 +24,6 @@ public class Game implements Serializable {
 		this.started = false;
 		this.saved = false;
 		this.graceTimer = null;
-	}
-
-	public RemindTimer getRemindTimer() {
-		return this.remindTimer;
-	}
-
-	public void startRemindTimer() {
-		this.remindTimer = new RemindTimer();
 	}
 
 	public TeamManager getTeamManager() {

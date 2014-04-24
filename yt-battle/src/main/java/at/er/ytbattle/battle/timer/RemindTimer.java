@@ -12,18 +12,24 @@ import at.er.ytbattle.battle.Battle;
 public class RemindTimer extends Thread implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final long every = 1000 * 60 * 15;
+	private static RemindTimer REMIND_TIMER;
+
+	private static final long every = 1000 * 10 * 1;
 
 	private int timeInMinutes = 0;
 
+	private long time = System.currentTimeMillis();
+
 	public RemindTimer() {
-		this.start();
+		if (REMIND_TIMER != null) {
+			REMIND_TIMER.resetTimer();
+		} else {
+			REMIND_TIMER = this;
+			this.start();
+		}
 	}
 
 	public void run() {
-
-		long time = System.currentTimeMillis();
-
 		while (true) {
 
 			long diff = System.currentTimeMillis() - time;
@@ -36,7 +42,17 @@ public class RemindTimer extends Thread implements Serializable {
 				broadcastTime();
 				note();
 			}
+
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+			}
 		}
+	}
+
+	public void resetTimer() {
+		this.time = System.currentTimeMillis();
+		this.timeInMinutes = 0;
 	}
 
 	private void note() {

@@ -214,7 +214,10 @@ public class Battle extends JavaPlugin implements Serializable {
 		}
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			p.setScoreboard(sb);
+			try {
+				p.setScoreboard(sb);
+			} catch (Exception e) {
+			}
 		}
 	}
 

@@ -19,6 +19,7 @@ public class Cmd_battle implements CommandExecutor {
 	private Cmd_battle_spawn_setspawn spawn_setspawn;
 	private Cmd_battle_start start;
 	private Cmd_battle_stats_list stats_list;
+	private Cmd_battle_resettimer resettimer;
 
 	public Cmd_battle(Battle b) {
 		this.plugin = b;
@@ -31,6 +32,7 @@ public class Cmd_battle implements CommandExecutor {
 		this.spawn_setspawn = new Cmd_battle_spawn_setspawn(this);
 		this.start = new Cmd_battle_start(this);
 		this.stats_list = new Cmd_battle_stats_list(this);
+		this.resettimer = new Cmd_battle_resettimer(this);
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -87,6 +89,10 @@ public class Cmd_battle implements CommandExecutor {
 
 				if (args[0].equalsIgnoreCase("reset")) {
 					return help_reset.onCmdReset(args, player);
+				}
+
+				if (args[0].equalsIgnoreCase("resettimer")) {
+					return resettimer.onCmdResetTimer(args, player);
 				}
 
 				return false;

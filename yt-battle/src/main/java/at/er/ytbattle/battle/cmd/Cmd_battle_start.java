@@ -17,6 +17,7 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamManager;
 import at.er.ytbattle.battle.timer.GraceTimer;
+import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.SerializableLocation;
 
 public class Cmd_battle_start {
@@ -104,7 +105,7 @@ public class Cmd_battle_start {
 				}
 				if (reminder == true) {
 					Bukkit.broadcastMessage(Battle.prefix() + "Starting battle reminder. Scheduling every 15 minutes!");
-					plugin.getGame().startRemindTimer();
+					new RemindTimer();
 				}
 				Bukkit.broadcastMessage(Battle.prefix() + "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
 				for (Team t : this.teamManager.getTeams()) {
