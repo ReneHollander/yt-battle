@@ -57,12 +57,12 @@ public class GameListener implements Listener, Serializable {
 
 	private TeamManager teamManager;
 
-	private HashMap<Player, PlayerArmor> playerAmror;
+	private HashMap<Player, PlayerArmor> playerArmor;
 
 	public GameListener(Battle plugin) {
 		this.plugin = plugin;
 		this.teamManager = this.plugin.getGame().getTeamManager();
-		this.playerAmror = new HashMap<Player, PlayerArmor>();
+		this.playerArmor = new HashMap<Player, PlayerArmor>();
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
@@ -78,11 +78,14 @@ public class GameListener implements Listener, Serializable {
 		if (event.getBlock().getType() == Material.WOOL && plugin.getGame().isStarted() && this.teamManager.isInTeam(player)) {
 			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
 			Team t = this.teamManager.getTeamByPlayer(player);
+
+			Team victim = this.teamManager.getTeamByDyeColor(color);
 			if (t.getTeamColor().getDyeColor().equals(color)) {
 				player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
 				event.setCancelled(true);
 			} else {
-				Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a white wool!");
+				victim.getBlockPlaceTimerManager().woolBreak();
+				Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a " + victim.getTeamColor().getChatColor() + victim.getTeamColor().getLongName() + ChatColor.RESET + " wool!");
 			}
 		}
 		if (plugin.getGame().getSpawn() != null) {
@@ -117,13 +120,19 @@ public class GameListener implements Listener, Serializable {
 			player.sendMessage(Battle.prefix() + "You are unable to place a Block of the Bordermaterial.");
 		}
 		if (event.getBlock().getType() == Material.WOOL && plugin.getGame().isStarted() && this.teamManager.isInTeam(player)) {
+			System.out.println("here7");
 			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
 			Team t = this.teamManager.getTeamByPlayer(player);
 			if (t.getTeamColor().getDyeColor().equals(color)) {
-				this.placeWool(event, color);
-				t.getBlockPlaceTimerManager().woolPlace(event);
+				boolean placed = this.placeWool(player, event.getBlock().getLocation(), color);
+				if (placed == false) {
+					player.sendMessage(Battle.prefix() + "Invalid Wool Location!");
+					event.setCancelled(true);
+				} else {
+					t.getBlockPlaceTimerManager().woolPlace();
+				}
 			} else {
-				Bukkit.broadcastMessage(Battle.prefix() + "You can't place other team's wool!");
+				player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
 			}
 		}
 		if (event.getBlock().getType() == Material.QUARTZ_ORE) {
@@ -137,50 +146,41 @@ public class GameListener implements Listener, Serializable {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
-	public void placeWool(BlockPlaceEvent e, DyeColor color) {
+	public boolean placeWool(Player p, Location l, DyeColor color) {
 
-		Location l = e.getBlock().getLocation();
+		int minHeight = this.plugin.getConfig().getInt("config.wool-place-min-height");
 
-		boolean valid = true;
-
-		for (int i = l.getBlockY() + 1; i <= 255; i++) {
-			Location now = (Location) l.clone();
-			now.setY(i);
-			Block b = now.getWorld().getBlockAt(now);
-			if (b != null) {
-				if (b.getType() != Material.AIR) {
-					valid = false;
-					break;
-				}
-			}
-		}
-
-		if (valid) {
-			World w = l.getWorld();
-
-			int rad = this.plugin.getConfig().getInt("config.wool-place-remove-radius");
-
-			for (int x = -rad; x <= rad; x++) {
-				for (int y = -rad; y <= rad; y++) {
-					for (int z = -rad; z <= rad; z++) {
-						Block b = w.getBlockAt((int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z);
-						if ((b.getType() != Material.WOOL) && (b.getType() != Material.BEDROCK) && (b.getType() != Material.GLASS)) {
-							w.getBlockAt((int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z).setType(Material.AIR);
-							w.playEffect(new Location(l.getWorld(), (int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z), Effect.MOBSPAWNER_FLAMES, 0);
-						}
+		if (l.getBlockY() < minHeight) {
+			return false;
+		} else {
+			for (int i = l.getBlockY() + 1; i <= 255; i++) {
+				Location now = (Location) l.clone();
+				now.setY(i);
+				Block b = now.getWorld().getBlockAt(now);
+				if (b != null) {
+					if (b.getType() != Material.AIR) {
+						return false;
 					}
 				}
 			}
-
-			w.getBlockAt(l).setType(Material.WOOL);
-			w.getBlockAt(l).setData(color.getData());
-
-		} else {
-			e.getPlayer().sendMessage(Battle.prefix() + "Invalid Wool Location!");
-			e.setCancelled(true);
-			e.getPlayer().updateInventory();
 		}
+
+		World w = l.getWorld();
+
+		int rad = this.plugin.getConfig().getInt("config.wool-place-remove-radius");
+
+		for (int x = -rad; x <= rad; x++) {
+			for (int y = -rad; y <= rad; y++) {
+				for (int z = -rad; z <= rad; z++) {
+					Block b = w.getBlockAt((int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z);
+					if ((b.getType() != Material.WOOL) && (b.getType() != Material.BEDROCK) && (b.getType() != Material.GLASS)) {
+						w.getBlockAt((int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z).setType(Material.AIR);
+						w.playEffect(new Location(l.getWorld(), (int) l.getX() + x, (int) l.getY() + y, (int) l.getZ() + z), Effect.MOBSPAWNER_FLAMES, 0);
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	// Interact
@@ -219,7 +219,9 @@ public class GameListener implements Listener, Serializable {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
+
 		if (plugin.getGame().isStarted()) {
+
 			Location spawn = plugin.getGame().getSpawn().getLocation();
 
 			if (this.teamManager.isInTeam(player) && plugin.getGame().isStarted()) {
@@ -268,7 +270,7 @@ public class GameListener implements Listener, Serializable {
 				}
 
 				PlayerArmor armor = new PlayerArmor(helmet, chestplate, leggings, boots);
-				this.playerAmror.put(player, armor);
+				this.playerArmor.put(player, armor);
 
 				plugin.updateScoreboard();
 
@@ -312,14 +314,14 @@ public class GameListener implements Listener, Serializable {
 		if (plugin.getGame().isStarted() && this.teamManager.isInTeam(player)) {
 
 			Team t = this.teamManager.getTeamByPlayer(player);
-			if (this.playerAmror.get(player) != null) {
-				PlayerArmor armor = this.playerAmror.get(player);
+			if (this.playerArmor.get(player) != null) {
+				PlayerArmor armor = this.playerArmor.get(player);
 				player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
 				player.getInventory().setHelmet(armor.getHelmet());
 				player.getInventory().setChestplate(armor.getChestplate());
 				player.getInventory().setLeggings(armor.getLeggings());
 				player.getInventory().setBoots(armor.getBoots());
-				this.playerAmror.remove(player);
+				this.playerArmor.remove(player);
 			}
 
 			new InvincibilityTimer(plugin, player.getName(), 10);

@@ -99,7 +99,7 @@ public class Cmd_battle_start {
 				if (timer > 0) {
 					plugin.getGame().getSpawn().getLocation().getWorld().setPVP(false);
 
-					plugin.getGame().setGraceTimer(new GraceTimer(plugin, timer * 60));
+					plugin.getGame().setGraceTimer(new GraceTimer(timer * 60));
 					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, plugin.getGame().getGraceTimer(), 0, 20);
 				}
 				if (reminder == true) {
@@ -107,12 +107,12 @@ public class Cmd_battle_start {
 					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, plugin.getGame().getRemindTimer(), 0L, 1200L);
 				}
 				Bukkit.broadcastMessage(Battle.prefix() + "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
-				plugin.updateScoreboard();
 				for (Team t : this.teamManager.getTeams()) {
 					t.setupInitialWool();
 				}
 				plugin.getGame().setStarted(true);
 				plugin.setTags();
+				plugin.updateScoreboard();
 				return true;
 			} else {
 				player.sendMessage(Battle.prefix() + "There have to be at least two teams with one or more Player(s) before the battle can be launched!");

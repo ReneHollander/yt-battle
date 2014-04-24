@@ -1,6 +1,7 @@
 package at.er.ytbattle.battle.cmd;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
@@ -31,10 +32,11 @@ public class Cmd_battle_join {
 				Team t = this.teamManager.getTeam(tc);
 				plugin.removeFromLists(player);
 				t.addPlayer(player.getName());
-				Bukkit.broadcastMessage("Player " + player.getName() + " joined the " + t.getTeamColor().getLongName() + "Team!");
+				plugin.setDisplayAndListName(player, t);
+				Bukkit.broadcastMessage(Battle.prefix() + "Player " + player.getName() + " joined the " + t.getTeamColor().getChatColor() + t.getTeamColor().getLongName() + ChatColor.RESET + " Team!");
 				return true;
 			} else {
-				player.sendMessage("Correct usage: /battle join <teamname>");
+				player.sendMessage(Battle.prefix() + "Correct usage: /battle join <teamname>");
 				return true;
 			}
 		} else {

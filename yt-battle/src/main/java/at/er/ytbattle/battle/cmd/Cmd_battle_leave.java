@@ -20,6 +20,7 @@ public class Cmd_battle_leave {
 		Battle plugin = cmd.getPlugin();
 		if (this.teamManager.isInTeam(player)) {
 			player.setDisplayName(player.getName());
+			player.setPlayerListName(player.getName());
 			plugin.removeFromLists(player);
 			player.sendMessage(Battle.prefix() + "You have left the Battle");
 			return true;

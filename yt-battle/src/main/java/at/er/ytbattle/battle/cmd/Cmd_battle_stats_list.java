@@ -39,7 +39,7 @@ public class Cmd_battle_stats_list {
 					}
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
-					player.sendMessage(ChatColor.DARK_RED + "Red Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + t.getLifes() + "\n" + "Wools: " + t.getBlockPlaceTimerManager().getRemainingWoolCount());
+					player.sendMessage(Battle.prefix() + ChatColor.DARK_RED + "Red Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + t.getLifes() + "\n" + "Wools: " + t.getBlockPlaceTimerManager().getRemainingWoolCount());
 				} else {
 					player.sendMessage(Battle.prefix() + "Please select a team: /battle stats <teamname>");
 				}

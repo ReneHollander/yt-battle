@@ -106,8 +106,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -163,6 +163,8 @@
 							tofile="${basedir}/final/${project.build.finalName}.jar" />
 						<copy file="${project.build.directory}/${project.build.finalName}.jar"
 							tofile="${basedir}/bukkit/plugins/${project.build.finalName}.jar" />
+						<copy file="${project.basedir}/lib/WorldEdit.jar" tofile="${basedir}/final/WorldEdit.jar" />
+						<copy file="${project.basedir}/lib/WorldEdit.jar" tofile="${basedir}/bukkit/plugins/WorldEdit.jar" />
 					</tasks>
 				</configuration>
 				<executions>

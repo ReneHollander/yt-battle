@@ -13,17 +13,13 @@ public class GraceTimer implements Runnable, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Battle plugin;
-
 	private int time;
 
-	public GraceTimer(Battle plugin) {
-		this.plugin = plugin;
+	public GraceTimer() {
 		this.time = -1;
 	}
 
-	public GraceTimer(Battle plugin, int timeSec) {
-		this.plugin = plugin;
+	public GraceTimer(int timeSec) {
 		this.time = timeSec;
 	}
 
@@ -46,8 +42,8 @@ public class GraceTimer implements Runnable, Serializable {
 		}
 
 		if (time == 0) {
-			plugin.getGame().getSpawn().getLocation().getWorld().setPVP(true);
-			for (Team t : this.plugin.getGame().getTeamManager().getTeams()) {
+			Battle.BATTLE.getGame().getSpawn().getLocation().getWorld().setPVP(true);
+			for (Team t : Battle.BATTLE.getGame().getTeamManager().getTeams()) {
 				for (String p : t.getPlayers()) {
 					Player player = Bukkit.getPlayer(p);
 					player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 10, 1);
@@ -62,7 +58,7 @@ public class GraceTimer implements Runnable, Serializable {
 	}
 
 	private void note() {
-		for (Team t : this.plugin.getGame().getTeamManager().getTeams()) {
+		for (Team t : Battle.BATTLE.getGame().getTeamManager().getTeams()) {
 			for (String p : t.getPlayers()) {
 				Player player = Bukkit.getPlayer(p);
 				player.playSound(player.getLocation(), Sound.NOTE_SNARE_DRUM, 10, 1);
@@ -81,4 +77,5 @@ public class GraceTimer implements Runnable, Serializable {
 	public int getTime() {
 		return this.time;
 	}
+
 }

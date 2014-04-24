@@ -28,6 +28,9 @@ public class Cmd_battle_help_reset {
 
 		this.b.dontSave(true);
 
+		this.b.unsetTags();
+		this.b.updateScoreboard();
+
 		File file = new File(b.getDataFolder(), "battle.save");
 
 		if (file.exists()) {

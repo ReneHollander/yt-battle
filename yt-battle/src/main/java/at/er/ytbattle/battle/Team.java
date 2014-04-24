@@ -20,7 +20,7 @@ public class Team implements Serializable {
 		this.players = players;
 		this.lifes = lifes;
 		this.lost = false;
-		this.bptm = new BlockPlaceTimerManager(battle, this, battle.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60);
+		this.bptm = new BlockPlaceTimerManager(this, battle.getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60);
 	}
 
 	public TeamColor getTeamColor() {

@@ -16,6 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.Wool;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -33,6 +34,8 @@ import com.google.common.collect.Lists;
 public class Battle extends JavaPlugin implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static Battle BATTLE;
+
 	public boolean dontSave;
 
 	private Game game;
@@ -41,6 +44,8 @@ public class Battle extends JavaPlugin implements Serializable {
 	private HashMap<String, ItemStack[]> armor;
 
 	public void onEnable() {
+
+		BATTLE = this;
 
 		this.dontSave = false;
 
@@ -90,6 +95,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.getConfig().addDefault("config.lifes-at-start", 10);
 		this.getConfig().addDefault("config.minutes-till-broken-wool-effects-appears", 15);
 		this.getConfig().addDefault("config.wool-place-remove-radius", 2);
+		this.getConfig().addDefault("config.wool-place-min-height", 65);
 		this.getConfig().addDefault("config.base-block-chest-content", defaultChestContent);
 
 		this.getConfig().addDefault("saves.spawn.world", "");
@@ -112,7 +118,6 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.dontSave = b;
 	}
 
-	@SuppressWarnings("deprecation")
 	public void addCraftings() {
 
 		ItemStack tear = new ItemStack(Material.GHAST_TEAR, 1);
@@ -121,16 +126,14 @@ public class Battle extends JavaPlugin implements Serializable {
 		tearMeta.setLore(Arrays.asList("Right Click Me"));
 		tear.setItemMeta(tearMeta);
 
-		ShapelessRecipe lifes = new ShapelessRecipe(tear);
-		for (int i = 0; i <= 15; i++) {
-			for (int j = 0; j <= 15; j++) {
-				if ((i == 0 || i == 4 || i == 5 || i == 9 || i == 10 || i == 11 || i == 14 || i == 15) && (j == 0 || j == 4 || j == 5 || j == 9 || j == 10 || j == 11 || j == 14 || j == 15)) {
-					lifes.addIngredient(1, Material.WOOL.getNewData((byte) i));
-					lifes.addIngredient(1, Material.WOOL.getNewData((byte) j));
-					Bukkit.getServer().addRecipe(lifes);
-				}
-				lifes.removeIngredient(1, Material.WOOL.getNewData((byte) i));
-				lifes.removeIngredient(1, Material.WOOL.getNewData((byte) j));
+		for (TeamColor tc1 : TeamColor.values()) {
+			for (TeamColor tc2 : TeamColor.values()) {
+				Wool w1 = new Wool(tc1.getDyeColor());
+				Wool w2 = new Wool(tc2.getDyeColor());
+				ShapelessRecipe lifes = new ShapelessRecipe(tear);
+				lifes.addIngredient(1, w1);
+				lifes.addIngredient(1, w2);
+				Bukkit.getServer().addRecipe(lifes);
 			}
 		}
 
@@ -150,7 +153,7 @@ public class Battle extends JavaPlugin implements Serializable {
 
 		if (save.exists()) {
 			try {
-				Object o = Deserialize.readFromFile(save, true);
+				Object o = Deserialize.readFromFile(save, false);
 				if (o instanceof Game) {
 					Game g = (Game) o;
 					if (g.isSaved()) {
@@ -179,7 +182,7 @@ public class Battle extends JavaPlugin implements Serializable {
 					}
 					File file = new File(getDataFolder(), "battle.save");
 					game.setSaved(true);
-					Serialize.writeToFile(game, file, true);
+					Serialize.writeToFile(game, file, false);
 				} catch (IOException e) {
 					game.setSaved(false);
 					e.printStackTrace();
@@ -192,19 +195,24 @@ public class Battle extends JavaPlugin implements Serializable {
 		Scoreboard sb = Bukkit.getScoreboardManager().getNewScoreboard();
 		Objective lifes = sb.registerNewObjective("stats", "dummy");
 
-		lifes.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
 		lifes.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-		for (Team t : this.game.getTeamManager().getTeams()) {
-			lifes.getScore(Bukkit.getOfflinePlayer(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName())).setScore(t.getLifes());
-		}
+		if (game.isStarted() == false || dontSave) {
+			lifes.setDisplayName(ChatColor.BOLD + "Battle Infos");
 
-		if (sb.getPlayers().size() == 0) {
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(8);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(7);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "by")).setScore(6);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "EXSolo")).setScore(5);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Rene8888")).setScore(4);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(5);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(4);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "by")).setScore(3);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "EXSolo")).setScore(2);
+			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Rene8888")).setScore(1);
+		} else {
+			lifes.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
+
+			for (Team t : this.game.getTeamManager().getTeams()) {
+				if (t.getPlayers().size() > 0) {
+					lifes.getScore(Bukkit.getOfflinePlayer(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName())).setScore(t.getLifes());
+				}
+			}
 		}
 
 		for (Player p : Bukkit.getOnlinePlayers()) {
@@ -213,7 +221,10 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public void removeFromLists(Player player) {
-		this.game.getTeamManager().getTeamByPlayer(player).removePlayer(player.getName());
+		try {
+			this.game.getTeamManager().getTeamByPlayer(player).removePlayer(player.getName());
+		} catch (Exception e) {
+		}
 	}
 
 	public void saveInventory(Player p) {
@@ -231,21 +242,28 @@ public class Battle extends JavaPlugin implements Serializable {
 		return iss;
 	}
 
-	public void setTags() {
-		if (game.isStarted() == false) {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				p.setPlayerListName(p.getName());
-			}
+	public void unsetTags() {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			p.setPlayerListName(p.getName());
+			p.setDisplayName(p.getName());
 		}
+	}
+
+	public void setTags() {
 		for (Team t : this.game.getTeamManager().getTeams()) {
 			for (String player : t.getPlayers()) {
-				String display = t.getTeamColor().getChatColor() + player;
-				if (display.length() > 16) {
-					display = display.substring(0, 16);
-				}
-				this.getServer().getPlayerExact(player).setPlayerListName(display);
+				setDisplayAndListName(this.getServer().getPlayerExact(player), t);
 			}
 		}
+	}
+
+	public void setDisplayAndListName(Player player, Team team) {
+		String display = team.getTeamColor().getChatColor() + player.getName();
+		if (display.length() > 16) {
+			display = display.substring(0, 16);
+		}
+		player.setPlayerListName(display);
+		player.setDisplayName(display);
 	}
 
 	public static String prefix() {

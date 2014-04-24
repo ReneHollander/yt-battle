@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
 public class TeamManager implements Serializable {
@@ -33,6 +34,15 @@ public class TeamManager implements Serializable {
 	public Team getTeamByPlayer(Player p) {
 		for (Entry<TeamColor, Team> t : this.teams.entrySet()) {
 			if (t.getValue().containsPlayer(p.getName())) {
+				return t.getValue();
+			}
+		}
+		return null;
+	}
+
+	public Team getTeamByDyeColor(DyeColor dyeColor) {
+		for (Entry<TeamColor, Team> t : this.teams.entrySet()) {
+			if (t.getValue().getTeamColor().getDyeColor().equals(dyeColor)) {
 				return t.getValue();
 			}
 		}
