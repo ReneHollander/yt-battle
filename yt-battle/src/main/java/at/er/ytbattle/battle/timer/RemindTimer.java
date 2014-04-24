@@ -14,7 +14,7 @@ public class RemindTimer extends Thread implements Serializable {
 
 	private static RemindTimer REMIND_TIMER;
 
-	private static final long every = 1000 * 10 * 1;
+	private static final long every = 1000 * 60 * 15;
 
 	private int timeInMinutes = 0;
 
