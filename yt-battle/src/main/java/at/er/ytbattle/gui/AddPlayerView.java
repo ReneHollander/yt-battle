@@ -17,11 +17,11 @@ public class AddPlayerView extends JFrame {
 
 	public AddPlayerView(EditView v) {
 		super("Add Player to Team");
-		
+
 		view = v;
 		name = new JTextField(10);
 		add = new JButton("Add Player");
-		
+
 		add.addActionListener(new AddPlayerControl(this));
 
 		this.setSize(320, 100);

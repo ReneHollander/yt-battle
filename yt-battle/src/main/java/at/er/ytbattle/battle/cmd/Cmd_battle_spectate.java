@@ -124,4 +124,4 @@ public class Cmd_battle_spectate {
 	}
 }
 
-*/
+ */

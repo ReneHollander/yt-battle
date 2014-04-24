@@ -8,7 +8,7 @@ public class PlayerArmor {
 	private ItemStack chestplate;
 	private ItemStack leggings;
 	private ItemStack boots;
-	
+
 	public PlayerArmor(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots) {
 		this.helmet = helmet;
 		this.chestplate = chestplate;
@@ -31,5 +31,5 @@ public class PlayerArmor {
 	public ItemStack getBoots() {
 		return boots;
 	}
-	
+
 }

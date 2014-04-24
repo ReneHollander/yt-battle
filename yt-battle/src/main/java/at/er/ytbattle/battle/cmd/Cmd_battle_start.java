@@ -68,7 +68,7 @@ public class Cmd_battle_start {
 				base.setItemMeta(baseMeta);
 
 				boolean baseItem = plugin.getConfig().getBoolean("config.enable-base-block");
-				
+
 				for (Team t : this.teamManager.getTeams()) {
 					for (String playername : t.getPlayers()) {
 						Player p = Bukkit.getPlayerExact(playername);

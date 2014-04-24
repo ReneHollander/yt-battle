@@ -18,11 +18,6 @@
 			<email>rene@rene8888.at</email>
 		</developer>
 	</developers>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-	</properties>
 	<repositories>
 		<repository>
 			<id>rene8888-repo</id>
@@ -37,24 +32,24 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.7.2-R0.2-SNAPSHOT</version>
+			<version>1.7.2-R0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.7.2-R0.2-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sk89q</groupId>
-			<artifactId>worldedit</artifactId>
-			<version>5.5.8</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/WorldEdit.jar</systemPath>
+			<version>1.7.2-R0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>at.rene8888</groupId>
 			<artifactId>serilib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sk89q</groupId>
+			<artifactId>worldedit</artifactId>
+			<version>5.6</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/WorldEdit.jar</systemPath>
 		</dependency>
 	</dependencies>
 	<build>
@@ -106,6 +101,15 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>

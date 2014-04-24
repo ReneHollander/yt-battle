@@ -50,27 +50,6 @@ import at.er.ytbattle.battle.timer.FireworkTimer;
 import at.er.ytbattle.battle.timer.InvincibilityTimer;
 import at.er.ytbattle.util.PlayerArmor;
 
-/*
- DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
- if (color == DyeColor.WHITE) {
-
- } else if (color == DyeColor.YELLOW) {
-
- } else if (color == DyeColor.LIME) {
-
- } else if (color == DyeColor.CYAN) {
-
- } else if (color == DyeColor.PURPLE) {
-
- } else if (color == DyeColor.BLUE) {
-
- } else if (color == DyeColor.RED) {
-
- } else if (color == DyeColor.BLACK) {
-
- }
- */
-
 public class GameListener implements Listener, Serializable {
 	private static final long serialVersionUID = 1L;
 

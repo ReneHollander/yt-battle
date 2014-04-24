@@ -14,17 +14,17 @@ import org.bukkit.inventory.meta.FireworkMeta;
 public class FireworkTimer implements Runnable {
 
 	private int count = 0;
-	
+
 	private int id;
-	
+
 	public FireworkTimer() {
 		this.count = 0;
 	}
-	
+
 	public void setID(int id) {
 		this.id = id;
 	}
-	
+
 	public void run() {
 		count++;
 		if (count > 15) {
@@ -40,7 +40,7 @@ public class FireworkTimer implements Runnable {
 			}
 			shootFirework();
 		}
-		
+
 	}
 
 	public void shootFirework() {

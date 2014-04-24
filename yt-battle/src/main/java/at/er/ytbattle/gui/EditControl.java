@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 public class EditControl implements ActionListener {
 
 	private EditView view;
-	
+
 	public EditControl(EditView v) {
 		view = v;
 	}
@@ -17,13 +17,14 @@ public class EditControl implements ActionListener {
 		if (view.checkForAdd(e)) {
 			new AddPlayerView(view);
 		}
-		
+
 		if (view.checkForRem(e)) {
 			try {
 				view.getPlayersModel().remove(view.getPlayers().getSelectedIndex());
-			} catch(Exception ex) {}
+			} catch (Exception ex) {
+			}
 		}
-		
+
 		if (view.checkForSave(e)) {
 			String l = view.getLifes().getText();
 			@SuppressWarnings("unused")
@@ -36,9 +37,9 @@ public class EditControl implements ActionListener {
 				System.out.println(l);
 				return;
 			}
-			
+
 			view.applyTeamData();
-			
+
 			JOptionPane.showMessageDialog(view, "Teamdata was saved successfully!");
 			view.dispose();
 		}

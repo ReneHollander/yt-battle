@@ -198,7 +198,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		for (Team t : this.game.getTeamManager().getTeams()) {
 			lifes.getScore(Bukkit.getOfflinePlayer(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName())).setScore(t.getLifes());
 		}
-		
+
 		if (sb.getPlayers().size() == 0) {
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(8);
 			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(7);
@@ -215,7 +215,7 @@ public class Battle extends JavaPlugin implements Serializable {
 	public void removeFromLists(Player player) {
 		this.game.getTeamManager().getTeamByPlayer(player).removePlayer(player.getName());
 	}
-		
+
 	public void saveInventory(Player p) {
 		ItemStack[] inv = p.getInventory().getContents();
 		ItemStack[] arm = p.getInventory().getArmorContents();
@@ -243,7 +243,7 @@ public class Battle extends JavaPlugin implements Serializable {
 				if (display.length() > 16) {
 					display = display.substring(0, 16);
 				}
-				this.getServer().getPlayerExact(player).setPlayerListName(display); 
+				this.getServer().getPlayerExact(player).setPlayerListName(display);
 			}
 		}
 	}

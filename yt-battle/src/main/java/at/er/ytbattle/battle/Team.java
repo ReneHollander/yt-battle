@@ -66,11 +66,11 @@ public class Team implements Serializable {
 	public BlockPlaceTimerManager getBlockPlaceTimerManager() {
 		return this.bptm;
 	}
-	
+
 	public boolean hasLost() {
 		return this.lost;
 	}
-	
+
 	public void setLost(boolean lost) {
 		this.lost = lost;
 	}

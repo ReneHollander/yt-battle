@@ -42,7 +42,7 @@ public class BlockPlaceTimer implements Runnable, Serializable {
 
 			}
 		}
-		
+
 		if (time == this.initTime) {
 			for (String s : t.getPlayers()) {
 				Player p = Bukkit.getPlayer(s);
@@ -78,11 +78,11 @@ public class BlockPlaceTimer implements Runnable, Serializable {
 		if (time > 0)
 			time--;
 	}
-	
+
 	public void stopCountdown() {
 		Bukkit.getScheduler().cancelTask(this.handleID);
 	}
-	
+
 	public int getTime() {
 		return this.time;
 	}

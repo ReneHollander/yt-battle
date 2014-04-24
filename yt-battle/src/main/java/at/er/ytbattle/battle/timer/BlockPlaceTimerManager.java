@@ -20,7 +20,7 @@ import at.er.ytbattle.battle.Team;
 public class BlockPlaceTimerManager implements Listener, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Battle plugin;
 	private Team team;
 	private int timetoplace;
@@ -81,7 +81,7 @@ public class BlockPlaceTimerManager implements Listener, Serializable {
 	public int getRemainingWoolCount() {
 		return this.timers.size();
 	}
-	
+
 	public void setupInitialWool() {
 		for (int i = 0; i < this.team.getPlayers().size(); i++) {
 			BlockPlaceTimer bpt = new BlockPlaceTimer(this.plugin, this.team, this.timetoplace);

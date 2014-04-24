@@ -16,7 +16,7 @@ public class InvincibilityTimer implements Runnable, Listener {
 	private Battle plugin;
 	private String player;
 	private int time;
-	
+
 	private int handle;
 
 	public InvincibilityTimer(Battle b, String pl, int time) {
@@ -39,7 +39,7 @@ public class InvincibilityTimer implements Runnable, Listener {
 			time--;
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		if (event.getEntity().getName() == this.player) {

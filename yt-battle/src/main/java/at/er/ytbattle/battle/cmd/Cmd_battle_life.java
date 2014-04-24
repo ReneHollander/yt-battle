@@ -10,7 +10,7 @@ import at.er.ytbattle.battle.TeamManager;
 public class Cmd_battle_life {
 
 	private Cmd_battle cmd;
-	
+
 	private TeamManager teamManager;
 
 	public Cmd_battle_life(Cmd_battle c) {

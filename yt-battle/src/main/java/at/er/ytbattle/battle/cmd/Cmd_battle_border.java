@@ -49,9 +49,8 @@ public class Cmd_battle_border {
 			player.sendMessage(Battle.prefix() + "Correct usage: /battle border <borderradius>");
 			return true;
 		}
-		
+
 		return false;
 
-		
 	}
 }

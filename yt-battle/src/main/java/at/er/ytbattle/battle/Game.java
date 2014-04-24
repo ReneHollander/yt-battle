@@ -7,11 +7,11 @@ import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.SerializableLocation;
 
 public class Game implements Serializable {
-	
+
 	private static final long serialVersionUID = 4886628307519507333L;
-	
+
 	private TeamManager teamManager;
-	
+
 	private SerializableLocation spawn;
 
 	private boolean started;
@@ -28,7 +28,7 @@ public class Game implements Serializable {
 		this.remindTimer = new RemindTimer();
 		this.graceTimer = null;
 	}
-	
+
 	public TeamManager getTeamManager() {
 		return this.teamManager;
 	}

@@ -10,7 +10,7 @@ public class Cmd_battle_leave {
 	private Cmd_battle cmd;
 
 	private TeamManager teamManager;
-	
+
 	public Cmd_battle_leave(Cmd_battle c) {
 		cmd = c;
 		this.teamManager = cmd.getPlugin().getGame().getTeamManager();
@@ -27,6 +27,6 @@ public class Cmd_battle_leave {
 			player.sendMessage(Battle.prefix() + "You havn't joined the Battle before");
 			return true;
 		}
-		
+
 	}
 }

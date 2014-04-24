@@ -35,14 +35,14 @@ public class EditView extends JFrame {
 	private GUIView view;
 
 	private Team t;
-	
+
 	public EditView(GUIView v, Team t) {
 		super("Edit Team " + t.getTeamColor().getLongName());
 
 		this.view = v;
 
 		this.t = t;
-		
+
 		l = new EditControl(this);
 
 		this.setSize(500, 250);
