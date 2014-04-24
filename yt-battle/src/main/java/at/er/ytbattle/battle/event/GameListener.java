@@ -189,8 +189,9 @@ public class GameListener implements Listener, Serializable {
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) && player.getItemInHand().getType() == Material.GHAST_TEAR && plugin.getGame().isStarted()) {
-			if (!this.teamManager.isInTeam(player)) {
+			if (this.teamManager.isInTeam(player) == false) {
 				player.sendMessage(Battle.prefix() + "You left the battle, this item is worthless now!");
+				return;
 			}
 			Team t = this.teamManager.getTeamByPlayer(player);
 			if (t != null) {

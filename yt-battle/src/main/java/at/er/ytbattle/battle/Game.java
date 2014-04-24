@@ -20,8 +20,8 @@ public class Game implements Serializable {
 	private GraceTimer graceTimer;
 	private RemindTimer remindTimer;
 
-	public Game(Battle battle) {
-		this.teamManager = new TeamManager(battle);
+	public Game(Battle battle, TeamManager tm) {
+		this.teamManager = tm;
 		this.spawn = null;
 		this.started = false;
 		this.saved = false;

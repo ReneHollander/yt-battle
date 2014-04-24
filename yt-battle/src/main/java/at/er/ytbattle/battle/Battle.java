@@ -45,19 +45,16 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	public void onEnable() {
 
+		this.loadConfig();
+		this.loadGame();
+
 		BATTLE = this;
 
 		this.dontSave = false;
 
-		this.loadConfig();
-
-		this.game = new Game(this);
 		this.gl = new GameListener(this);
 		this.inventories = new HashMap<String, ItemStack[]>();
 		this.armor = new HashMap<String, ItemStack[]>();
-
-		this.loadConfig();
-		this.loadGame();
 
 		this.addCraftings();
 		this.registerCommands();
@@ -95,7 +92,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.getConfig().addDefault("config.lifes-at-start", 10);
 		this.getConfig().addDefault("config.minutes-till-broken-wool-effects-appears", 15);
 		this.getConfig().addDefault("config.wool-place-remove-radius", 2);
-		this.getConfig().addDefault("config.wool-place-min-height", 65);
+		this.getConfig().addDefault("config.wool-place-min-height", 50);
 		this.getConfig().addDefault("config.base-block-chest-content", defaultChestContent);
 
 		this.getConfig().addDefault("saves.spawn.world", "");
@@ -169,6 +166,7 @@ public class Battle extends JavaPlugin implements Serializable {
 		} else {
 			System.out.println("No battle.save file detected...");
 			System.out.println("Skipping data loading...");
+			this.game = new Game(this, new TeamManager(this));
 		}
 
 	}
@@ -252,18 +250,21 @@ public class Battle extends JavaPlugin implements Serializable {
 	public void setTags() {
 		for (Team t : this.game.getTeamManager().getTeams()) {
 			for (String player : t.getPlayers()) {
-				setDisplayAndListName(this.getServer().getPlayerExact(player), t);
+				Player p = this.getServer().getPlayerExact(player);
+				if (p != null) {
+					setDisplayAndListName(p, t);
+				}
 			}
 		}
 	}
 
 	public void setDisplayAndListName(Player player, Team team) {
 		String display = team.getTeamColor().getChatColor() + player.getName();
-		if (display.length() > 16) {
-			display = display.substring(0, 16);
+		if (display.length() > 15) {
+			display = display.substring(0, 15);
 		}
 		player.setPlayerListName(display);
-		player.setDisplayName(display);
+		player.setDisplayName(display + ChatColor.RESET);
 	}
 
 	public static String prefix() {
