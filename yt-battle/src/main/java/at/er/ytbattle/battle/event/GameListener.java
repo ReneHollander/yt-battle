@@ -120,7 +120,6 @@ public class GameListener implements Listener, Serializable {
 			player.sendMessage(Battle.prefix() + "You are unable to place a Block of the Bordermaterial.");
 		}
 		if (event.getBlock().getType() == Material.WOOL && plugin.getGame().isStarted() && this.teamManager.isInTeam(player)) {
-			System.out.println("here7");
 			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
 			Team t = this.teamManager.getTeamByPlayer(player);
 			if (t.getTeamColor().getDyeColor().equals(color)) {
