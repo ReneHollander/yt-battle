@@ -9,19 +9,34 @@ import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
 
-public class RemindTimer implements Runnable, Serializable {
+public class RemindTimer extends Thread implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private static final long every = 1000 * 60 * 15;
 
 	private int timeInMinutes = 0;
 
+	public RemindTimer() {
+		this.start();
+	}
+
 	public void run() {
 
-		if (timeInMinutes % 15 == 0 && timeInMinutes > 0) {
-			broadcastTime();
-			note();
-		}
+		long time = System.currentTimeMillis();
 
-		timeInMinutes += 1;
+		while (true) {
+
+			long diff = System.currentTimeMillis() - time;
+
+			if (diff > every) {
+				time = System.currentTimeMillis();
+
+				timeInMinutes += 15;
+
+				broadcastTime();
+				note();
+			}
+		}
 	}
 
 	private void note() {

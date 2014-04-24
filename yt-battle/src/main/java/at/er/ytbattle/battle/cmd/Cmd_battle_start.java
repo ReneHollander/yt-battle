@@ -104,7 +104,7 @@ public class Cmd_battle_start {
 				}
 				if (reminder == true) {
 					Bukkit.broadcastMessage(Battle.prefix() + "Starting battle reminder. Scheduling every 15 minutes!");
-					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, plugin.getGame().getRemindTimer(), 0L, 1200L);
+					plugin.getGame().startRemindTimer();
 				}
 				Bukkit.broadcastMessage(Battle.prefix() + "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
 				for (Team t : this.teamManager.getTeams()) {

@@ -25,8 +25,15 @@ public class Game implements Serializable {
 		this.spawn = null;
 		this.started = false;
 		this.saved = false;
-		this.remindTimer = new RemindTimer();
 		this.graceTimer = null;
+	}
+
+	public RemindTimer getRemindTimer() {
+		return this.remindTimer;
+	}
+
+	public void startRemindTimer() {
+		this.remindTimer = new RemindTimer();
 	}
 
 	public TeamManager getTeamManager() {
@@ -41,16 +48,8 @@ public class Game implements Serializable {
 		return graceTimer;
 	}
 
-	public RemindTimer getRemindTimer() {
-		return remindTimer;
-	}
-
 	public void setGraceTimer(GraceTimer graceTimer) {
 		this.graceTimer = graceTimer;
-	}
-
-	public void setRemindTimer(RemindTimer remindTimer) {
-		this.remindTimer = remindTimer;
 	}
 
 	public void setStarted(boolean started) {
