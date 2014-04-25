@@ -396,17 +396,17 @@ public class GameListener implements Listener, Serializable {
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
-		Player player = event.getPlayer();
-		if (plugin.getGame().isStarted()) {
-			if (this.teamManager.isInTeam(player)) {
-				Team t = this.teamManager.getTeamByPlayer(player);
-				if (this.teamManager.isLastTeam(t)) {
-					event.setFormat(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
-				} else {
-					event.setFormat(t.getTeamColor().getChatColor() + "[Battle]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
-				}
-			}
-		}
+//		Player player = event.getPlayer();
+//		if (plugin.getGame().isStarted()) {
+//			if (this.teamManager.isInTeam(player)) {
+//				Team t = this.teamManager.getTeamByPlayer(player);
+//				if (this.teamManager.isLastTeam(t)) {
+//					event.setFormat(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
+//				} else {
+//					event.setFormat(t.getTeamColor().getChatColor() + "[Battle]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
+//				}
+//			}
+//		}
 	}
 
 	public void buildBase(Location l) {
