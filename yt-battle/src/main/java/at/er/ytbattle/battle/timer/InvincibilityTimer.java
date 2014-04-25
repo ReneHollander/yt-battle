@@ -40,6 +40,11 @@ public class InvincibilityTimer implements Runnable, Listener {
 		}
 	}
 
+	public void stopTimer() {
+		HandlerList.unregisterAll(this);
+		Bukkit.getScheduler().cancelTask(handle);
+	}
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		if (event.getEntity().getName() == this.player) {

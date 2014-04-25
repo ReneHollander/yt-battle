@@ -20,17 +20,19 @@ public class RemindTimer extends Thread implements Serializable {
 
 	private long time = System.currentTimeMillis();
 
+	private boolean running;
+
 	public RemindTimer() {
 		if (REMIND_TIMER != null) {
-			REMIND_TIMER.resetTimer();
-		} else {
-			REMIND_TIMER = this;
-			this.start();
+			getRT().stopTimer();
 		}
+		REMIND_TIMER = this;
+		this.running = true;
+		this.start();
 	}
 
 	public void run() {
-		while (true) {
+		while (running) {
 
 			long diff = System.currentTimeMillis() - time;
 
@@ -50,11 +52,6 @@ public class RemindTimer extends Thread implements Serializable {
 		}
 	}
 
-	public void resetTimer() {
-		this.time = System.currentTimeMillis();
-		this.timeInMinutes = 0;
-	}
-
 	private void note() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			player.playSound(player.getLocation(), Sound.NOTE_PLING, 10, 1);
@@ -63,5 +60,13 @@ public class RemindTimer extends Thread implements Serializable {
 
 	private void broadcastTime() {
 		Bukkit.broadcastMessage(Battle.prefix() + ChatColor.DARK_RED + "The battle is going on for " + timeInMinutes + " minutes");
+	}
+
+	public void stopTimer() {
+		this.running = false;
+	}
+
+	public static RemindTimer getRT() {
+		return REMIND_TIMER;
 	}
 }

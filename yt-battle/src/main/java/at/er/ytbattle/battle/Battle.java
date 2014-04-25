@@ -25,6 +25,8 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import at.er.ytbattle.battle.cmd.Cmd_battle;
 import at.er.ytbattle.battle.event.GameListener;
+import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
+import at.er.ytbattle.battle.timer.RemindTimer;
 import at.rene8888.serilib.Deserialize;
 import at.rene8888.serilib.Serialize;
 
@@ -64,9 +66,16 @@ public class Battle extends JavaPlugin implements Serializable {
 		this.setTags();
 		this.updateScoreboard();
 
+		new InvincibilityTimerManager(this, getConfig().getInt("config.invincibility-timer-duration"));
+
 	}
 
 	public void onDisable() {
+		try {
+			RemindTimer.getRT().stopTimer();
+		} catch (Exception e) {
+		}
+
 		saveGame();
 	}
 
@@ -88,6 +97,7 @@ public class Battle extends JavaPlugin implements Serializable {
 
 		this.getConfig().addDefault("config.enable-automatic-save", true);
 		this.getConfig().addDefault("config.enable-automatic-load", false);
+		this.getConfig().addDefault("config.invincibility-timer-duration", 10);
 		this.getConfig().addDefault("config.enable-base-block", true);
 		this.getConfig().addDefault("config.lifes-at-start", 10);
 		this.getConfig().addDefault("config.minutes-till-broken-wool-effects-appears", 15);

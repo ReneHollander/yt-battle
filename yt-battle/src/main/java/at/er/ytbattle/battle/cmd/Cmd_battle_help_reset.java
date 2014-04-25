@@ -19,8 +19,8 @@ public class Cmd_battle_help_reset {
 		player.sendMessage(Battle.prefix() + "Battle Commands:  - <> = has to be attached [] = can be attached \n" + " - Alias for /battle is /b \n"
 				+ " - /battle join <red;blue;green;yellow;purple;cyan;black;white> - Adds you to the attached Team \n" + " - /battle leave - Removes you from the Battle queue \n" + " - /battle start [graceperiod] - Starts the Battle \n"
 				+ " - /battle life - Adds a live in form of a wool to your inventory \n" + " - /battle setspawn - Battlespawn will be set to you current location \n" + " - /battle spawn - Teleports you to spawn if set \n"
-				+ " - /battle list - Lists all Battle players and spectators \n" + " - /battle stats <red;blue;green;yellow;purple;cyan;black;white> - Returns a summary of stats from the attached Team \n"
-				+ " - /battle spectate [tp;inv] [playername] - Marks you as Spectator \n" + " - /battle border <borderradius> - Creates a Glassborder with attached radius. WorldEdit has to be installed!" + " - /battle reset - Resets the Battle\n");
+				+ " - /battle list - Lists all Battle players and spectators \n" + " - /battle stats <red;blue;green;yellow;purple;cyan;black;white> - Returns a summary of stats from the attached Team \n" + " - /battle reset - Resets the Battle\n"
+				+ " - /battle resettimer - Resets the Youtube Remind Timer\n");
 		return true;
 	}
 

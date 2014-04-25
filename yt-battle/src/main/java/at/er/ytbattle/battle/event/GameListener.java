@@ -47,7 +47,7 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamManager;
 import at.er.ytbattle.battle.timer.FireworkTimer;
-import at.er.ytbattle.battle.timer.InvincibilityTimer;
+import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.util.PlayerArmor;
 
 public class GameListener implements Listener, Serializable {
@@ -85,6 +85,12 @@ public class GameListener implements Listener, Serializable {
 				event.setCancelled(true);
 			} else {
 				victim.getBlockPlaceTimerManager().woolBreak();
+
+				if (InvincibilityTimerManager.getITM().timerRunning(player)) {
+					InvincibilityTimerManager.getITM().stopTimer(player);
+					player.sendMessage(Battle.prefix() + "You have lost your invincibility!");
+				}
+
 				Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " destroyed a " + victim.getTeamColor().getChatColor() + victim.getTeamColor().getLongName() + ChatColor.RESET + " wool!");
 			}
 		}
@@ -112,6 +118,15 @@ public class GameListener implements Listener, Serializable {
 		event.setCancelled(true);
 	}
 
+	// TODO fix other team player can place other team wool - NEEDS TESTING
+	// TODO fix team lost scoreboard update - NEEDS TESTING
+	// TODO fix team lost respawn wool back into inv - NEEDS TESTING
+	// TODO check enough players onm start - NEEDS TESTING
+	// TODO fix help list - NEEDS TESTING
+	// TODO expand no wool msg - NEEDS TESTING
+	// TODO on woolbreak reset invincibility - NEEDS TESTING
+	// TODO fix remoind timer - NEEDS TESTING
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
@@ -132,6 +147,8 @@ public class GameListener implements Listener, Serializable {
 				}
 			} else {
 				player.sendMessage(Battle.prefix() + "You can't place other team's wool!");
+				event.setCancelled(true);
+				return;
 			}
 		}
 		if (event.getBlock().getType() == Material.QUARTZ_ORE) {
@@ -220,91 +237,88 @@ public class GameListener implements Listener, Serializable {
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
 
-		if (plugin.getGame().isStarted()) {
+		if (plugin.getGame().isStarted() && this.teamManager.isInTeam(player)) {
 
 			Location spawn = plugin.getGame().getSpawn().getLocation();
 
-			if (this.teamManager.isInTeam(player) && plugin.getGame().isStarted()) {
+			Team t = this.teamManager.getTeamByPlayer(player);
 
-				Team t = this.teamManager.getTeamByPlayer(player);
+			ItemStack helmet = player.getInventory().getHelmet();
+			ItemStack chestplate = player.getInventory().getChestplate();
+			ItemStack leggings = player.getInventory().getLeggings();
+			ItemStack boots = player.getInventory().getBoots();
 
-				ItemStack helmet = player.getInventory().getHelmet();
-				ItemStack chestplate = player.getInventory().getChestplate();
-				ItemStack leggings = player.getInventory().getLeggings();
-				ItemStack boots = player.getInventory().getBoots();
+			if (helmet != null) {
+				if (helmet.getType() == Material.DIAMOND_HELMET)
+					helmet = new ItemStack(Material.IRON_HELMET);
+				helmet.setDurability((short) 0);
+				Iterator<?> hit = helmet.getEnchantments().entrySet().iterator();
+				while (hit.hasNext())
+					helmet.removeEnchantment((Enchantment) ((Map.Entry) hit.next()).getKey());
+			}
 
-				if (helmet != null) {
-					if (helmet.getType() == Material.DIAMOND_HELMET)
-						helmet = new ItemStack(Material.IRON_HELMET);
-					helmet.setDurability((short) 0);
-					Iterator<?> hit = helmet.getEnchantments().entrySet().iterator();
-					while (hit.hasNext())
-						helmet.removeEnchantment((Enchantment) ((Map.Entry) hit.next()).getKey());
-				}
+			if (chestplate != null) {
+				if (chestplate.getType() == Material.DIAMOND_CHESTPLATE)
+					chestplate = new ItemStack(Material.IRON_CHESTPLATE);
+				chestplate.setDurability((short) 0);
+				Iterator<?> cit = chestplate.getEnchantments().entrySet().iterator();
+				while (cit.hasNext())
+					chestplate.removeEnchantment((Enchantment) ((Map.Entry) cit.next()).getKey());
+			}
 
-				if (chestplate != null) {
-					if (chestplate.getType() == Material.DIAMOND_CHESTPLATE)
-						chestplate = new ItemStack(Material.IRON_CHESTPLATE);
-					chestplate.setDurability((short) 0);
-					Iterator<?> cit = chestplate.getEnchantments().entrySet().iterator();
-					while (cit.hasNext())
-						chestplate.removeEnchantment((Enchantment) ((Map.Entry) cit.next()).getKey());
-				}
+			if (leggings != null) {
+				if (leggings.getType() == Material.DIAMOND_LEGGINGS)
+					leggings = new ItemStack(Material.IRON_LEGGINGS);
+				leggings.setDurability((short) 0);
+				Iterator<?> lit = leggings.getEnchantments().entrySet().iterator();
+				while (lit.hasNext())
+					leggings.removeEnchantment((Enchantment) ((Map.Entry) lit.next()).getKey());
+			}
 
-				if (leggings != null) {
-					if (leggings.getType() == Material.DIAMOND_LEGGINGS)
-						leggings = new ItemStack(Material.IRON_LEGGINGS);
-					leggings.setDurability((short) 0);
-					Iterator<?> lit = leggings.getEnchantments().entrySet().iterator();
-					while (lit.hasNext())
-						leggings.removeEnchantment((Enchantment) ((Map.Entry) lit.next()).getKey());
-				}
+			if (boots != null) {
+				if (boots.getType() == Material.DIAMOND_BOOTS)
+					boots = new ItemStack(Material.IRON_BOOTS);
+				boots.setDurability((short) 0);
+				Iterator<?> bit = boots.getEnchantments().entrySet().iterator();
+				while (bit.hasNext())
+					boots.removeEnchantment((Enchantment) ((Map.Entry) bit.next()).getKey());
+			}
 
-				if (boots != null) {
-					if (boots.getType() == Material.DIAMOND_BOOTS)
-						boots = new ItemStack(Material.IRON_BOOTS);
-					boots.setDurability((short) 0);
-					Iterator<?> bit = boots.getEnchantments().entrySet().iterator();
-					while (bit.hasNext())
-						boots.removeEnchantment((Enchantment) ((Map.Entry) bit.next()).getKey());
-				}
+			PlayerArmor armor = new PlayerArmor(helmet, chestplate, leggings, boots);
+			this.playerArmor.put(player, armor);
 
-				PlayerArmor armor = new PlayerArmor(helmet, chestplate, leggings, boots);
-				this.playerArmor.put(player, armor);
-
-				plugin.updateScoreboard();
-
-				if (t.getLifes() > 0) {
-					t.setLifes(t.getLifes() - 1);
-					plugin.updateScoreboard();
-				} else {
-					player.teleport(spawn);
-					player.setDisplayName(player.getName());
-					t.removePlayer(player.getName());
-					Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the " + t.getTeamColor().getShortName() + " team has lost!");
-					if (t.getTeamSize() == 0) {
-						t.setLost(true);
-						Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getShortName() + " has lost!");
-					}
-				}
-
-				if (this.teamManager.isLastTeam(t)) {
-					Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getShortName() + " has won the Battle!");
-					for (String s : t.getPlayers()) {
-						Player p = Bukkit.getPlayer(s);
-						p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-						p.teleport(spawn);
-						p.setAllowFlight(true);
-						p.setFlying(true);
-					}
-					plugin.getGame().setStarted(false);
-					FireworkTimer ft = new FireworkTimer();
-					int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ft, 0, 20L);
-					ft.setID(id);
-					Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! Battle Plugin v" + plugin.getDescription().getVersion() + " made by EXSolo and Rene8888.");
+			if (t.getLifes() > 0) {
+				t.setLifes(t.getLifes() - 1);
+			} else {
+				player.teleport(spawn);
+				player.setDisplayName(player.getName());
+				t.removePlayer(player.getName());
+				Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the " + t.getTeamColor().getShortName() + " team has lost!");
+				if (t.getTeamSize() == 0) {
+					t.setLost(true);
+					Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getShortName() + " has lost!");
 				}
 			}
+
+			if (this.teamManager.isLastTeam(t)) {
+				Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getShortName() + " has won the Battle!");
+				for (String s : t.getPlayers()) {
+					Player p = Bukkit.getPlayer(s);
+					p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+					p.teleport(spawn);
+					p.setAllowFlight(true);
+					p.setFlying(true);
+				}
+				plugin.getGame().setStarted(false);
+				FireworkTimer ft = new FireworkTimer();
+				int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ft, 0, 20L);
+				ft.setID(id);
+				Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! Battle Plugin v" + plugin.getDescription().getVersion() + " made by EXSolo and Rene8888.");
+			}
 		}
+
+		plugin.updateScoreboard();
+
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
@@ -324,7 +338,7 @@ public class GameListener implements Listener, Serializable {
 				this.playerArmor.remove(player);
 			}
 
-			new InvincibilityTimer(plugin, player.getName(), 10);
+			InvincibilityTimerManager.getITM().createTimer(player);
 			event.setRespawnLocation(plugin.getGame().getSpawn().getLocation());
 			player.getInventory().addItem(new Wool(t.getTeamColor().getDyeColor()).toItemStack(1));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 2));
@@ -354,10 +368,10 @@ public class GameListener implements Listener, Serializable {
 						}
 					}
 					if (!found) {
-						player.sendMessage(Battle.prefix() + ChatColor.RED + "Your Inventory has to contain a wool of your colour!");
+						player.sendMessage(Battle.prefix() + ChatColor.RED + "Your Inventory has to contain a wool of your color! Get another with /b life!");
 					}
 				} else {
-					player.sendMessage(Battle.prefix() + ChatColor.RED + "Your Inventory has to contain a wool of your colour!");
+					player.sendMessage(Battle.prefix() + ChatColor.RED + "Your Inventory has to contain a wool of your color! Get another with /b life!");
 				}
 			}
 		}

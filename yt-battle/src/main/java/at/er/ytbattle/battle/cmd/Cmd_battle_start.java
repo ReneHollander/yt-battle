@@ -35,19 +35,14 @@ public class Cmd_battle_start {
 
 		Battle plugin = cmd.getPlugin();
 
-		int timer = 0;
-
-		int startlifes = plugin.getConfig().getInt("config.lifes-at-start");
-		boolean reminder = plugin.getConfig().getBoolean("config.enable-remind-scheduler");
-
-		for (Team t : this.teamManager.getTeams()) {
-			if (t.getTeamSize() > 0) {
-				t.setLifes(startlifes);
-			}
-		}
-
 		if (plugin.getGame().isStarted() == false) {
 			if (this.teamManager.getTeams().size() > 1) {
+
+				int timer = 0;
+
+				int startlifes = plugin.getConfig().getInt("config.lifes-at-start");
+				boolean reminder = plugin.getConfig().getBoolean("config.enable-remind-scheduler");
+
 				if (plugin.getGame().getSpawn() == null) {
 					plugin.getGame().setSpawn(new SerializableLocation(player.getLocation()));
 					plugin.getGame().getSpawn().getLocation().getWorld()
@@ -71,6 +66,11 @@ public class Cmd_battle_start {
 				boolean baseItem = plugin.getConfig().getBoolean("config.enable-base-block");
 
 				for (Team t : this.teamManager.getTeams()) {
+
+					if (t.getTeamSize() > 0) {
+						t.setLifes(startlifes);
+					}
+
 					for (String playername : t.getPlayers()) {
 						Player p = Bukkit.getPlayerExact(playername);
 						p.teleport(plugin.getGame().getSpawn().getLocation());
