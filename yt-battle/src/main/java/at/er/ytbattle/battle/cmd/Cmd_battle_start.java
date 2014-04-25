@@ -36,7 +36,16 @@ public class Cmd_battle_start {
 		Battle plugin = cmd.getPlugin();
 
 		if (plugin.getGame().isStarted() == false) {
-			if (this.teamManager.getTeams().size() > 1) {
+
+			int teamcounter = 0;
+
+			for (Team t : this.teamManager.getTeams()) {
+				if (t.getTeamSize() > 0) {
+					teamcounter++;
+				}
+			}
+
+			if (teamcounter > 1) {
 
 				int timer = 0;
 

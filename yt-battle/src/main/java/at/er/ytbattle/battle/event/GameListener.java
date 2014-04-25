@@ -48,6 +48,7 @@ import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamManager;
 import at.er.ytbattle.battle.timer.FireworkTimer;
 import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
+import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.PlayerArmor;
 
 public class GameListener implements Listener, Serializable {
@@ -117,15 +118,6 @@ public class GameListener implements Listener, Serializable {
 	public void onPlayerShears(PlayerShearEntityEvent event) {
 		event.setCancelled(true);
 	}
-
-	// TODO fix other team player can place other team wool - NEEDS TESTING
-	// TODO fix team lost scoreboard update - NEEDS TESTING
-	// TODO fix team lost respawn wool back into inv - NEEDS TESTING
-	// TODO check enough players onm start - NEEDS TESTING
-	// TODO fix help list - NEEDS TESTING
-	// TODO expand no wool msg - NEEDS TESTING
-	// TODO on woolbreak reset invincibility - NEEDS TESTING
-	// TODO fix remoind timer - NEEDS TESTING
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(BlockPlaceEvent event) {
@@ -309,6 +301,7 @@ public class GameListener implements Listener, Serializable {
 					p.setAllowFlight(true);
 					p.setFlying(true);
 				}
+				RemindTimer.getRT().stopTimer();
 				plugin.getGame().setStarted(false);
 				FireworkTimer ft = new FireworkTimer();
 				int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ft, 0, 20L);

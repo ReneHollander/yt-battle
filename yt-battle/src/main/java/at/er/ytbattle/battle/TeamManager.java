@@ -76,11 +76,8 @@ public class TeamManager implements Serializable {
 				}
 			}
 		}
-		if ((this.teams.size() - count) <= 1) {
-			return true;
-		} else {
-			return false;
-		}
+
+		return count < 1;
 	}
 
 	public Team getLastTeam() {
