@@ -292,22 +292,22 @@ public class GameListener implements Listener, Serializable {
 				}
 			}
 
-			if (this.teamManager.isLastTeam(t)) {
-				Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getShortName() + " has won the Battle!");
-				for (String s : t.getPlayers()) {
-					Player p = Bukkit.getPlayer(s);
-					p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-					p.teleport(spawn);
-					p.setAllowFlight(true);
-					p.setFlying(true);
-				}
-				RemindTimer.getRT().stopTimer();
-				plugin.getGame().setStarted(false);
-				FireworkTimer ft = new FireworkTimer();
-				int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ft, 0, 20L);
-				ft.setID(id);
-				Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! Battle Plugin v" + plugin.getDescription().getVersion() + " made by EXSolo and Rene8888.");
-			}
+//			if (this.teamManager.isLastTeam(t)) {
+//				Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getShortName() + " has won the Battle!");
+//				for (String s : t.getPlayers()) {
+//					Player p = Bukkit.getPlayer(s);
+//					p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+//					p.teleport(spawn);
+//					p.setAllowFlight(true);
+//					p.setFlying(true);
+//				}
+//				RemindTimer.getRT().stopTimer();
+//				plugin.getGame().setStarted(false);
+//				FireworkTimer ft = new FireworkTimer();
+//				int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ft, 0, 20L);
+//				ft.setID(id);
+//				Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! Battle Plugin v" + plugin.getDescription().getVersion() + " made by EXSolo and Rene8888.");
+//			}
 		}
 
 		plugin.updateScoreboard();
