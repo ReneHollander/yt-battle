@@ -55,7 +55,7 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 			if (userSelection == JFileChooser.APPROVE_OPTION) {
 				File fileToOpen = fileChooser.getSelectedFile();
 				try {
-					Game g = (Game) Deserialize.readFromFile(fileToOpen, true);
+					Game g = (Game) Deserialize.readFromFile(fileToOpen, false);
 					view.setGame(g);
 				} catch (ClassNotFoundException ex) {
 					ex.printStackTrace();
@@ -82,7 +82,7 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 				if (fileChooser.getSelectedFile().getPath().endsWith("battle.save")) {
 					File fileToSave = fileChooser.getSelectedFile();
 					try {
-						Serialize.writeToFile(view.getGame(), fileToSave, true);
+						Serialize.writeToFile(view.getGame(), fileToSave, false);
 					} catch (IOException ex) {
 						ex.printStackTrace();
 					}
