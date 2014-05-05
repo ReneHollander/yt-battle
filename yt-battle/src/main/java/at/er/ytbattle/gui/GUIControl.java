@@ -56,6 +56,7 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 				File fileToOpen = fileChooser.getSelectedFile();
 				try {
 					Game g = (Game) Deserialize.readFromFile(fileToOpen, false);
+					JOptionPane.showMessageDialog(view, g.toString());
 					view.setGame(g);
 				} catch (ClassNotFoundException ex) {
 					ex.printStackTrace();

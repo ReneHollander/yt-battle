@@ -46,9 +46,7 @@ import org.bukkit.potion.PotionEffectType;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamManager;
-import at.er.ytbattle.battle.timer.FireworkTimer;
 import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
-import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.PlayerArmor;
 
 public class GameListener implements Listener, Serializable {
@@ -235,10 +233,10 @@ public class GameListener implements Listener, Serializable {
 
 			Team t = this.teamManager.getTeamByPlayer(player);
 
-			ItemStack helmet = player.getInventory().getHelmet();
-			ItemStack chestplate = player.getInventory().getChestplate();
-			ItemStack leggings = player.getInventory().getLeggings();
-			ItemStack boots = player.getInventory().getBoots();
+			ItemStack helmet = player.getInventory().getHelmet().clone();
+			ItemStack chestplate = player.getInventory().getChestplate().clone();
+			ItemStack leggings = player.getInventory().getLeggings().clone();
+			ItemStack boots = player.getInventory().getBoots().clone();
 
 			if (helmet != null) {
 				if (helmet.getType() == Material.DIAMOND_HELMET)
@@ -378,8 +376,8 @@ public class GameListener implements Listener, Serializable {
 			ItemStack ce = new ItemStack(Material.WRITTEN_BOOK);
 			BookMeta ceMeta = (BookMeta) ce.getItemMeta();
 			ceMeta.setDisplayName(ChatColor.GOLD + "Cheat Protection");
-			ceMeta.addPage("#DisabledCheating :)\nNo wool by crafting :(");
-			ceMeta.setAuthor("Ihr(e) Bundeskanzler(in)");
+			ceMeta.addPage("Nein.");
+			ceMeta.setAuthor("Entwickler");
 			ce.setItemMeta(ceMeta);
 			event.getInventory().setResult(ce);
 		}
