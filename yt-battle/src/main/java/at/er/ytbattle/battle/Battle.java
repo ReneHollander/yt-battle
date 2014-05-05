@@ -82,6 +82,7 @@ public class Battle extends JavaPlugin implements Serializable {
 	public void registerEvents() {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.gl, this); // game
+		pm.registerEvents(new TestListener(), this); // game
 	}
 
 	public void loadConfig() {

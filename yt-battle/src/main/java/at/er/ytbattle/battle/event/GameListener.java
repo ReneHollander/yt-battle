@@ -290,22 +290,28 @@ public class GameListener implements Listener, Serializable {
 				}
 			}
 
-//			if (this.teamManager.isLastTeam(t)) {
-//				Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getShortName() + " has won the Battle!");
-//				for (String s : t.getPlayers()) {
-//					Player p = Bukkit.getPlayer(s);
-//					p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
-//					p.teleport(spawn);
-//					p.setAllowFlight(true);
-//					p.setFlying(true);
-//				}
-//				RemindTimer.getRT().stopTimer();
-//				plugin.getGame().setStarted(false);
-//				FireworkTimer ft = new FireworkTimer();
-//				int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ft, 0, 20L);
-//				ft.setID(id);
-//				Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! Battle Plugin v" + plugin.getDescription().getVersion() + " made by EXSolo and Rene8888.");
-//			}
+			// if (this.teamManager.isLastTeam(t)) {
+			// Bukkit.broadcastMessage(Battle.prefix() + "Team " +
+			// t.getTeamColor().getShortName() + " has won the Battle!");
+			// for (String s : t.getPlayers()) {
+			// Player p = Bukkit.getPlayer(s);
+			// p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE +
+			// " - " + p.getName());
+			// p.teleport(spawn);
+			// p.setAllowFlight(true);
+			// p.setFlying(true);
+			// }
+			// RemindTimer.getRT().stopTimer();
+			// plugin.getGame().setStarted(false);
+			// FireworkTimer ft = new FireworkTimer();
+			// int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
+			// ft, 0, 20L);
+			// ft.setID(id);
+			// Bukkit.broadcastMessage(Battle.prefix() +
+			// "Thanks for playing! Battle Plugin v" +
+			// plugin.getDescription().getVersion() +
+			// " made by EXSolo and Rene8888.");
+			// }
 		}
 
 		plugin.updateScoreboard();
@@ -394,17 +400,19 @@ public class GameListener implements Listener, Serializable {
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
-//		Player player = event.getPlayer();
-//		if (plugin.getGame().isStarted()) {
-//			if (this.teamManager.isInTeam(player)) {
-//				Team t = this.teamManager.getTeamByPlayer(player);
-//				if (this.teamManager.isLastTeam(t)) {
-//					event.setFormat(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
-//				} else {
-//					event.setFormat(t.getTeamColor().getChatColor() + "[Battle]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
-//				}
-//			}
-//		}
+		// Player player = event.getPlayer();
+		// if (plugin.getGame().isStarted()) {
+		// if (this.teamManager.isInTeam(player)) {
+		// Team t = this.teamManager.getTeamByPlayer(player);
+		// if (this.teamManager.isLastTeam(t)) {
+		// event.setFormat(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - "
+		// + "%1$s: " + ChatColor.RESET + "%2$s");
+		// } else {
+		// event.setFormat(t.getTeamColor().getChatColor() + "[Battle]" +
+		// ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
+		// }
+		// }
+		// }
 	}
 
 	public void buildBase(Location l) {

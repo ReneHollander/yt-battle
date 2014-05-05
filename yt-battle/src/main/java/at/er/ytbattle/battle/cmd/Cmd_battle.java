@@ -11,7 +11,6 @@ public class Cmd_battle implements CommandExecutor {
 
 	private Battle plugin;
 
-	private Cmd_battle_border border;
 	private Cmd_battle_help_reset help_reset;
 	private Cmd_battle_join join;
 	private Cmd_battle_leave leave;
@@ -24,7 +23,6 @@ public class Cmd_battle implements CommandExecutor {
 	public Cmd_battle(Battle b) {
 		this.plugin = b;
 
-		this.border = new Cmd_battle_border(this);
 		this.help_reset = new Cmd_battle_help_reset(this, b);
 		this.join = new Cmd_battle_join(this);
 		this.leave = new Cmd_battle_leave(this);
@@ -45,10 +43,6 @@ public class Cmd_battle implements CommandExecutor {
 				if (args.length == 0) {
 					player.sendMessage(Battle.prefix() + "EXSolo's and Rene8888's Battle Plugin: For a command overview do /battle help");
 					return true;
-				}
-
-				if (args[0].equalsIgnoreCase("border")) {
-					return border.onCmdBorder(args, player);
 				}
 
 				if (args[0].equalsIgnoreCase("help")) {

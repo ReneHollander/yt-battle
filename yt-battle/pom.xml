@@ -44,13 +44,6 @@
 			<artifactId>serilib</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.sk89q</groupId>
-			<artifactId>worldedit</artifactId>
-			<version>5.6</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/WorldEdit.jar</systemPath>
-		</dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>
@@ -136,8 +129,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<excludeArtifactIds>worldedit</excludeArtifactIds>
-							<excludeGroupIds>org.bukkit,org.com.sk89q</excludeGroupIds>
+							<excludeGroupIds>org.bukkit</excludeGroupIds>
 							<outputDirectory>${basedir}/final/lib</outputDirectory>
 						</configuration>
 					</execution>
@@ -148,8 +140,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<excludeArtifactIds>worldedit</excludeArtifactIds>
-							<excludeGroupIds>org.bukkit,com.sk89q</excludeGroupIds>
+							<excludeGroupIds>org.bukkit</excludeGroupIds>
 							<outputDirectory>${basedir}/bukkit/plugins/lib</outputDirectory>
 						</configuration>
 					</execution>
@@ -163,8 +154,6 @@
 							tofile="${basedir}/final/${project.build.finalName}.jar" />
 						<copy file="${project.build.directory}/${project.build.finalName}.jar"
 							tofile="${basedir}/bukkit/plugins/${project.build.finalName}.jar" />
-						<copy file="${project.basedir}/lib/WorldEdit.jar" tofile="${basedir}/final/WorldEdit.jar" />
-						<copy file="${project.basedir}/lib/WorldEdit.jar" tofile="${basedir}/bukkit/plugins/WorldEdit.jar" />
 					</tasks>
 				</configuration>
 				<executions>
