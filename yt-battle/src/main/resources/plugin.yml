@@ -6,7 +6,6 @@ website: http://www.exsoloscript.com
 
 main: at.er.ytbattle.battle.Battle
 database: false
-depend: [WorldEdit]
 
 commands:
   battle:
