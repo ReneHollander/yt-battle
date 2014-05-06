@@ -35,7 +35,7 @@ public class Cmd_battle_stats_list {
 				Team t = this.teamManager.getTeam(TeamColor.getTeamByShortName(args[1].toLowerCase()));
 				if (t != null) {
 					for (String p : t.getPlayers()) {
-						list += p + " (" + Bukkit.getPlayer(p).getHealth() * 10 / 2 + "%), ";
+						list += p + " (" + Bukkit.getPlayer(p).getHealth() * 10.0 / 2.0 + "%), ";
 					}
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));

@@ -45,6 +45,10 @@ public class Battle extends JavaPlugin implements Serializable {
 	private HashMap<String, ItemStack[]> inventories;
 	private HashMap<String, ItemStack[]> armor;
 
+	public Battle() {
+		super();
+	}
+
 	public void onEnable() {
 
 		this.loadConfig();
