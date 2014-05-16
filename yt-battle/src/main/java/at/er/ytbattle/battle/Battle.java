@@ -45,10 +45,6 @@ public class Battle extends JavaPlugin implements Serializable {
 	private HashMap<String, ItemStack[]> inventories;
 	private HashMap<String, ItemStack[]> armor;
 
-	public Battle() {
-		super();
-	}
-
 	public void onEnable() {
 
 		this.loadConfig();
@@ -213,17 +209,17 @@ public class Battle extends JavaPlugin implements Serializable {
 		if (game.isStarted() == false || dontSave) {
 			lifes.setDisplayName(ChatColor.BOLD + "Battle Infos");
 
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Battle v" + getDescription().getVersion())).setScore(5);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "")).setScore(4);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "by")).setScore(3);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "EXSolo")).setScore(2);
-			lifes.getScore(Bukkit.getOfflinePlayer(ChatColor.ITALIC + "Rene8888")).setScore(1);
+			lifes.getScore(ChatColor.ITALIC + "Battle v" + getDescription().getVersion()).setScore(5);
+			lifes.getScore(ChatColor.ITALIC + "").setScore(4);
+			lifes.getScore(ChatColor.ITALIC + "by").setScore(3);
+			lifes.getScore(ChatColor.ITALIC + "EXSolo").setScore(2);
+			lifes.getScore(ChatColor.ITALIC + "Rene8888").setScore(1);
 		} else {
 			lifes.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
 
 			for (Team t : this.game.getTeamManager().getTeams()) {
 				if (t.getPlayers().size() > 0) {
-					lifes.getScore(Bukkit.getOfflinePlayer(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName())).setScore(t.getLifes());
+					lifes.getScore(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName()).setScore(t.getLifes());
 				}
 			}
 		}
