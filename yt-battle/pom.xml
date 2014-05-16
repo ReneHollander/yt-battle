@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>at.er</groupId>
 	<artifactId>yt-battle</artifactId>
-	<version>1.8.0</version>
+	<version>1.9.0</version>
 	<name>Lobby</name>
 	<description>YT-Battle Plugin for the battle series</description>
 	<developers>
@@ -32,12 +32,12 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.7.2-R0.3-SNAPSHOT</version>
+			<version>1.7.9-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.7.2-R0.3-SNAPSHOT</version>
+			<version>1.7.9-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>at.rene8888</groupId>
