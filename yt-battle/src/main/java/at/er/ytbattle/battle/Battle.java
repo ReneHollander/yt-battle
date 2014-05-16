@@ -36,7 +36,7 @@ import com.google.common.collect.Lists;
 public class Battle extends JavaPlugin implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static Battle BATTLE;
+	private static Battle instance;
 
 	public boolean dontSave;
 
@@ -47,10 +47,10 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	public void onEnable() {
 
+		instance = this;
+
 		this.loadConfig();
 		this.loadGame();
-
-		BATTLE = this;
 
 		this.dontSave = false;
 
@@ -77,6 +77,10 @@ public class Battle extends JavaPlugin implements Serializable {
 		}
 
 		saveGame();
+	}
+
+	public static Battle instance() {
+		return instance;
 	}
 
 	public void registerEvents() {

@@ -39,7 +39,7 @@ public class BlockPlaceTimerManager implements Serializable {
 	}
 
 	public void woolBreak() {
-		BlockPlaceTimer bpt = new BlockPlaceTimer(Battle.BATTLE, this.team, this.timetoplace);
+		BlockPlaceTimer bpt = new BlockPlaceTimer(Battle.instance(), this.team, this.timetoplace);
 		this.timers.add(bpt);
 	}
 
@@ -61,7 +61,7 @@ public class BlockPlaceTimerManager implements Serializable {
 
 	public void setupInitialWool() {
 		for (int i = 0; i < this.team.getPlayers().size(); i++) {
-			BlockPlaceTimer bpt = new BlockPlaceTimer(Battle.BATTLE, this.team, this.timetoplace);
+			BlockPlaceTimer bpt = new BlockPlaceTimer(Battle.instance(), this.team, this.timetoplace);
 			this.timers.add(bpt);
 		}
 	}
