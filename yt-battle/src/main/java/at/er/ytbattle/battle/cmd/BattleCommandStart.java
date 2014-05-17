@@ -39,7 +39,7 @@ public class BattleCommandStart {
 				}
 			}
 
-			if (teamcounter > 1) {
+			if (teamcounter > 0) {
 
 				int timer = 0;
 
