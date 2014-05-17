@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -78,9 +77,10 @@ public class EditView extends JFrame {
 		buttonContainer.add(del);
 		buttonContainer.add(save);
 
-		for (String player : t.getPlayers()) {
-			playersModel.addElement(player);
-		}
+		// TODO fix player editor
+		// for (String player : t.getPlayers()) {
+		// playersModel.addElement(player);
+		// }
 		lifes.setText("" + t.getLifes());
 
 		this.setLayout(new BorderLayout());
@@ -95,11 +95,11 @@ public class EditView extends JFrame {
 	public void applyTeamData() {
 		Team t = getTeam();
 
-		t.setPlayers(new ArrayList<String>());
+		// t.setPlayers(new ArrayList<String>());
 
-		for (int i = 0; i < playersModel.size(); i++) {
-			t.getPlayers().add(playersModel.getElementAt(i));
-		}
+		// for (int i = 0; i < playersModel.size(); i++) {
+		// t.getPlayers().add(playersModel.getElementAt(i));
+		// }
 
 		t.setLifes(Integer.parseInt(lifes.getText()));
 	}

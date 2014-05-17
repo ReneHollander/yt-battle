@@ -6,6 +6,7 @@ import java.util.Map;
 import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.player.BattlePlayer;
 
 public class InvincibilityTimerManager {
 
@@ -41,9 +42,9 @@ public class InvincibilityTimerManager {
 		return timers.containsKey(p.getName());
 	}
 
-	public void createTimer(Player p) {
+	public void createTimer(BattlePlayer p) {
 		this.stopTimer(p);
-		InvincibilityTimer it = new InvincibilityTimer(this.b, p.getName(), time);
+		InvincibilityTimer it = new InvincibilityTimer(this.b, p, time);
 		timers.put(p.getName(), it);
 
 	}

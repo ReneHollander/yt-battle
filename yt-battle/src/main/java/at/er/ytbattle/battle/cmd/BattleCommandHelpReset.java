@@ -3,13 +3,13 @@ package at.er.ytbattle.battle.cmd;
 import java.io.File;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.player.BattlePlayer;
 
 public class BattleCommandHelpReset {
 
-	public boolean onCmdHelp(String[] args, Player player) {
+	public boolean onCmdHelp(String[] args, BattlePlayer player) {
 		player.sendMessage(Battle.prefix() + "Battle Commands:  - <> = has to be attached [] = can be attached \n" + " - Alias for /battle is /b \n"
 				+ " - /battle join <red;blue;green;yellow;purple;cyan;black;white> - Adds you to the attached Team \n" + " - /battle leave - Removes you from the Battle queue \n" + " - /battle start [graceperiod] - Starts the Battle \n"
 				+ " - /battle life - Adds a live in form of a wool to your inventory \n" + " - /battle setspawn - Battlespawn will be set to you current location \n" + " - /battle spawn - Teleports you to spawn if set \n"
@@ -18,7 +18,7 @@ public class BattleCommandHelpReset {
 		return true;
 	}
 
-	public boolean onCmdReset(String[] args, Player player) {
+	public boolean onCmdReset(String[] args, BattlePlayer player) {
 
 		Battle.instance().dontSave(true);
 

@@ -2,14 +2,14 @@ package at.er.ytbattle.battle.cmd;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.RemindTimer;
 
 public class BattleCommandResetTimer {
 
-	public boolean onCmdResetTimer(String[] args, Player player) {
+	public boolean onCmdResetTimer(String[] args, BattlePlayer player) {
 
 		new RemindTimer();
 

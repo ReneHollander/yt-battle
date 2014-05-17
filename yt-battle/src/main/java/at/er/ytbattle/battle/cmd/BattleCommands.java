@@ -6,6 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.battle.player.BattlePlayerManager;
 
 public class BattleCommands implements CommandExecutor {
 
@@ -32,7 +34,7 @@ public class BattleCommands implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
 		if (sender instanceof Player) {
-			Player player = (Player) sender;
+			BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer((Player) sender);
 
 			if (label.equalsIgnoreCase("battle") || label.equalsIgnoreCase("b")) {
 

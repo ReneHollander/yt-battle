@@ -3,12 +3,11 @@ package at.er.ytbattle.battle.timer;
 import java.io.Serializable;
 import java.util.HashSet;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
+import at.er.ytbattle.battle.player.BattlePlayer;
 
 public class BlockPlaceTimerManager implements Serializable {
 
@@ -30,8 +29,7 @@ public class BlockPlaceTimerManager implements Serializable {
 			BlockPlaceTimer bpt = this.findFirstTimer();
 			bpt.stopCountdown();
 			this.timers.remove(bpt);
-			for (String s : team.getPlayers()) {
-				Player p = Bukkit.getPlayer(s);
+			for (BattlePlayer p : team.getPlayers()) {
 				p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
 				p.sendMessage(Battle.prefix() + "Wool was placed. Place " + this.getRemainingWoolCount() + " more to disable the timer.");
 			}

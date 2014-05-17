@@ -1,13 +1,12 @@
 package at.er.ytbattle.battle.cmd;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamColor;
 import at.er.ytbattle.battle.TeamManager;
+import at.er.ytbattle.battle.player.BattlePlayer;
 
 public class BattleCommandStatList {
 
@@ -17,7 +16,7 @@ public class BattleCommandStatList {
 		this.teamManager = Battle.instance().getGame().getTeamManager();
 	}
 
-	public boolean onCmdStats(String[] args, Player player) {
+	public boolean onCmdStats(String[] args, BattlePlayer player) {
 		if (Battle.instance().getGame().isStarted()) {
 			String list = "";
 			String winners = "";
@@ -29,8 +28,8 @@ public class BattleCommandStatList {
 				}
 				Team t = this.teamManager.getTeam(TeamColor.getTeamByShortName(args[1].toLowerCase()));
 				if (t != null) {
-					for (String p : t.getPlayers()) {
-						list += p + " (" + Bukkit.getPlayer(p).getHealth() * 10.0 / 2.0 + "%), ";
+					for (BattlePlayer p : t.getPlayers()) {
+						list += p + " (" + p.getHealth() * 10.0 / 2.0 + "%), ";
 					}
 					if (list.length() > 0)
 						list = list.substring(0, list.lastIndexOf(','));
@@ -48,11 +47,11 @@ public class BattleCommandStatList {
 		return false;
 	}
 
-	public boolean onCmdList(String[] args, Player player) {
+	public boolean onCmdList(String[] args, BattlePlayer player) {
 		String list = "";
 		for (Team t : this.teamManager.getTeams()) {
-			for (String p : t.getPlayers()) {
-				list = list + p + ", ";
+			for (BattlePlayer p : t.getPlayers()) {
+				list = list + p.getName() + ", ";
 			}
 		}
 		if (list.equals("")) {

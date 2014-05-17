@@ -46,6 +46,8 @@ import org.bukkit.potion.PotionEffectType;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamManager;
+import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.util.PlayerArmor;
 
@@ -73,7 +75,7 @@ public class GameListener implements Listener, Serializable {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
-		Player player = (Player) event.getPlayer();
+		BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
 		if (event.getBlock().getType() == Material.WOOL && plugin.getGame().isStarted() && this.teamManager.isInTeam(player)) {
 			DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
 			Team t = this.teamManager.getTeamByPlayer(player);
@@ -119,7 +121,7 @@ public class GameListener implements Listener, Serializable {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(BlockPlaceEvent event) {
-		Player player = event.getPlayer();
+		BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
 		if (event.getBlock().getType() == Material.GLASS && player.getWorld() == plugin.getGame().getSpawn().getLocation().getWorld() && plugin.getGame().isStarted()) {
 			event.setCancelled(true);
 			player.sendMessage(Battle.prefix() + "You are unable to place a Block of the Bordermaterial.");
@@ -193,7 +195,7 @@ public class GameListener implements Listener, Serializable {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerInteract(PlayerInteractEvent event) {
-		Player player = event.getPlayer();
+		BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
 		if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) && player.getItemInHand().getType() == Material.GHAST_TEAR && plugin.getGame().isStarted()) {
 			if (this.teamManager.isInTeam(player) == false) {
 				player.sendMessage(Battle.prefix() + "You left the battle, this item is worthless now!");
@@ -225,7 +227,7 @@ public class GameListener implements Listener, Serializable {
 	@SuppressWarnings("rawtypes")
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		Player player = event.getEntity();
+		BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getEntity());
 
 		if (plugin.getGame().isStarted() && this.teamManager.isInTeam(player)) {
 
@@ -282,7 +284,7 @@ public class GameListener implements Listener, Serializable {
 			} else {
 				player.teleport(spawn);
 				player.setDisplayName(player.getName());
-				t.removePlayer(player.getName());
+				t.removePlayer(player);
 				Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the " + t.getTeamColor().getShortName() + " team has lost!");
 				if (t.getTeamSize() == 0) {
 					t.setLost(true);
@@ -320,7 +322,7 @@ public class GameListener implements Listener, Serializable {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		Player player = event.getPlayer();
+		BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
 
 		if (plugin.getGame().isStarted() && this.teamManager.isInTeam(player)) {
 
@@ -344,7 +346,7 @@ public class GameListener implements Listener, Serializable {
 
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
-		Player player = event.getPlayer();
+		BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
 
 		if (plugin.getGame().isStarted()) {
 			if (this.teamManager.isInTeam(player)) {

@@ -1,13 +1,12 @@
 package at.er.ytbattle.battle.cmd;
 
-import org.bukkit.entity.Player;
-
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.util.SerializableLocation;
 
 public class BattleCommandSetSpawn {
 
-	public boolean onCmdSpawn(String[] args, Player player) {
+	public boolean onCmdSpawn(String[] args, BattlePlayer player) {
 		if (Battle.instance().getGame().getSpawn() != null) {
 			player.teleport(Battle.instance().getGame().getSpawn().getLocation());
 		} else {
@@ -17,9 +16,10 @@ public class BattleCommandSetSpawn {
 		return true;
 	}
 
-	public boolean onCmdSetspawn(String[] args, Player player) {
+	public boolean onCmdSetspawn(String[] args, BattlePlayer player) {
 		Battle.instance().getGame().setSpawn(new SerializableLocation(player.getLocation()));
-		Battle.instance().getGame().getSpawn().getLocation().getWorld().setSpawnLocation((int) Battle.instance().getGame().getSpawn().getLocation().getX(), (int) Battle.instance().getGame().getSpawn().getLocation().getY(), (int) Battle.instance().getGame().getSpawn().getLocation().getZ());
+		Battle.instance().getGame().getSpawn().getLocation().getWorld()
+				.setSpawnLocation((int) Battle.instance().getGame().getSpawn().getLocation().getX(), (int) Battle.instance().getGame().getSpawn().getLocation().getY(), (int) Battle.instance().getGame().getSpawn().getLocation().getZ());
 
 		Battle.instance().getConfig().set("saves.spawn.world", player.getLocation().getWorld().getName());
 		Battle.instance().getConfig().set("saves.spawn.x", player.getLocation().getX());

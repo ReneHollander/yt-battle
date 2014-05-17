@@ -3,6 +3,7 @@ package at.er.ytbattle.battle;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.BlockPlaceTimerManager;
 
 public class Team implements Serializable {
@@ -10,12 +11,12 @@ public class Team implements Serializable {
 	private static final long serialVersionUID = -1836760149452108862L;
 
 	private TeamColor teamColor;
-	private ArrayList<String> players;
+	private ArrayList<BattlePlayer> players;
 	private int lifes;
 	private boolean lost;
 	private BlockPlaceTimerManager bptm;
 
-	public Team(Battle battle, TeamColor teamColor, ArrayList<String> players, int lifes) {
+	public Team(Battle battle, TeamColor teamColor, ArrayList<BattlePlayer> players, int lifes) {
 		this.teamColor = teamColor;
 		this.players = players;
 		this.lifes = lifes;
@@ -27,23 +28,23 @@ public class Team implements Serializable {
 		return this.teamColor;
 	}
 
-	public ArrayList<String> getPlayers() {
+	public ArrayList<BattlePlayer> getPlayers() {
 		return players;
 	}
 
-	public void setPlayers(ArrayList<String> players) {
+	public void setPlayers(ArrayList<BattlePlayer> players) {
 		this.players = players;
 	}
 
-	public boolean addPlayer(String player) {
+	public boolean addPlayer(BattlePlayer player) {
 		return this.players.add(player);
 	}
 
-	public boolean removePlayer(String player) {
+	public boolean removePlayer(BattlePlayer player) {
 		return this.players.remove(player);
 	}
 
-	public boolean containsPlayer(String player) {
+	public boolean containsPlayer(BattlePlayer player) {
 		return this.players.contains(player);
 	}
 

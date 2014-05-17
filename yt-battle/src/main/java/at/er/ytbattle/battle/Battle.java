@@ -25,6 +25,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import at.er.ytbattle.battle.cmd.BattleCommands;
 import at.er.ytbattle.battle.event.GameListener;
+import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.battle.timer.RemindTimer;
 import at.rene8888.serilib.Deserialize;
@@ -236,9 +237,9 @@ public class Battle extends JavaPlugin implements Serializable {
 		}
 	}
 
-	public void removeFromLists(Player player) {
+	public void removeFromLists(BattlePlayer player) {
 		try {
-			this.game.getTeamManager().getTeamByPlayer(player).removePlayer(player.getName());
+			this.game.getTeamManager().getTeamByPlayer(player).removePlayer(player);
 		} catch (Exception e) {
 		}
 	}
@@ -267,16 +268,15 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	public void setTags() {
 		for (Team t : this.game.getTeamManager().getTeams()) {
-			for (String player : t.getPlayers()) {
-				Player p = this.getServer().getPlayerExact(player);
-				if (p != null) {
-					setDisplayAndListName(p, t);
+			for (BattlePlayer player : t.getPlayers()) {
+				if (player != null) {
+					setDisplayAndListName(player, t);
 				}
 			}
 		}
 	}
 
-	public void setDisplayAndListName(Player player, Team team) {
+	public void setDisplayAndListName(BattlePlayer player, Team team) {
 		String display = team.getTeamColor().getChatColor() + player.getName();
 		if (display.length() > 15) {
 			display = display.substring(0, 15);

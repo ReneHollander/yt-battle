@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Wool;
@@ -16,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamManager;
+import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.GraceTimer;
 import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.SerializableLocation;
@@ -28,7 +28,7 @@ public class BattleCommandStart {
 		this.teamManager = Battle.instance().getGame().getTeamManager();
 	}
 
-	public boolean onCmdStart(String[] args, Player player) {
+	public boolean onCmdStart(String[] args, BattlePlayer player) {
 		if (Battle.instance().getGame().isStarted() == false) {
 
 			int teamcounter = 0;
@@ -74,8 +74,7 @@ public class BattleCommandStart {
 						t.setLifes(startlifes);
 					}
 
-					for (String playername : t.getPlayers()) {
-						Player p = Bukkit.getPlayerExact(playername);
+					for (BattlePlayer p : t.getPlayers()) {
 						p.teleport(Battle.instance().getGame().getSpawn().getLocation());
 						p.setGameMode(GameMode.SURVIVAL);
 						p.setAllowFlight(false);

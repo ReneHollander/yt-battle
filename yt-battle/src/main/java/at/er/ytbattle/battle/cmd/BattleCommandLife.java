@@ -1,11 +1,11 @@
 package at.er.ytbattle.battle.cmd;
 
-import org.bukkit.entity.Player;
 import org.bukkit.material.Wool;
 
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamManager;
+import at.er.ytbattle.battle.player.BattlePlayer;
 
 public class BattleCommandLife {
 
@@ -15,7 +15,7 @@ public class BattleCommandLife {
 		this.teamManager = Battle.instance().getGame().getTeamManager();
 	}
 
-	public boolean onCmdLife(String[] args, Player player) {
+	public boolean onCmdLife(String[] args, BattlePlayer player) {
 		if (Battle.instance().getGame().isStarted() && this.teamManager.isInTeam(player)) {
 			Team t = this.teamManager.getTeamByPlayer(player);
 			if (t.getLifes() > 1) {
