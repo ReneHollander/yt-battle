@@ -26,6 +26,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import at.er.ytbattle.battle.cmd.BattleCommands;
 import at.er.ytbattle.battle.event.GameListener;
 import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.battle.timer.RemindTimer;
 import at.rene8888.serilib.Deserialize;
@@ -49,6 +50,8 @@ public class Battle extends JavaPlugin implements Serializable {
 	public void onEnable() {
 
 		instance = this;
+
+		new BattlePlayerManager(this);
 
 		this.loadConfig();
 		this.loadGame();
