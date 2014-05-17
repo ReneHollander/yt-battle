@@ -235,12 +235,13 @@ public class GameListener implements Listener, Serializable {
 
 			Team t = this.teamManager.getTeamByPlayer(player);
 
-			ItemStack helmet = player.getInventory().getHelmet().clone();
-			ItemStack chestplate = player.getInventory().getChestplate().clone();
-			ItemStack leggings = player.getInventory().getLeggings().clone();
-			ItemStack boots = player.getInventory().getBoots().clone();
+			ItemStack helmet = player.getInventory().getHelmet();
+			ItemStack chestplate = player.getInventory().getChestplate();
+			ItemStack leggings = player.getInventory().getLeggings();
+			ItemStack boots = player.getInventory().getBoots();
 
 			if (helmet != null) {
+				helmet = helmet.clone();
 				if (helmet.getType() == Material.DIAMOND_HELMET)
 					helmet = new ItemStack(Material.IRON_HELMET);
 				helmet.setDurability((short) 0);
@@ -250,6 +251,7 @@ public class GameListener implements Listener, Serializable {
 			}
 
 			if (chestplate != null) {
+				chestplate = chestplate.clone();
 				if (chestplate.getType() == Material.DIAMOND_CHESTPLATE)
 					chestplate = new ItemStack(Material.IRON_CHESTPLATE);
 				chestplate.setDurability((short) 0);
@@ -259,6 +261,7 @@ public class GameListener implements Listener, Serializable {
 			}
 
 			if (leggings != null) {
+				leggings = leggings.clone();
 				if (leggings.getType() == Material.DIAMOND_LEGGINGS)
 					leggings = new ItemStack(Material.IRON_LEGGINGS);
 				leggings.setDurability((short) 0);
@@ -268,6 +271,7 @@ public class GameListener implements Listener, Serializable {
 			}
 
 			if (boots != null) {
+				boots = boots.clone();
 				if (boots.getType() == Material.DIAMOND_BOOTS)
 					boots = new ItemStack(Material.IRON_BOOTS);
 				boots.setDurability((short) 0);
