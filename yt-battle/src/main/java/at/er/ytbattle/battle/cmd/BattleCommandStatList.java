@@ -9,21 +9,16 @@ import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamColor;
 import at.er.ytbattle.battle.TeamManager;
 
-public class Cmd_battle_stats_list {
-
-	private Cmd_battle cmd;
-	private Battle plugin;
+public class BattleCommandStatList {
 
 	private TeamManager teamManager;
 
-	public Cmd_battle_stats_list(Cmd_battle c) {
-		cmd = c;
-		plugin = cmd.getPlugin();
-		this.teamManager = cmd.getPlugin().getGame().getTeamManager();
+	public BattleCommandStatList() {
+		this.teamManager = Battle.instance().getGame().getTeamManager();
 	}
 
 	public boolean onCmdStats(String[] args, Player player) {
-		if (plugin.getGame().isStarted()) {
+		if (Battle.instance().getGame().isStarted()) {
 			String list = "";
 			String winners = "";
 

@@ -7,22 +7,16 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamManager;
 
-public class Cmd_battle_life {
-
-	private Cmd_battle cmd;
+public class BattleCommandLife {
 
 	private TeamManager teamManager;
 
-	public Cmd_battle_life(Cmd_battle c) {
-		cmd = c;
-		this.teamManager = cmd.getPlugin().getGame().getTeamManager();
+	public BattleCommandLife() {
+		this.teamManager = Battle.instance().getGame().getTeamManager();
 	}
 
 	public boolean onCmdLife(String[] args, Player player) {
-
-		Battle plugin = cmd.getPlugin();
-
-		if (plugin.getGame().isStarted() && this.teamManager.isInTeam(player)) {
+		if (Battle.instance().getGame().isStarted() && this.teamManager.isInTeam(player)) {
 			Team t = this.teamManager.getTeamByPlayer(player);
 			if (t.getLifes() > 1) {
 				player.getInventory().addItem(new Wool(t.getTeamColor().getDyeColor()).toItemStack(1));
@@ -31,7 +25,7 @@ public class Cmd_battle_life {
 			} else {
 				player.sendMessage(Battle.prefix() + "Your team hasn't enough lifes left!");
 			}
-			plugin.updateScoreboard();
+			Battle.instance().updateScoreboard();
 			return true;
 		}
 		return false;

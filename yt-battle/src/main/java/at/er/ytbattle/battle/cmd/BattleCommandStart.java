@@ -20,22 +20,16 @@ import at.er.ytbattle.battle.timer.GraceTimer;
 import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.SerializableLocation;
 
-public class Cmd_battle_start {
-
-	private Cmd_battle cmd;
+public class BattleCommandStart {
 
 	private TeamManager teamManager;
 
-	public Cmd_battle_start(Cmd_battle c) {
-		cmd = c;
-		this.teamManager = cmd.getPlugin().getGame().getTeamManager();
+	public BattleCommandStart() {
+		this.teamManager = Battle.instance().getGame().getTeamManager();
 	}
 
 	public boolean onCmdStart(String[] args, Player player) {
-
-		Battle plugin = cmd.getPlugin();
-
-		if (plugin.getGame().isStarted() == false) {
+		if (Battle.instance().getGame().isStarted() == false) {
 
 			int teamcounter = 0;
 
@@ -49,22 +43,22 @@ public class Cmd_battle_start {
 
 				int timer = 0;
 
-				int startlifes = plugin.getConfig().getInt("config.lifes-at-start");
-				boolean reminder = plugin.getConfig().getBoolean("config.enable-remind-scheduler");
+				int startlifes = Battle.instance().getConfig().getInt("config.lifes-at-start");
+				boolean reminder = Battle.instance().getConfig().getBoolean("config.enable-remind-scheduler");
 
-				if (plugin.getGame().getSpawn() == null) {
-					plugin.getGame().setSpawn(new SerializableLocation(player.getLocation()));
-					plugin.getGame().getSpawn().getLocation().getWorld()
-							.setSpawnLocation((int) plugin.getGame().getSpawn().getLocation().getX(), (int) plugin.getGame().getSpawn().getLocation().getY(), (int) plugin.getGame().getSpawn().getLocation().getZ());
-					plugin.getConfig().set("saves.spawn.world", player.getLocation().getWorld().getName());
-					plugin.getConfig().set("saves.spawn.x", player.getLocation().getX());
-					plugin.getConfig().set("saves.spawn.y", player.getLocation().getY());
-					plugin.getConfig().set("saves.spawn.z", player.getLocation().getZ());
-					plugin.saveConfig();
+				if (Battle.instance().getGame().getSpawn() == null) {
+					Battle.instance().getGame().setSpawn(new SerializableLocation(player.getLocation()));
+					Battle.instance().getGame().getSpawn().getLocation().getWorld()
+							.setSpawnLocation((int) Battle.instance().getGame().getSpawn().getLocation().getX(), (int) Battle.instance().getGame().getSpawn().getLocation().getY(), (int) Battle.instance().getGame().getSpawn().getLocation().getZ());
+					Battle.instance().getConfig().set("saves.spawn.world", player.getLocation().getWorld().getName());
+					Battle.instance().getConfig().set("saves.spawn.x", player.getLocation().getX());
+					Battle.instance().getConfig().set("saves.spawn.y", player.getLocation().getY());
+					Battle.instance().getConfig().set("saves.spawn.z", player.getLocation().getZ());
+					Battle.instance().saveConfig();
 					player.sendMessage(Battle.prefix() + "Battlespawn has been set to your current location!");
 				}
 
-				plugin.getGame().getSpawn().getLocation().getWorld().setTime(200);
+				Battle.instance().getGame().getSpawn().getLocation().getWorld().setTime(200);
 
 				ItemStack base = new ItemStack(Material.QUARTZ_ORE);
 				ItemMeta baseMeta = base.getItemMeta();
@@ -72,7 +66,7 @@ public class Cmd_battle_start {
 				baseMeta.setLore(Arrays.asList("Place me to create a base"));
 				base.setItemMeta(baseMeta);
 
-				boolean baseItem = plugin.getConfig().getBoolean("config.enable-base-block");
+				boolean baseItem = Battle.instance().getConfig().getBoolean("config.enable-base-block");
 
 				for (Team t : this.teamManager.getTeams()) {
 
@@ -82,7 +76,7 @@ public class Cmd_battle_start {
 
 					for (String playername : t.getPlayers()) {
 						Player p = Bukkit.getPlayerExact(playername);
-						p.teleport(plugin.getGame().getSpawn().getLocation());
+						p.teleport(Battle.instance().getGame().getSpawn().getLocation());
 						p.setGameMode(GameMode.SURVIVAL);
 						p.setAllowFlight(false);
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 1));
@@ -107,10 +101,10 @@ public class Cmd_battle_start {
 				} catch (Exception e) {
 				}
 				if (timer > 0) {
-					plugin.getGame().getSpawn().getLocation().getWorld().setPVP(false);
+					Battle.instance().getGame().getSpawn().getLocation().getWorld().setPVP(false);
 
-					plugin.getGame().setGraceTimer(new GraceTimer(timer * 60));
-					Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, plugin.getGame().getGraceTimer(), 0, 20);
+					Battle.instance().getGame().setGraceTimer(new GraceTimer(timer * 60));
+					Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), Battle.instance().getGame().getGraceTimer(), 0, 20);
 				}
 				if (reminder == true) {
 					Bukkit.broadcastMessage(Battle.prefix() + "Starting battle reminder. Scheduling every 15 minutes!");
@@ -120,9 +114,9 @@ public class Cmd_battle_start {
 				for (Team t : this.teamManager.getTeams()) {
 					t.setupInitialWool();
 				}
-				plugin.getGame().setStarted(true);
-				plugin.setTags();
-				plugin.updateScoreboard();
+				Battle.instance().getGame().setStarted(true);
+				Battle.instance().setTags();
+				Battle.instance().updateScoreboard();
 				return true;
 			} else {
 				player.sendMessage(Battle.prefix() + "There have to be at least two teams with one or more Player(s) before the battle can be launched!");

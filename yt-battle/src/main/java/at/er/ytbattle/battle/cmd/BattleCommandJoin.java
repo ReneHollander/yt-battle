@@ -9,20 +9,16 @@ import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamColor;
 import at.er.ytbattle.battle.TeamManager;
 
-public class Cmd_battle_join {
-
-	private Cmd_battle cmd;
+public class BattleCommandJoin {
 
 	private TeamManager teamManager;
 
-	public Cmd_battle_join(Cmd_battle c) {
-		cmd = c;
-		this.teamManager = c.getPlugin().getGame().getTeamManager();
+	public BattleCommandJoin() {
+		this.teamManager = Battle.instance().getGame().getTeamManager();
 	}
 
 	public boolean onCmdJoin(String[] args, Player player) {
-		Battle plugin = cmd.getPlugin();
-		if (plugin.getGame().isStarted() == false) {
+		if (Battle.instance().getGame().isStarted() == false) {
 			if (args.length == 1 || args.length > 2) {
 				player.sendMessage(Battle.prefix() + "Correct usage: /battle join <teamname>");
 				return true;
@@ -30,9 +26,9 @@ public class Cmd_battle_join {
 			TeamColor tc = TeamColor.getTeamByShortName(args[1]);
 			if (tc != null) {
 				Team t = this.teamManager.getTeam(tc);
-				plugin.removeFromLists(player);
+				Battle.instance().removeFromLists(player);
 				t.addPlayer(player.getName());
-				plugin.setDisplayAndListName(player, t);
+				Battle.instance().setDisplayAndListName(player, t);
 				Bukkit.broadcastMessage(Battle.prefix() + "Player " + player.getName() + " joined the " + t.getTeamColor().getChatColor() + t.getTeamColor().getLongName() + ChatColor.RESET + " Team!");
 				return true;
 			} else {

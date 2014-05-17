@@ -7,13 +7,7 @@ import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
 
-public class Cmd_battle_help_reset {
-
-	private Battle b;
-
-	public Cmd_battle_help_reset(Cmd_battle c, Battle b) {
-		this.b = b;
-	}
+public class BattleCommandHelpReset {
 
 	public boolean onCmdHelp(String[] args, Player player) {
 		player.sendMessage(Battle.prefix() + "Battle Commands:  - <> = has to be attached [] = can be attached \n" + " - Alias for /battle is /b \n"
@@ -26,12 +20,12 @@ public class Cmd_battle_help_reset {
 
 	public boolean onCmdReset(String[] args, Player player) {
 
-		this.b.dontSave(true);
+		Battle.instance().dontSave(true);
 
-		this.b.unsetTags();
-		this.b.updateScoreboard();
+		Battle.instance().unsetTags();
+		Battle.instance().updateScoreboard();
 
-		File file = new File(b.getDataFolder(), "battle.save");
+		File file = new File(Battle.instance().getDataFolder(), "battle.save");
 
 		if (file.exists()) {
 			if (!file.delete())

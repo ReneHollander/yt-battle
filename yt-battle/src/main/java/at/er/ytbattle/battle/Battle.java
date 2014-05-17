@@ -23,7 +23,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import at.er.ytbattle.battle.cmd.Cmd_battle;
+import at.er.ytbattle.battle.cmd.BattleCommands;
 import at.er.ytbattle.battle.event.GameListener;
 import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.battle.timer.RemindTimer;
@@ -122,8 +122,8 @@ public class Battle extends JavaPlugin implements Serializable {
 	}
 
 	public void registerCommands() {
-		getCommand("battle").setExecutor(new Cmd_battle(this));
-		getCommand("b").setExecutor(new Cmd_battle(this));
+		getCommand("battle").setExecutor(new BattleCommands());
+		getCommand("b").setExecutor(new BattleCommands());
 	}
 
 	public void dontSave(boolean b) {

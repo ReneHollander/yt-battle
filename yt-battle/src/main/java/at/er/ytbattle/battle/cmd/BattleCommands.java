@@ -7,30 +7,26 @@ import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
 
-public class Cmd_battle implements CommandExecutor {
+public class BattleCommands implements CommandExecutor {
 
-	private Battle plugin;
+	private BattleCommandHelpReset help_reset;
+	private BattleCommandJoin join;
+	private BattleCommandLeave leave;
+	private BattleCommandLife life;
+	private BattleCommandSetSpawn spawn_setspawn;
+	private BattleCommandStart start;
+	private BattleCommandStatList stats_list;
+	private BattleCommandResetTimer resettimer;
 
-	private Cmd_battle_help_reset help_reset;
-	private Cmd_battle_join join;
-	private Cmd_battle_leave leave;
-	private Cmd_battle_life life;
-	private Cmd_battle_spawn_setspawn spawn_setspawn;
-	private Cmd_battle_start start;
-	private Cmd_battle_stats_list stats_list;
-	private Cmd_battle_resettimer resettimer;
-
-	public Cmd_battle(Battle b) {
-		this.plugin = b;
-
-		this.help_reset = new Cmd_battle_help_reset(this, b);
-		this.join = new Cmd_battle_join(this);
-		this.leave = new Cmd_battle_leave(this);
-		this.life = new Cmd_battle_life(this);
-		this.spawn_setspawn = new Cmd_battle_spawn_setspawn(this);
-		this.start = new Cmd_battle_start(this);
-		this.stats_list = new Cmd_battle_stats_list(this);
-		this.resettimer = new Cmd_battle_resettimer(this);
+	public BattleCommands() {
+		this.help_reset = new BattleCommandHelpReset();
+		this.join = new BattleCommandJoin();
+		this.leave = new BattleCommandLeave();
+		this.life = new BattleCommandLife();
+		this.spawn_setspawn = new BattleCommandSetSpawn();
+		this.start = new BattleCommandStart();
+		this.stats_list = new BattleCommandStatList();
+		this.resettimer = new BattleCommandResetTimer();
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -97,11 +93,4 @@ public class Cmd_battle implements CommandExecutor {
 		return false;
 	}
 
-	public Battle getPlugin() {
-		return plugin;
-	}
-
-	public void setPlugin(Battle plugin) {
-		this.plugin = plugin;
-	}
 }
