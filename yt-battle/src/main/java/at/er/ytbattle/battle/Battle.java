@@ -90,7 +90,6 @@ public class Battle extends JavaPlugin implements Serializable {
 	public void registerEvents() {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.gl, this); // game
-		pm.registerEvents(new TestListener(), this); // game
 	}
 
 	public void loadConfig() {
@@ -272,7 +271,7 @@ public class Battle extends JavaPlugin implements Serializable {
 	public void setTags() {
 		for (Team t : this.game.getTeamManager().getTeams()) {
 			for (BattlePlayer player : t.getPlayers()) {
-				if (player != null) {
+				if (player != null && player.isLoaded()) {
 					setDisplayAndListName(player, t);
 				}
 			}

@@ -62,6 +62,10 @@ public class CustomPlayer implements Player, Externalizable {
 
 	private String lastValidName;
 
+	public CustomPlayer() {
+
+	}
+
 	public CustomPlayer(Player player) {
 		this.player = player;
 		this.uuid = player.getUniqueId();
@@ -78,7 +82,7 @@ public class CustomPlayer implements Player, Externalizable {
 				this.uuid = player.getUniqueId();
 				this.lastValidName = player.getName();
 			} else {
-				throw new RuntimeException("no player for uuid: " + this.getUniqueId().toString() + " with last valid name: " + this.getLastValidName() + " found! maybe he is offline!");
+				throw new RuntimeException("no player for uuid: " + this.uuid.toString() + " with last valid name: " + this.lastValidName + " found! maybe he is offline!");
 			}
 		}
 		return this.player;
@@ -96,6 +100,10 @@ public class CustomPlayer implements Player, Externalizable {
 	@Override
 	public String getName() {
 		return this.getLastValidName();
+	}
+
+	public boolean isLoaded() {
+		return this.player != null;
 	}
 
 	public String getLastValidName() {
