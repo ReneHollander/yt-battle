@@ -1,6 +1,5 @@
 package at.er.ytbattle.battle.event;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -51,8 +50,7 @@ import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.util.PlayerArmor;
 
-public class GameListener implements Listener, Serializable {
-	private static final long serialVersionUID = 1L;
+public class GameListener implements Listener {
 
 	private Battle plugin;
 
@@ -162,7 +160,7 @@ public class GameListener implements Listener, Serializable {
 			return false;
 		} else {
 			for (int i = l.getBlockY() + 1; i <= 255; i++) {
-				Location now = (Location) l.clone();
+				Location now = l.clone();
 				now.setY(i);
 				Block b = now.getWorld().getBlockAt(now);
 				if (b != null) {

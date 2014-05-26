@@ -1,9 +1,11 @@
 package at.er.ytbattle.battle.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,22 +16,28 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BattlePlayerManager implements Listener {
+public class BattlePlayerManager implements Listener, Serializable {
 
-	private static BattlePlayerManager instance;
+	private static final long serialVersionUID = 1123813768710789814L;
 
-	private Map<Player, BattlePlayer> players;
+	private transient static BattlePlayerManager instance;
+
+	private Map<UUID, BattlePlayer> players;
 
 	public BattlePlayerManager(JavaPlugin plugin) {
 		instance = this;
 
-		this.players = new HashMap<Player, BattlePlayer>();
+		this.players = new HashMap<UUID, BattlePlayer>();
 
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
+	public BattlePlayer getBattlePlayer(UUID uuid) {
+		return this.players.get(uuid);
+	}
+
 	public BattlePlayer getBattlePlayer(Player player) {
-		return this.players.get(player);
+		return this.getBattlePlayer(player.getUniqueId());
 	}
 
 	public List<BattlePlayer> getAllBattlePlayers() {
@@ -45,25 +53,28 @@ public class BattlePlayerManager implements Listener {
 		Player player = event.getPlayer();
 		BattlePlayer battlePlayer = new BattlePlayer(player);
 
-		this.players.put(player, battlePlayer);
+		this.players.put(player.getUniqueId(), battlePlayer);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 
-		this.players.remove(player);
+		this.players.remove(player.getUniqueId());
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerKick(PlayerKickEvent event) {
 		Player player = event.getPlayer();
 
-		this.players.remove(player);
+		this.players.remove(player.getUniqueId());
 	}
 
 	public static BattlePlayerManager instance() {
 		return instance;
 	}
 
+	public static void setInstance(BattlePlayerManager newInstance) {
+		instance = newInstance;
+	}
 }

@@ -2,7 +2,6 @@ package at.er.ytbattle.battle;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,8 +34,7 @@ import at.rene8888.serilib.Serialize;
 import com.google.common.base.Functions;
 import com.google.common.collect.Lists;
 
-public class Battle extends JavaPlugin implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Battle extends JavaPlugin {
 
 	private static Battle instance;
 
@@ -47,6 +45,7 @@ public class Battle extends JavaPlugin implements Serializable {
 	private HashMap<String, ItemStack[]> inventories;
 	private HashMap<String, ItemStack[]> armor;
 
+	@Override
 	public void onEnable() {
 
 		instance = this;
@@ -74,6 +73,7 @@ public class Battle extends JavaPlugin implements Serializable {
 
 	}
 
+	@Override
 	public void onDisable() {
 		try {
 			RemindTimer.getRT().stopTimer();

@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import at.er.ytbattle.battle.Team;
 
@@ -48,7 +49,7 @@ public class EditView extends JFrame {
 
 		this.setLocationRelativeTo(null);
 
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		this.add = new JButton("Add Player to Team");
 		this.del = new JButton("Remove Player from Team");

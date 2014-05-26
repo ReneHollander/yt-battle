@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 public class AddPlayerView extends JFrame {
 	private static final long serialVersionUID = -2551907156134971678L;
@@ -26,7 +27,7 @@ public class AddPlayerView extends JFrame {
 
 		this.setSize(320, 100);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 
 		this.add(name, BorderLayout.CENTER);

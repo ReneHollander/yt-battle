@@ -24,6 +24,7 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 		this.view = new GUIView(this);
 	}
 
+	@Override
 	public void valueChanged(ListSelectionEvent e) {
 
 		if (!e.getValueIsAdjusting())
@@ -39,6 +40,7 @@ public class GUIControl implements ActionListener, ListSelectionListener {
 		}
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (view.checkForOpen(e)) {
 			JFileChooser fileChooser = new JFileChooser();

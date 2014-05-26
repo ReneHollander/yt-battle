@@ -101,7 +101,7 @@ public class CustomPlayer implements Player, Externalizable {
 	public String getName() {
 		return this.getLastValidName();
 	}
-	
+
 	public boolean hasPlayer() {
 		return Bukkit.getPlayer(this.getUniqueId()) == null ? false : true;
 	}

@@ -1,13 +1,15 @@
 package at.er.ytbattle.battle;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
+import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.GraceTimer;
 import at.er.ytbattle.util.SerializableLocation;
 
-public class Game implements Serializable {
-
-	private static final long serialVersionUID = 4886628307519507333L;
+public class Game implements Externalizable {
 
 	private TeamManager teamManager;
 
@@ -17,6 +19,10 @@ public class Game implements Serializable {
 	private boolean saved;
 
 	private GraceTimer graceTimer;
+
+	public Game() {
+
+	}
 
 	public Game(Battle battle, TeamManager tm) {
 		this.teamManager = tm;
@@ -60,6 +66,24 @@ public class Game implements Serializable {
 
 	public void setSpawn(SerializableLocation spawn) {
 		this.spawn = spawn;
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(BattlePlayerManager.instance());
+		out.writeObject(this.teamManager);
+		out.writeObject(this.spawn);
+		out.writeBoolean(started);
+		out.writeBoolean(saved);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		BattlePlayerManager.setInstance((BattlePlayerManager) in.readObject());
+		this.teamManager = (TeamManager) in.readObject();
+		this.spawn = (SerializableLocation) in.readObject();
+		this.started = in.readBoolean();
+		this.saved = in.readBoolean();
 	}
 
 }

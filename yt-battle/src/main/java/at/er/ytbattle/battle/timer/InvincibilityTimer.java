@@ -29,15 +29,20 @@ public class InvincibilityTimer implements Runnable, Listener {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
+	@Override
 	public void run() {
 		if (time == 0) {
-			player.sendMessage(Battle.prefix() + "Your invincibility ended!");
+			if (player.hasPlayer()) {
+				player.sendMessage(Battle.prefix() + "Your invincibility ended!");
+			}
 			HandlerList.unregisterAll(this);
 			time--;
 		}
 
 		if (time > 0) {
-			player.sendMessage(Battle.prefix() + "Your invincibility ends in " + time + " minutes!");
+			if (player.hasPlayer()) {
+				player.sendMessage(Battle.prefix() + "Your invincibility ends in " + time + " minutes!");
+			}
 			time--;
 		}
 	}

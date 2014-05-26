@@ -13,6 +13,7 @@ public class AddPlayerControl implements ActionListener {
 		view = v;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (view.checkForAdd(e)) {
 			String name = view.getNameField().getText();

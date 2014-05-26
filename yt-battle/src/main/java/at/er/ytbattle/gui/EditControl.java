@@ -13,6 +13,7 @@ public class EditControl implements ActionListener {
 		view = v;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (view.checkForAdd(e)) {
 			new AddPlayerView(view);

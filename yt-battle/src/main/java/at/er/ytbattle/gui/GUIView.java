@@ -61,6 +61,7 @@ public class GUIView extends JFrame {
 		teams.addListSelectionListener(l);
 
 		teams.setCellRenderer(new DefaultListCellRenderer() {
+			@Override
 			public int getHorizontalAlignment() {
 				return CENTER;
 			}

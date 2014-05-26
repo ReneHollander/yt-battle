@@ -1,26 +1,32 @@
 package at.er.ytbattle.util;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
 
-public final class SerializableLocation implements Serializable {
+public final class SerializableLocation implements Externalizable {
 	private static final long serialVersionUID = 1L;
 
-	private final String world;
-	private final String uuid;
-	private final double x, y, z;
-	private final float yaw, pitch;
-	private transient Location loc;
+	private String world;
+	private UUID uuid;
+	private double x, y, z;
+	private float yaw, pitch;
+	private Location loc;
+
+	public SerializableLocation() {
+
+	}
 
 	public SerializableLocation(Location l) {
 		this.world = l.getWorld().getName();
-		this.uuid = l.getWorld().getUID().toString();
+		this.uuid = l.getWorld().getUID();
 		this.x = l.getX();
 		this.y = l.getY();
 		this.z = l.getZ();
@@ -48,28 +54,6 @@ public final class SerializableLocation implements Serializable {
 		return location;
 	}
 
-	public SerializableLocation(Map<String, Object> map) {
-		this.world = (String) map.get("world");
-		this.uuid = (String) map.get("uuid");
-		this.x = (Double) map.get("x");
-		this.y = (Double) map.get("y");
-		this.z = (Double) map.get("z");
-		this.yaw = ((Float) map.get("yaw")).floatValue();
-		this.pitch = ((Float) map.get("pitch")).floatValue();
-	}
-
-	public final Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("world", this.world);
-		map.put("uuid", this.uuid);
-		map.put("x", this.x);
-		map.put("y", this.y);
-		map.put("z", this.z);
-		map.put("yaw", this.yaw);
-		map.put("pitch", this.pitch);
-		return map;
-	}
-
 	public final Location getLocation() {
 		Server server = Bukkit.getServer();
 		if (loc == null) {
@@ -80,5 +64,27 @@ public final class SerializableLocation implements Serializable {
 			loc = new Location(world, x, y, z, yaw, pitch);
 		}
 		return loc;
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeUTF(world);
+		out.writeUTF(uuid.toString());
+		out.writeDouble(x);
+		out.writeDouble(y);
+		out.writeDouble(z);
+		out.writeFloat(yaw);
+		out.writeFloat(pitch);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		world = in.readUTF();
+		uuid = UUID.fromString(in.readUTF());
+		x = in.readDouble();
+		y = in.readDouble();
+		z = in.readDouble();
+		yaw = in.readFloat();
+		pitch = in.readFloat();
 	}
 }

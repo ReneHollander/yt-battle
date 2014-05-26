@@ -25,6 +25,7 @@ public class FireworkTimer implements Runnable {
 		this.id = id;
 	}
 
+	@Override
 	public void run() {
 		count++;
 		if (count > 15) {
@@ -45,7 +46,7 @@ public class FireworkTimer implements Runnable {
 
 	public void shootFirework() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			Firework f = (Firework) p.getWorld().spawn(p.getLocation(), Firework.class);
+			Firework f = p.getWorld().spawn(p.getLocation(), Firework.class);
 			FireworkMeta fm = f.getFireworkMeta();
 			Random r = new Random();
 			int fType = r.nextInt(5) + 1;
