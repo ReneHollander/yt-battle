@@ -10,7 +10,7 @@ import at.er.ytbattle.battle.player.BattlePlayer;
 
 public class InvincibilityTimerManager {
 
-	private static InvincibilityTimerManager INSTANCE;
+	private static InvincibilityTimerManager instance;
 
 	private Battle b;
 	private Map<String, InvincibilityTimer> timers;
@@ -18,8 +18,8 @@ public class InvincibilityTimerManager {
 	private int time;
 
 	public InvincibilityTimerManager(Battle b, int time) {
-		if (INSTANCE == null) {
-			INSTANCE = this;
+		if (instance == null) {
+			instance = this;
 			this.b = b;
 			this.timers = new HashMap<String, InvincibilityTimer>();
 			this.time = time;
@@ -49,7 +49,7 @@ public class InvincibilityTimerManager {
 
 	}
 
-	public static InvincibilityTimerManager getITM() {
-		return INSTANCE;
+	public static InvincibilityTimerManager instance() {
+		return instance;
 	}
 }

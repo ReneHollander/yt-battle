@@ -16,18 +16,29 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Wool;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
 import at.er.ytbattle.battle.cmd.BattleCommands;
-import at.er.ytbattle.battle.event.GameListener;
+import at.er.ytbattle.battle.event.BlockBreakListener;
+import at.er.ytbattle.battle.event.BlockPlaceListener;
+import at.er.ytbattle.battle.event.EntityDeathListener;
+import at.er.ytbattle.battle.event.EntityExplodeListener;
+import at.er.ytbattle.battle.event.PlayerChatListener;
+import at.er.ytbattle.battle.event.PlayerDeathListener;
+import at.er.ytbattle.battle.event.PlayerInteractListener;
+import at.er.ytbattle.battle.event.PlayerJoinListener;
+import at.er.ytbattle.battle.event.PlayerMoveListener;
+import at.er.ytbattle.battle.event.PlayerRespawnListener;
+import at.er.ytbattle.battle.event.PlayerShearListener;
+import at.er.ytbattle.battle.event.PrepareItemCraftListener;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.battle.timer.RemindTimer;
+import at.er.ytbattle.util.PlayerArmor;
 import at.rene8888.serilib.Deserialize;
 import at.rene8888.serilib.Serialize;
 
@@ -41,14 +52,15 @@ public class Battle extends JavaPlugin {
 	public boolean dontSave;
 
 	private Game game;
-	public GameListener gl;
-	private HashMap<String, ItemStack[]> inventories;
-	private HashMap<String, ItemStack[]> armor;
+
+	public HashMap<Player, PlayerArmor> playerArmor;
 
 	@Override
 	public void onEnable() {
 
 		instance = this;
+
+		this.playerArmor = new HashMap<Player, PlayerArmor>();
 
 		new BattlePlayerManager(this);
 
@@ -56,10 +68,6 @@ public class Battle extends JavaPlugin {
 		this.loadGame();
 
 		this.dontSave = false;
-
-		this.gl = new GameListener(this);
-		this.inventories = new HashMap<String, ItemStack[]>();
-		this.armor = new HashMap<String, ItemStack[]>();
 
 		this.addCraftings();
 		this.registerCommands();
@@ -79,7 +87,6 @@ public class Battle extends JavaPlugin {
 			RemindTimer.getRT().stopTimer();
 		} catch (Exception e) {
 		}
-
 		saveGame();
 	}
 
@@ -88,8 +95,18 @@ public class Battle extends JavaPlugin {
 	}
 
 	public void registerEvents() {
-		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(this.gl, this); // game
+		new BlockBreakListener();
+		new BlockPlaceListener();
+		new EntityDeathListener();
+		new EntityExplodeListener();
+		new PlayerChatListener();
+		new PlayerDeathListener();
+		new PlayerInteractListener();
+		new PlayerJoinListener();
+		new PlayerMoveListener();
+		new PlayerRespawnListener();
+		new PlayerShearListener();
+		new PrepareItemCraftListener();
 	}
 
 	public void loadConfig() {
@@ -244,21 +261,6 @@ public class Battle extends JavaPlugin {
 			this.game.getTeamManager().getTeamByPlayer(player).removePlayer(player);
 		} catch (Exception e) {
 		}
-	}
-
-	public void saveInventory(Player p) {
-		ItemStack[] inv = p.getInventory().getContents();
-		ItemStack[] arm = p.getInventory().getArmorContents();
-		inventories.put(p.getName(), inv);
-		armor.put(p.getName(), arm);
-	}
-
-	public ItemStack[][] loadInventory(Player p) {
-		ItemStack[][] iss = { inventories.get(p.getName()), armor.get(p.getName()) };
-		inventories.remove(p.getName());
-		armor.remove(p.getName());
-
-		return iss;
 	}
 
 	public void unsetTags() {
