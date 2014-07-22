@@ -17,10 +17,10 @@ public class BattleCommandStats extends AbstractCommand {
             String winners = "";
 
             if (Battle.instance().getGame().getTeamManager().getTeams().size() > 1) {
-                if (args.length == 1) {
+                if (args.length == 0) {
                     player.sendMessage(Battle.prefix() + "Please select a team: /battle stats <teamname>");
                 } else {
-                    Team t = Battle.instance().getGame().getTeamManager().getTeam(TeamColor.getTeamByShortName(args[1].toLowerCase()));
+                    Team t = Battle.instance().getGame().getTeamManager().getTeam(TeamColor.getTeamByShortName(args[0].toLowerCase()));
                     if (t != null) {
                         for (BattlePlayer p : t.getPlayers()) {
                             list += p + " (" + p.getHealth() * 10.0 / 2.0 + "%), ";

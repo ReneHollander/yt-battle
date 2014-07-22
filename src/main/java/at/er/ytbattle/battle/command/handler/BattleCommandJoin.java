@@ -14,11 +14,11 @@ public class BattleCommandJoin extends AbstractCommand {
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
         if (Battle.instance().getGame().isStarted() == false) {
-            if (args.length == 1 || args.length > 2) {
+            if (args.length == 0 || args.length > 1) {
                 player.sendMessage(Battle.prefix() + "Correct usage: /battle join <teamname>");
                 return true;
             }
-            TeamColor tc = TeamColor.getTeamByShortName(args[1]);
+            TeamColor tc = TeamColor.getTeamByShortName(args[0]);
             if (tc != null) {
                 Team t = Battle.instance().getGame().getTeamManager().getTeam(tc);
                 Battle.instance().removeFromLists(player);

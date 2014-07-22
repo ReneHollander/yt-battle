@@ -91,7 +91,7 @@ public class BattleCommandStart extends AbstractCommand {
                 }
 
                 try {
-                    timer = Integer.parseInt(args[1]);
+                    timer = Integer.parseInt(args[0]);
                 } catch (Exception e) {
                 }
                 if (timer > 0) {
