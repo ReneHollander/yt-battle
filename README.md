@@ -17,7 +17,7 @@ Dann kann schon der Server gestartet werden. Die Konfiguration erfolgt nun INGAM
 ####Befehle im Spielverlauf
 Um eine neue Wolle zu erhalten, wird das Kommando `/battle life` verwendet.
 
-###Die Offiziellen Regeln
+###Die Offiziellen Regeln nach [Rathamoon](https://www.youtube.com/user/RathamoonLP)
 1. Nether ist aus!
 2. Friedensphase und After-Kill-Schutzzeit:
 	1. Die Friedenphase beträgt 30 Minuten und wird durch das Plugin realisiert (keinem ist es erlaubt in dieser Phase aggressive Handlungen gegenüber anderen Teams zu begehen. (z.B. kein Angreifen, keine Kisten öffnen ect.)
