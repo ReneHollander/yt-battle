@@ -11,79 +11,79 @@ import at.er.ytbattle.util.SerializableLocation;
 
 public class Game implements Externalizable {
 
-	private TeamManager teamManager;
+    private TeamManager teamManager;
 
-	private SerializableLocation spawn;
+    private SerializableLocation spawn;
 
-	private boolean started;
-	private boolean saved;
+    private boolean started;
+    private boolean saved;
 
-	private GraceTimer graceTimer;
+    private GraceTimer graceTimer;
 
-	public Game() {
+    public Game() {
 
-	}
+    }
 
-	public Game(Battle battle, TeamManager tm) {
-		this.teamManager = tm;
-		this.spawn = null;
-		this.started = false;
-		this.saved = false;
-		this.graceTimer = null;
-	}
+    public Game(Battle battle, TeamManager tm) {
+        this.teamManager = tm;
+        this.spawn = null;
+        this.started = false;
+        this.saved = false;
+        this.graceTimer = null;
+    }
 
-	public TeamManager getTeamManager() {
-		return this.teamManager;
-	}
+    public TeamManager getTeamManager() {
+        return this.teamManager;
+    }
 
-	public boolean isStarted() {
-		return started;
-	}
+    public boolean isStarted() {
+        return started;
+    }
 
-	public GraceTimer getGraceTimer() {
-		return graceTimer;
-	}
+    public GraceTimer getGraceTimer() {
+        return graceTimer;
+    }
 
-	public void setGraceTimer(GraceTimer graceTimer) {
-		this.graceTimer = graceTimer;
-	}
+    public void setGraceTimer(GraceTimer graceTimer) {
+        this.graceTimer = graceTimer;
+    }
 
-	public void setStarted(boolean started) {
-		this.started = started;
-	}
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
 
-	public SerializableLocation getSpawn() {
-		return spawn;
-	}
+    public SerializableLocation getSpawn() {
+        return spawn;
+    }
 
-	public boolean isSaved() {
-		return saved;
-	}
+    public boolean isSaved() {
+        return saved;
+    }
 
-	public void setSaved(boolean saved) {
-		this.saved = saved;
-	}
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
 
-	public void setSpawn(SerializableLocation spawn) {
-		this.spawn = spawn;
-	}
+    public void setSpawn(SerializableLocation spawn) {
+        this.spawn = spawn;
+    }
 
-	@Override
-	public void writeExternal(ObjectOutput out) throws IOException {
-		out.writeObject(BattlePlayerManager.instance());
-		out.writeObject(this.teamManager);
-		out.writeObject(this.spawn);
-		out.writeBoolean(started);
-		out.writeBoolean(saved);
-	}
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(BattlePlayerManager.instance());
+        out.writeObject(this.teamManager);
+        out.writeObject(this.spawn);
+        out.writeBoolean(started);
+        out.writeBoolean(saved);
+    }
 
-	@Override
-	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		BattlePlayerManager.setInstance((BattlePlayerManager) in.readObject());
-		this.teamManager = (TeamManager) in.readObject();
-		this.spawn = (SerializableLocation) in.readObject();
-		this.started = in.readBoolean();
-		this.saved = in.readBoolean();
-	}
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        BattlePlayerManager.setInstance((BattlePlayerManager) in.readObject());
+        this.teamManager = (TeamManager) in.readObject();
+        this.spawn = (SerializableLocation) in.readObject();
+        this.started = in.readBoolean();
+        this.saved = in.readBoolean();
+    }
 
 }

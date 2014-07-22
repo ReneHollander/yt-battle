@@ -10,13 +10,13 @@ import at.er.ytbattle.battle.Battle;
 
 public class PlayerShearListener implements Listener {
 
-	public PlayerShearListener() {
-		Bukkit.getPluginManager().registerEvents(this, Battle.instance());
-	}
+    public PlayerShearListener() {
+        Bukkit.getPluginManager().registerEvents(this, Battle.instance());
+    }
 
-	@EventHandler(priority = EventPriority.HIGH)
-	public void onPlayerShear(PlayerShearEntityEvent event) {
-		event.setCancelled(true);
-	}
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerShear(PlayerShearEntityEvent event) {
+        event.setCancelled(true);
+    }
 
 }

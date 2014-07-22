@@ -13,18 +13,18 @@ import at.er.ytbattle.battle.Battle;
 
 public class EntityExplodeListener implements Listener {
 
-	public EntityExplodeListener() {
-		Bukkit.getPluginManager().registerEvents(this, Battle.instance());
-	}
+    public EntityExplodeListener() {
+        Bukkit.getPluginManager().registerEvents(this, Battle.instance());
+    }
 
-	@EventHandler(priority = EventPriority.HIGH)
-	public void onEntityExplode(EntityExplodeEvent event) {
-		if (event.getEntityType() == EntityType.CREEPER)
-			event.blockList().clear();
-		for (Block block : event.blockList()) {
-			if (block.getType() == Material.WOOL || block.getType() == Material.GLASS)
-				event.blockList().remove(block);
-		}
-	}
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onEntityExplode(EntityExplodeEvent event) {
+        if (event.getEntityType() == EntityType.CREEPER)
+            event.blockList().clear();
+        for (Block block : event.blockList()) {
+            if (block.getType() == Material.WOOL || block.getType() == Material.GLASS)
+                event.blockList().remove(block);
+        }
+    }
 
 }

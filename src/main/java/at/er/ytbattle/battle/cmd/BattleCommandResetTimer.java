@@ -9,12 +9,12 @@ import at.er.ytbattle.battle.timer.RemindTimer;
 
 public class BattleCommandResetTimer {
 
-	public boolean onCmdResetTimer(String[] args, BattlePlayer player) {
+    public boolean onCmdResetTimer(String[] args, BattlePlayer player) {
 
-		new RemindTimer();
+        new RemindTimer();
 
-		Bukkit.broadcastMessage(Battle.prefix() + ChatColor.RED + "Continuing the game! Have fun!");
+        Bukkit.broadcastMessage(Battle.prefix() + ChatColor.RED + "Continuing the game! Have fun!");
 
-		return true;
-	}
+        return true;
+    }
 }

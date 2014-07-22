@@ -10,14 +10,14 @@ import at.er.ytbattle.battle.Battle;
 
 public class PlayerJoinListener implements Listener {
 
-	public PlayerJoinListener() {
-		Bukkit.getPluginManager().registerEvents(this, Battle.instance());
-	}
+    public PlayerJoinListener() {
+        Bukkit.getPluginManager().registerEvents(this, Battle.instance());
+    }
 
-	@EventHandler(priority = EventPriority.HIGH)
-	public void onPlayerJoin(PlayerJoinEvent event) {
-		Battle.instance().setTags();
-		Battle.instance().updateScoreboard();
-	}
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Battle.instance().setTags();
+        Battle.instance().updateScoreboard();
+    }
 
 }

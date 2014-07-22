@@ -11,14 +11,14 @@ import at.er.ytbattle.battle.Battle;
 
 public class EntityDeathListener implements Listener {
 
-	public EntityDeathListener() {
-		Bukkit.getPluginManager().registerEvents(this, Battle.instance());
-	}
+    public EntityDeathListener() {
+        Bukkit.getPluginManager().registerEvents(this, Battle.instance());
+    }
 
-	@EventHandler(priority = EventPriority.HIGH)
-	public void onEntityDeath(EntityDeathEvent event) {
-		if (event.getEntityType() == EntityType.SHEEP)
-			event.getDrops().clear();
-	}
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onEntityDeath(EntityDeathEvent event) {
+        if (event.getEntityType() == EntityType.SHEEP)
+            event.getDrops().clear();
+    }
 
 }
