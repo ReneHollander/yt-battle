@@ -21,7 +21,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import at.er.ytbattle.battle.cmd.BattleCommands;
+import at.er.ytbattle.battle.command.CommandManager;
 import at.er.ytbattle.battle.event.BlockBreakListener;
 import at.er.ytbattle.battle.event.BlockPlaceListener;
 import at.er.ytbattle.battle.event.EntityDeathListener;
@@ -142,8 +142,8 @@ public class Battle extends JavaPlugin {
     }
 
     public void registerCommands() {
-        getCommand("battle").setExecutor(new BattleCommands());
-        getCommand("b").setExecutor(new BattleCommands());
+        getCommand("battle").setExecutor(new CommandManager());
+        getCommand("b").setExecutor(new CommandManager());
     }
 
     public void dontSave(boolean b) {

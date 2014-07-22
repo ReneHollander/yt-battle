@@ -1,4 +1,4 @@
-package at.er.ytbattle.battle.cmd;
+package at.er.ytbattle.battle.command.handler;
 
 import java.util.Arrays;
 
@@ -14,26 +14,21 @@ import org.bukkit.potion.PotionEffectType;
 
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
-import at.er.ytbattle.battle.TeamManager;
+import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.GraceTimer;
 import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.SerializableLocation;
 
-public class BattleCommandStart {
+public class BattleCommandStart extends AbstractCommand {
 
-    private TeamManager teamManager;
-
-    public BattleCommandStart() {
-        this.teamManager = Battle.instance().getGame().getTeamManager();
-    }
-
-    public boolean onCmdStart(String[] args, BattlePlayer player) {
+    @Override
+    public boolean onCommand(String label, String[] args, BattlePlayer player) {
         if (Battle.instance().getGame().isStarted() == false) {
 
             int teamcounter = 0;
 
-            for (Team t : this.teamManager.getTeams()) {
+            for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
                 if (t.getTeamSize() > 0) {
                     teamcounter++;
                 }
@@ -68,7 +63,7 @@ public class BattleCommandStart {
 
                 boolean baseItem = Battle.instance().getConfig().getBoolean("config.enable-base-block");
 
-                for (Team t : this.teamManager.getTeams()) {
+                for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
 
                     if (t.getTeamSize() > 0) {
                         t.setLifes(startlifes);
@@ -110,7 +105,7 @@ public class BattleCommandStart {
                     new RemindTimer();
                 }
                 Bukkit.broadcastMessage(Battle.prefix() + "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
-                for (Team t : this.teamManager.getTeams()) {
+                for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
                     t.setupInitialWool();
                 }
                 Battle.instance().getGame().setStarted(true);

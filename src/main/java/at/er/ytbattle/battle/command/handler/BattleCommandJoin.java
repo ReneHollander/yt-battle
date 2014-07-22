@@ -1,4 +1,4 @@
-package at.er.ytbattle.battle.cmd;
+package at.er.ytbattle.battle.command.handler;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -6,18 +6,13 @@ import org.bukkit.ChatColor;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamColor;
-import at.er.ytbattle.battle.TeamManager;
+import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
 
-public class BattleCommandJoin {
+public class BattleCommandJoin extends AbstractCommand {
 
-    private TeamManager teamManager;
-
-    public BattleCommandJoin() {
-        this.teamManager = Battle.instance().getGame().getTeamManager();
-    }
-
-    public boolean onCmdJoin(String[] args, BattlePlayer player) {
+    @Override
+    public boolean onCommand(String label, String[] args, BattlePlayer player) {
         if (Battle.instance().getGame().isStarted() == false) {
             if (args.length == 1 || args.length > 2) {
                 player.sendMessage(Battle.prefix() + "Correct usage: /battle join <teamname>");
@@ -25,7 +20,7 @@ public class BattleCommandJoin {
             }
             TeamColor tc = TeamColor.getTeamByShortName(args[1]);
             if (tc != null) {
-                Team t = this.teamManager.getTeam(tc);
+                Team t = Battle.instance().getGame().getTeamManager().getTeam(tc);
                 Battle.instance().removeFromLists(player);
                 t.addPlayer(player);
                 Battle.instance().setDisplayAndListName(player, t);

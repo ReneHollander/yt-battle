@@ -1,16 +1,17 @@
-package at.er.ytbattle.battle.cmd;
+package at.er.ytbattle.battle.command.handler;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.RemindTimer;
 
-public class BattleCommandResetTimer {
+public class BattleCommandResetTimer extends AbstractCommand {
 
-    public boolean onCmdResetTimer(String[] args, BattlePlayer player) {
-
+    @Override
+    public boolean onCommand(String label, String[] args, BattlePlayer player) {
         new RemindTimer();
 
         Bukkit.broadcastMessage(Battle.prefix() + ChatColor.RED + "Continuing the game! Have fun!");

@@ -1,22 +1,14 @@
-package at.er.ytbattle.battle.cmd;
+package at.er.ytbattle.battle.command.handler;
 
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.util.SerializableLocation;
 
-public class BattleCommandSetSpawn {
+public class BattleCommandSetspawn extends AbstractCommand {
 
-    public boolean onCmdSpawn(String[] args, BattlePlayer player) {
-        if (Battle.instance().getGame().getSpawn() != null) {
-            player.teleport(Battle.instance().getGame().getSpawn().getLocation());
-        } else {
-            player.sendMessage(Battle.prefix() + "Battlespawn hasn't been set yet!");
-        }
-
-        return true;
-    }
-
-    public boolean onCmdSetspawn(String[] args, BattlePlayer player) {
+    @Override
+    public boolean onCommand(String label, String[] args, BattlePlayer player) {
         Battle.instance().getGame().setSpawn(new SerializableLocation(player.getLocation()));
         Battle.instance().getGame().getSpawn().getLocation().getWorld().setSpawnLocation((int) Battle.instance().getGame().getSpawn().getLocation().getX(), (int) Battle.instance().getGame().getSpawn().getLocation().getY(), (int) Battle.instance().getGame().getSpawn().getLocation().getZ());
 
