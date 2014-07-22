@@ -71,14 +71,20 @@ public class TeamManager implements Serializable {
     }
 
     public Team getLastTeam() {
-        ArrayList<Team> team = new ArrayList<Team>();
+        int livingcount = 0;
+        Team living = null;
         for (Team t : this.getTeams()) {
             if (t.hasLost() == false) {
-                team.add(t);
+                livingcount++;
+                if (livingcount >= 2) {
+                    return null;
+                } else {
+                    living = t;
+                }
             }
         }
-        if (team.size() == 1) {
-            return team.get(0);
+        if (livingcount == 1) {
+            return living;
         } else {
             return null;
         }
