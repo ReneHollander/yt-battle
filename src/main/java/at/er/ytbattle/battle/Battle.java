@@ -64,6 +64,8 @@ public class Battle extends JavaPlugin {
 
         new BattlePlayerManager(this);
 
+        
+        
         this.loadConfig();
         this.loadGame();
 

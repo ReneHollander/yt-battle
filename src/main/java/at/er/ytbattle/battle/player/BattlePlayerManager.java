@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,6 +31,12 @@ public class BattlePlayerManager implements Listener, Serializable {
         this.players = new HashMap<UUID, BattlePlayer>();
 
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            BattlePlayer battlePlayer = new BattlePlayer(p);
+
+            this.players.put(p.getUniqueId(), battlePlayer);
+        }
     }
 
     public BattlePlayer getBattlePlayer(UUID uuid) {
