@@ -32,39 +32,41 @@ public class BlockPlaceTimer implements Runnable, Serializable {
 
     @Override
     public void run() {
-        if (time == 0) {
-            for (BattlePlayer player : t.getPlayers()) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 120, 0));
-                player.sendMessage(Battle.prefix() + "Place a wool to disable this effect");
-
-                Bukkit.getScheduler().cancelTask(this.handleID);
-            }
-        }
-
         if (time == this.initTime) {
             for (BattlePlayer player : t.getPlayers()) {
                 player.sendMessage(Battle.prefix() + "You have " + time / 60 + " minutes left to place a wool.");
             }
-        }
+        } else {
+            if (time % 600 == 0 && time >= 600) {
+                for (BattlePlayer player : t.getPlayers()) {
+                    player.sendMessage(Battle.prefix() + "You have " + time / 60 + " minutes left to place a wool.");
+                }
+            }
 
-        if (time % 600 == 0 && time >= 600) {
-            for (BattlePlayer player : t.getPlayers()) {
-                player.sendMessage(Battle.prefix() + "You have " + time / 60 + " minutes left to place a wool.");
+            if (time % 60 == 0 && time >= 60 && time < 600) {
+                for (BattlePlayer player : t.getPlayers()) {
+                    player.sendMessage(Battle.prefix() + "You have " + time / 60 + " minutes left to place a wool.");
+                }
+            }
+
+            if (time % 10 == 0 && time > 0 && time < 60) {
+                for (BattlePlayer player : t.getPlayers()) {
+                    player.sendMessage(Battle.prefix() + "You have " + time + " seconds left to place a wool.");
+                }
+            }
+
+            if (time == 0) {
+                for (BattlePlayer player : t.getPlayers()) {
+
+                    // TODO fix whiter effect duration length
+
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 120, 0));
+                    player.sendMessage(Battle.prefix() + "Place a wool to disable this effect");
+
+                    Bukkit.getScheduler().cancelTask(this.handleID);
+                }
             }
         }
-
-        if (time % 60 == 0 && time >= 60 && time < 600) {
-            for (BattlePlayer player : t.getPlayers()) {
-                player.sendMessage(Battle.prefix() + "You have " + time / 60 + " minutes left to place a wool.");
-            }
-        }
-
-        if (time % 10 == 0 && time > 0 && time < 60) {
-            for (BattlePlayer player : t.getPlayers()) {
-                player.sendMessage(Battle.prefix() + "You have " + time + " seconds left to place a wool.");
-            }
-        }
-
         if (time > 0)
             time--;
     }

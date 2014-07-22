@@ -67,6 +67,8 @@ public class TeamManager implements Serializable {
     }
 
     public boolean isLastTeam(Team team) {
+        // TODO fix this method
+
         int count = 0;
         for (Entry<TeamColor, Team> t : this.teams.entrySet()) {
             if (t.getValue().hasLost()) {
