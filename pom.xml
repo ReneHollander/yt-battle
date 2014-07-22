@@ -180,7 +180,7 @@
 				<version>2.6</version>
 				<executions>
 					<execution>
-						<id>copy_scripts_to_testenv</id>
+						<id>copy_serverfiles_to_testenv</id>
 						<phase>install</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -189,7 +189,7 @@
 							<outputDirectory>${basedir}/bukkit/</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${basedir}/config/scripts/</directory>
+									<directory>${basedir}/config/server_files/</directory>
 								</resource>
 							</resources>
 						</configuration>
