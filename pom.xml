@@ -23,10 +23,6 @@
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public/</url>
 		</repository>
-		<repository>
-			<id>rene8888-repo</id>
-			<url>http://repo.rene8888.at/</url>
-		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
@@ -38,11 +34,6 @@
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
 			<version>1.7.10-R0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>at.rene8888</groupId>
-			<artifactId>serilib</artifactId>
-			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 	<build>

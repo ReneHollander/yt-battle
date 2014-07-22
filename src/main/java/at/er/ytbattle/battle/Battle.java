@@ -38,9 +38,9 @@ import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.battle.timer.RemindTimer;
+import at.er.ytbattle.util.Deserialize;
 import at.er.ytbattle.util.PlayerArmor;
-import at.rene8888.serilib.Deserialize;
-import at.rene8888.serilib.Serialize;
+import at.er.ytbattle.util.Serialize;
 
 import com.google.common.base.Functions;
 import com.google.common.collect.Lists;
@@ -64,8 +64,6 @@ public class Battle extends JavaPlugin {
 
         new BattlePlayerManager(this);
 
-        
-        
         this.loadConfig();
         this.loadGame();
 

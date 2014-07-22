@@ -2,6 +2,7 @@ package at.er.ytbattle.battle.timer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
@@ -73,6 +74,21 @@ public class InvincibilityTimer implements Runnable, Listener {
                 damager.sendMessage(Battle.prefix() + "You damaged " + victim.getName() + ". You have lost your invincibility!");
                 HandlerList.unregisterAll(this);
                 Bukkit.getScheduler().cancelTask(handle);
+            }
+        } else if ((event.getDamager() instanceof Projectile) && (event.getEntity() instanceof Player)) {
+            Projectile projectile = (Projectile) event.getDamager();
+            if (projectile.getShooter() instanceof Player) {
+                Player victim = (Player) event.getEntity();
+                Player damager = (Player) projectile.getShooter();
+                if (PlayerUtil.areEqual(victim, player)) {
+                    damager.sendMessage(Battle.prefix() + victim.getName() + " died shortly before. He is invincible!");
+                    event.setCancelled(true);
+                }
+                if (PlayerUtil.areEqual(damager, player)) {
+                    damager.sendMessage(Battle.prefix() + "You damaged " + victim.getName() + ". You have lost your invincibility!");
+                    HandlerList.unregisterAll(this);
+                    Bukkit.getScheduler().cancelTask(handle);
+                }
             }
         }
     }

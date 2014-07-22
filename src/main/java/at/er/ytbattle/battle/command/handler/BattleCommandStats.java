@@ -23,11 +23,11 @@ public class BattleCommandStats extends AbstractCommand {
                     Team t = Battle.instance().getGame().getTeamManager().getTeam(TeamColor.getTeamByShortName(args[0].toLowerCase()));
                     if (t != null) {
                         for (BattlePlayer p : t.getPlayers()) {
-                            list += p + " (" + p.getHealth() * 10.0 / 2.0 + "%), ";
+                            list += p.getName() + " (" + p.getHealth() * 10.0 / 2.0 + "%), ";
                         }
                         if (list.length() > 0)
                             list = list.substring(0, list.lastIndexOf(','));
-                        player.sendMessage(Battle.prefix() + ChatColor.DARK_RED + "Red Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + t.getLifes() + "\n" + "Wools: " + t.getBlockPlaceTimerManager().getRemainingWoolCount());
+                        player.sendMessage(Battle.prefix() + t.getTeamColor().getChatColor() + t.getTeamColor().getLongName() + " Team:" + ChatColor.WHITE + "\n" + "Players: " + list + "\n" + "Lifes: " + t.getLifes() + "\n" + "Wools: " + t.getBlockPlaceTimerManager().getRemainingWoolCount());
                     } else {
                         player.sendMessage(Battle.prefix() + "Please select a team: /battle stats <teamname>");
                     }

@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -17,6 +18,8 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.player.BattlePlayerManager;
+import at.er.ytbattle.battle.timer.FireworkTimer;
+import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.PlayerArmor;
 
 public class PlayerDeathListener implements Listener {
@@ -89,36 +92,28 @@ public class PlayerDeathListener implements Listener {
                 player.teleport(spawn);
                 player.setDisplayName(player.getName());
                 t.removePlayer(player);
-                Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the " + t.getTeamColor().getShortName() + " team has lost!");
+                Bukkit.broadcastMessage(Battle.prefix() + player.getName() + " from the " + t.getTeamColor().getLongName() + " team has lost!");
                 if (t.getTeamSize() == 0) {
                     t.setLost(true);
-                    Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getShortName() + " has lost!");
+                    Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getLongName() + " has lost!");
                 }
             }
 
-            // if (Battle.instance().getGame().getTeamManager().isLastTeam(t)) {
-            // Bukkit.broadcastMessage(Battle.prefix() + "Team " +
-            // t.getTeamColor().getShortName() + " has won the Battle!");
-            // for (String s : t.getPlayers()) {
-            // Player p = Bukkit.getPlayer(s);
-            // p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE +
-            // " - " + p.getName());
-            // p.teleport(spawn);
-            // p.setAllowFlight(true);
-            // p.setFlying(true);
-            // }
-            // RemindTimer.getRT().stopTimer();
-            // Battle.instance().getGame().setStarted(false);
-            // FireworkTimer ft = new FireworkTimer();
-            // int id =
-            // Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(),
-            // ft, 0, 20L);
-            // ft.setID(id);
-            // Bukkit.broadcastMessage(Battle.prefix() +
-            // "Thanks for playing! Battle Battle.instance() v" +
-            // Battle.instance().getDescription().getVersion() +
-            // " made by EXSolo and Rene8888.");
-            // }
+            if (Battle.instance().getGame().getTeamManager().isLastTeam(t)) {
+                Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getLongName() + " has won the Battle!");
+                for (BattlePlayer p : t.getPlayers()) {
+                    p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+                    p.teleport(spawn);
+                    p.setAllowFlight(true);
+                    p.setFlying(true);
+                }
+                RemindTimer.getRT().stopTimer();
+                Battle.instance().getGame().setStarted(false);
+                FireworkTimer ft = new FireworkTimer();
+                int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), ft, 0, 20L);
+                ft.setID(id);
+                Bukkit.broadcastMessage(Battle.prefix() + "Thanks for playing! YT-Battle v" + Battle.instance().getDescription().getVersion() + " made by EXSolo and Rene8888.");
+            }
         }
 
         Battle.instance().updateScoreboard();

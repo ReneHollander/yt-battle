@@ -21,7 +21,7 @@ public class BattleCommandLife extends AbstractCommand {
         if (Battle.instance().getGame().isStarted()) {
             if (this.teamManager.isInTeam(player)) {
                 Team t = this.teamManager.getTeamByPlayer(player);
-                if (t.getLifes() > 1) {
+                if (t.getLifes() > 0) {
                     player.getInventory().addItem(new Wool(t.getTeamColor().getDyeColor()).toItemStack(1));
                     t.setLifes(t.getLifes() - 1);
                     player.sendMessage(Battle.prefix() + "You recieved a new wool!");

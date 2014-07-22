@@ -13,8 +13,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import at.er.ytbattle.battle.Game;
 import at.er.ytbattle.battle.TeamColor;
-import at.rene8888.serilib.Deserialize;
-import at.rene8888.serilib.Serialize;
+import at.er.ytbattle.util.Deserialize;
+import at.er.ytbattle.util.Serialize;
 
 public class GUIControl implements ActionListener, ListSelectionListener {
 
