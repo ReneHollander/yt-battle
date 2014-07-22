@@ -1,4 +1,4 @@
-Das YouTube-Battle Plugin
+Willkommen beim offizielle YouTube-Battle Plugin
 -------------------------
 
 **Download der letzten Version**: [YT-Battle 1.9.0 für Craftbukkit 1.7.10-R0.1](http://www.google.at)
