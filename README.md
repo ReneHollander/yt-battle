@@ -46,7 +46,8 @@ Damit das gut Funktioniert, bitte ich dich, den Eclipse Code Formatter zu verwen
 Auch bitte ich dich, alles gut zu testen und zu dokumentieren! Jetzt kannst du deinen Pull Request ausführen. Wenn alles passt wird der Request nach maximal 1-2 Tagen angenommen. Die Änderung wird dann bei der nächsten Version im Download inkludiert. Sollte es sich um einen Major Bugfix handeln, wird sofort ein neuer Download bereitgestellt.
  
 ####Issues
-Solltest du einen Fehler finden, kannst du ihn ganz einfach reporten: 
+Solltest du einen Fehler finden, kannst du ihn ganz einfach reporten:
+
 1. Navigiere zur [Issue Page](https://github.com/Rene8888/yt-battle/issues)
 2. Überprüfe ob das Problem nicht bereits reportet wurde
 3. Erstelle ein neues Problem (`New Issue` Button)
