@@ -5,6 +5,17 @@ Willkommen beim offiziellen YouTube-Battle Plugin
 
 ##Informationen
 
+###Autoren
+* EXSolo:
+	* Website: [exsoloscript.com](http://exsoloscript.com/)
+	* YouTube: [EXSoloScript](https://www.youtube.com/user/EXSoloScript)
+	* Skype: exsoloyt
+*Rene8888: 
+	* Website: [rene8888.at](http://rene8888.at/)
+	* YouTube: [Rene8004](https://www.youtube.com/user/Rene8004/)
+	* Skype: simpsons_fan2
+	* Twitter: [Rene8004](https://twitter.com/Rene8004)
+
 ###Den Server konfigurieren
 ####Installation:
 Verwendet wird die Craftbukkit Version `1.7.10-R0.1`. Das Plugin muss mitsamt dem `lib` Ordner in den `plugins` Ordner verschoben werden. Am sichersten ist es, wenn vorher alle anderen Plugins wie Permission System, World Edit, Essentials usw entfernt werden. Sonst kann es zu Problemen kommen!  
