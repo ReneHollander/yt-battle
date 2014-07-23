@@ -9,6 +9,7 @@ Willkommen beim offiziellen YouTube-Battle Plugin
 ####Installation:
 Verwendet wird die Craftbukkit Version `1.7.10-R0.1`. Das Plugin muss mitsamt dem `lib` Ordner in den `plugins` Ordner verschoben werden. Am sichersten ist es, wenn vorher alle anderen Plugins wie Permission System, World Edit, Essentials usw entfernt werden. Sonst kann es zu Problemen kommen!  
 Dann kann schon der Server gestartet werden. Die Konfiguration erfolgt nun INGAME:
+
 1. Zuerst muss der Spawn Punkt mit dem Kommando `/battle spawn` gesetzt werden.
 2. Durch einen Fehler in der momentanen Version von WorldEdit, können wir den Border nicht automatisch generieren. Als Border Material wird Bedrock empfohlen.
 3. Damit jeder Spieler im Richtigen Team ist, muss jeder Spieler folgendes Kommando ausführen: `/battle join <farbe>`. Folgende Team Farben sind verfügbar: `white, yellow, green, cyan, purple, blue, red, black`
