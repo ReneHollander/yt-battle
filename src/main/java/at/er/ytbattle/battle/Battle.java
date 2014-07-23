@@ -35,9 +35,9 @@ import at.er.ytbattle.battle.event.PlayerRespawnListener;
 import at.er.ytbattle.battle.event.PlayerShearListener;
 import at.er.ytbattle.battle.event.PrepareItemCraftListener;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.PlayerArmor;
+import at.er.ytbattle.util.XStreamUtil;
 
 import com.google.common.base.Functions;
 import com.google.common.collect.Lists;
@@ -61,8 +61,6 @@ public class Battle extends JavaPlugin {
         instance = this;
 
         this.playerArmor = new HashMap<Player, PlayerArmor>();
-
-        new BattlePlayerManager();
 
         this.loadConfig();
         this.loadGame();
@@ -176,8 +174,7 @@ public class Battle extends JavaPlugin {
     public void loadGame() {
         File save = new File(getDataFolder(), "savegame.xml");
         if (save.exists()) {
-            XStream xstream = new XStream();
-            xstream.setMode(XStream.ID_REFERENCES);
+            XStream xstream = XStreamUtil.createXStream();
             try {
                 Game g = (Game) xstream.fromXML(save);
                 System.out.println("Loaded savegame.xml!");
@@ -196,8 +193,7 @@ public class Battle extends JavaPlugin {
     public void saveGame() {
         if (!dontSave) {
             if (game.isStarted()) {
-                XStream xstream = new XStream();
-                xstream.setMode(XStream.ID_REFERENCES);
+                XStream xstream = XStreamUtil.createXStream();
                 try {
                     xstream.toXML(this.game, new FileOutputStream(new File(getDataFolder(), "savegame.xml")));
                 } catch (Exception e) {

@@ -27,9 +27,10 @@ public class BattlePlayerManager implements Listener {
         Battle.instance().getServer().getPluginManager().registerEvents(this, Battle.instance());
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            BattlePlayer battlePlayer = new BattlePlayer(p);
-
-            this.players.put(p.getUniqueId(), battlePlayer);
+            if (this.players.containsKey(p.getUniqueId()) == false) {
+                BattlePlayer battlePlayer = new BattlePlayer(p);
+                this.players.put(UUID.fromString(p.getUniqueId().toString()), battlePlayer);
+            }
         }
     }
 
@@ -57,22 +58,19 @@ public class BattlePlayerManager implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerLogin(PlayerLoginEvent event) {
         Player player = event.getPlayer();
-        BattlePlayer battlePlayer = new BattlePlayer(player);
-
-        this.players.put(player.getUniqueId(), battlePlayer);
+        if (this.players.containsKey(player.getUniqueId()) == false) {
+            BattlePlayer battlePlayer = new BattlePlayer(player);
+            this.players.put(UUID.fromString(player.getUniqueId().toString()), battlePlayer);
+        }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-
-        this.players.remove(player.getUniqueId());
+        this.getBattlePlayer(event.getPlayer()).store();
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerKick(PlayerKickEvent event) {
-        Player player = event.getPlayer();
-
-        this.players.remove(player.getUniqueId());
+        this.getBattlePlayer(event.getPlayer()).store();
     }
 }

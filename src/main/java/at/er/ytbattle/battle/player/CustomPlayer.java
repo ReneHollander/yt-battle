@@ -54,13 +54,13 @@ import org.bukkit.util.Vector;
 public class CustomPlayer implements Player {
 
     private UUID uuid;
-    private transient Player player;
-
     private String lastValidName;
+    
+    private transient Player player;
 
     public CustomPlayer(Player player) {
         this.player = player;
-        this.uuid = player.getUniqueId();
+        this.uuid = UUID.fromString(player.getUniqueId().toString());
 
         this.lastValidName = player.getName();
     }
@@ -108,6 +108,10 @@ public class CustomPlayer implements Player {
         } catch (Exception e) {
         }
         return this.lastValidName;
+    }
+    
+    public void store() {
+        this.player = null;
     }
 
     @Override
