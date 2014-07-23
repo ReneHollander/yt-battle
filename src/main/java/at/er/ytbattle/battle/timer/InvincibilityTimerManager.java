@@ -3,53 +3,35 @@ package at.er.ytbattle.battle.timer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.entity.Player;
-
-import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.player.BattlePlayer;
 
 public class InvincibilityTimerManager {
 
-    private static InvincibilityTimerManager instance;
-
-    private Battle b;
-    private Map<String, InvincibilityTimer> timers;
+    private Map<BattlePlayer, InvincibilityTimer> timers;
 
     private int time;
 
-    public InvincibilityTimerManager(Battle b, int time) {
-        if (instance == null) {
-            instance = this;
-            this.b = b;
-            this.timers = new HashMap<String, InvincibilityTimer>();
-            this.time = time;
-        } else {
-            throw new RuntimeException("manager already running!");
-        }
+    public InvincibilityTimerManager(int time) {
+        this.timers = new HashMap<BattlePlayer, InvincibilityTimer>();
+        this.time = time;
     }
 
-    public void stopTimer(Player p) {
-        String name = p.getName();
-
-        InvincibilityTimer it = timers.get(name);
+    public void stopTimer(BattlePlayer p) {
+        InvincibilityTimer it = timers.get(p);
         if (it != null) {
             it.stopTimer();
-            timers.remove(name);
+            timers.remove(p);
         }
     }
 
-    public boolean timerRunning(Player p) {
+    public boolean timerRunning(BattlePlayer p) {
         return timers.containsKey(p.getName());
     }
 
     public void createTimer(BattlePlayer p) {
         this.stopTimer(p);
-        InvincibilityTimer it = new InvincibilityTimer(this.b, p, time);
-        timers.put(p.getName(), it);
+        InvincibilityTimer it = new InvincibilityTimer(p, time);
+        timers.put(p, it);
 
-    }
-
-    public static InvincibilityTimerManager instance() {
-        return instance;
     }
 }

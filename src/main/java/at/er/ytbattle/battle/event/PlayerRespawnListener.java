@@ -14,8 +14,6 @@ import org.bukkit.potion.PotionEffectType;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.player.BattlePlayerManager;
-import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.util.PlayerArmor;
 
 public class PlayerRespawnListener implements Listener {
@@ -26,7 +24,7 @@ public class PlayerRespawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
+        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
 
         if (Battle.instance().getGame().isStarted() && Battle.instance().getGame().getTeamManager().isInTeam(player)) {
 
@@ -41,7 +39,7 @@ public class PlayerRespawnListener implements Listener {
                 Battle.instance().playerArmor.remove(player);
             }
 
-            InvincibilityTimerManager.instance().createTimer(player);
+            Battle.instance().getGame().getInvincibilityTimerManager().createTimer(player);
             event.setRespawnLocation(Battle.instance().getGame().getSpawn().getLocation());
             player.getInventory().addItem(new Wool(t.getTeamColor().getDyeColor()).toItemStack(1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 2));

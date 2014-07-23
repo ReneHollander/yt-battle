@@ -13,8 +13,6 @@ import org.bukkit.material.Wool;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.player.BattlePlayerManager;
-import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 
 public class BlockBreakListener implements Listener {
 
@@ -24,7 +22,7 @@ public class BlockBreakListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
-        BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
+        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
         if (event.getBlock().getType() == Material.WOOL && Battle.instance().getGame().isStarted() && Battle.instance().getGame().getTeamManager().isInTeam(player)) {
             DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
             Team t = Battle.instance().getGame().getTeamManager().getTeamByPlayer(player);
@@ -36,8 +34,8 @@ public class BlockBreakListener implements Listener {
             } else {
                 victim.getBlockPlaceTimerManager().woolBreak();
 
-                if (InvincibilityTimerManager.instance().timerRunning(player)) {
-                    InvincibilityTimerManager.instance().stopTimer(player);
+                if (Battle.instance().getGame().getInvincibilityTimerManager().timerRunning(player)) {
+                    Battle.instance().getGame().getInvincibilityTimerManager().stopTimer(player);
                     player.sendMessage(Battle.prefix() + "You have lost your invincibility!");
                 }
 

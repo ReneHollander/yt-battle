@@ -1,7 +1,5 @@
 package at.er.ytbattle.battle.timer;
 
-import java.io.Serializable;
-
 import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -10,24 +8,27 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
 
-public class BlockPlaceTimer implements Runnable, Serializable {
-    private static final long serialVersionUID = 1L;
+public class BlockPlaceTimer implements Runnable {
 
     private Team t;
-
-    private int handleID;
 
     private int initTime;
     private int time;
 
-    public BlockPlaceTimer(Battle b, Team t, int time) {
+    private transient int handleID;
+
+    public BlockPlaceTimer(Team t, int time) {
         this.t = t;
 
         this.time = time;
         this.initTime = time;
 
-        this.handleID = Bukkit.getScheduler().scheduleSyncRepeatingTask(b, this, 0L, 20L);
+        this.handleID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), this, 0L, 20L);
+    }
 
+    private Object readResolve() {
+        this.handleID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), this, 0L, 20L);
+        return this;
     }
 
     @Override

@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.player.BattlePlayerManager;
 
 public class PlayerInteractListener implements Listener {
 
@@ -23,7 +22,7 @@ public class PlayerInteractListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
+        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
         if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) && player.getItemInHand().getType() == Material.GHAST_TEAR && Battle.instance().getGame().isStarted()) {
             if (Battle.instance().getGame().getTeamManager().isInTeam(player) == false) {
                 player.sendMessage(Battle.prefix() + "You left the battle, this item is worthless now!");

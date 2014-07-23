@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -40,16 +41,12 @@ public class BattleCommandStart extends AbstractCommand {
 
                 int startlifes = Battle.instance().getConfig().getInt("config.lifes-at-start");
                 boolean reminder = Battle.instance().getConfig().getBoolean("config.enable-remind-scheduler");
+                boolean baseItem = Battle.instance().getConfig().getBoolean("config.enable-base-block");
 
                 if (Battle.instance().getGame().getSpawn() == null) {
-                    Battle.instance().getGame().setSpawn(new SerializableLocation(player.getLocation()));
-                    Battle.instance().getGame().getSpawn().getLocation().getWorld()
-                            .setSpawnLocation((int) Battle.instance().getGame().getSpawn().getLocation().getX(), (int) Battle.instance().getGame().getSpawn().getLocation().getY(), (int) Battle.instance().getGame().getSpawn().getLocation().getZ());
-                    Battle.instance().getConfig().set("saves.spawn.world", player.getLocation().getWorld().getName());
-                    Battle.instance().getConfig().set("saves.spawn.x", player.getLocation().getX());
-                    Battle.instance().getConfig().set("saves.spawn.y", player.getLocation().getY());
-                    Battle.instance().getConfig().set("saves.spawn.z", player.getLocation().getZ());
-                    Battle.instance().saveConfig();
+                    Location spawn = player.getLocation();
+                    Battle.instance().getGame().setSpawn(new SerializableLocation(spawn));
+                    spawn.getWorld().setSpawnLocation((int) spawn.getX(), (int) spawn.getY(), (int) spawn.getZ());
                     player.sendMessage(Battle.prefix() + "Battlespawn has been set to your current location!");
                 }
 
@@ -60,8 +57,6 @@ public class BattleCommandStart extends AbstractCommand {
                 baseMeta.setDisplayName(ChatColor.GRAY + "Base Block");
                 baseMeta.setLore(Arrays.asList("Place me to create a base"));
                 base.setItemMeta(baseMeta);
-
-                boolean baseItem = Battle.instance().getConfig().getBoolean("config.enable-base-block");
 
                 for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
 
@@ -97,8 +92,7 @@ public class BattleCommandStart extends AbstractCommand {
                 if (timer > 0) {
                     Battle.instance().getGame().getSpawn().getLocation().getWorld().setPVP(false);
 
-                    Battle.instance().getGame().setGraceTimer(new GraceTimer(timer * 60));
-                    Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), Battle.instance().getGame().getGraceTimer(), 0, 20);
+                    new GraceTimer(timer * 60);
                 }
                 if (reminder == true) {
                     Bukkit.broadcastMessage(Battle.prefix() + "Starting battle reminder. Scheduling every 15 minutes!");

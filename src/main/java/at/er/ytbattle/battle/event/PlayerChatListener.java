@@ -9,7 +9,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.player.BattlePlayerManager;
 
 public class PlayerChatListener implements Listener {
 
@@ -19,7 +18,7 @@ public class PlayerChatListener implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
+        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
         if (Battle.instance().getGame().isStarted()) {
             if (Battle.instance().getGame().getTeamManager().isInTeam(player)) {
                 Team t = Battle.instance().getGame().getTeamManager().getTeamByPlayer(player);

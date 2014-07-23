@@ -16,18 +16,22 @@ import at.er.ytbattle.battle.player.PlayerUtil;
 
 public class InvincibilityTimer implements Runnable, Listener {
 
-    private Battle plugin;
     private BattlePlayer player;
     private int time;
 
-    private int handle;
+    private transient int handleID;
 
-    public InvincibilityTimer(Battle b, BattlePlayer player, int time) {
-        this.plugin = b;
+    public InvincibilityTimer(BattlePlayer player, int time) {
         this.player = player;
         this.time = time;
-        handle = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this, 0L, 1200L);
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.handleID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), this, 0L, 1200L);
+        Battle.instance().getServer().getPluginManager().registerEvents(this, Battle.instance());
+    }
+
+    private Object readResolve() {
+        this.handleID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), this, 0L, 1200L);
+        Battle.instance().getServer().getPluginManager().registerEvents(this, Battle.instance());
+        return this;
     }
 
     @Override
@@ -50,14 +54,14 @@ public class InvincibilityTimer implements Runnable, Listener {
 
     public void stopTimer() {
         HandlerList.unregisterAll(this);
-        Bukkit.getScheduler().cancelTask(handle);
+        Bukkit.getScheduler().cancelTask(handleID);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent event) {
         if (PlayerUtil.areEqual(event.getEntity(), player)) {
             HandlerList.unregisterAll(this);
-            Bukkit.getScheduler().cancelTask(handle);
+            Bukkit.getScheduler().cancelTask(handleID);
         }
     }
 
@@ -73,7 +77,7 @@ public class InvincibilityTimer implements Runnable, Listener {
             if (PlayerUtil.areEqual(damager, player)) {
                 damager.sendMessage(Battle.prefix() + "You damaged " + victim.getName() + ". You have lost your invincibility!");
                 HandlerList.unregisterAll(this);
-                Bukkit.getScheduler().cancelTask(handle);
+                Bukkit.getScheduler().cancelTask(handleID);
             }
         } else if ((event.getDamager() instanceof Projectile) && (event.getEntity() instanceof Player)) {
             Projectile projectile = (Projectile) event.getDamager();
@@ -87,7 +91,7 @@ public class InvincibilityTimer implements Runnable, Listener {
                 if (PlayerUtil.areEqual(damager, player)) {
                     damager.sendMessage(Battle.prefix() + "You damaged " + victim.getName() + ". You have lost your invincibility!");
                     HandlerList.unregisterAll(this);
-                    Bukkit.getScheduler().cancelTask(handle);
+                    Bukkit.getScheduler().cancelTask(handleID);
                 }
             }
         }

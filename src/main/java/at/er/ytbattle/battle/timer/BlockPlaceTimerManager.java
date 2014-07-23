@@ -1,6 +1,5 @@
 package at.er.ytbattle.battle.timer;
 
-import java.io.Serializable;
 import java.util.HashSet;
 
 import org.bukkit.Sound;
@@ -9,9 +8,7 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
 
-public class BlockPlaceTimerManager implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class BlockPlaceTimerManager {
 
     private Team team;
     private int timetoplace;
@@ -37,7 +34,7 @@ public class BlockPlaceTimerManager implements Serializable {
     }
 
     public void woolBreak() {
-        BlockPlaceTimer bpt = new BlockPlaceTimer(Battle.instance(), this.team, this.timetoplace);
+        BlockPlaceTimer bpt = new BlockPlaceTimer(this.team, this.timetoplace);
         this.timers.add(bpt);
     }
 
@@ -59,7 +56,7 @@ public class BlockPlaceTimerManager implements Serializable {
 
     public void setupInitialWool() {
         for (int i = 0; i < this.team.getPlayers().size(); i++) {
-            BlockPlaceTimer bpt = new BlockPlaceTimer(Battle.instance(), this.team, this.timetoplace);
+            BlockPlaceTimer bpt = new BlockPlaceTimer(this.team, this.timetoplace);
             this.timers.add(bpt);
         }
     }

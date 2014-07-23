@@ -1,7 +1,5 @@
 package at.er.ytbattle.battle.timer;
 
-import java.io.Serializable;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 
@@ -9,14 +7,14 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
 
-public class GraceTimer implements Runnable, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class GraceTimer implements Runnable {
 
     private int time;
 
     public GraceTimer() {
         this.time = -1;
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), this, 0, 20);
     }
 
     public GraceTimer(int timeSec) {

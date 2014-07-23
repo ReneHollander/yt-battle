@@ -17,7 +17,6 @@ import org.bukkit.inventory.ItemStack;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.FireworkTimer;
 import at.er.ytbattle.battle.timer.RemindTimer;
 import at.er.ytbattle.util.PlayerArmor;
@@ -30,7 +29,7 @@ public class PlayerDeathListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDeath(PlayerDeathEvent event) {
-        BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getEntity());
+        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getEntity());
 
         if (Battle.instance().getGame().isStarted() && Battle.instance().getGame().getTeamManager().isInTeam(player)) {
 

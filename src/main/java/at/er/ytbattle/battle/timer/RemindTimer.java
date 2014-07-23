@@ -1,7 +1,5 @@
 package at.er.ytbattle.battle.timer;
 
-import java.io.Serializable;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -9,9 +7,7 @@ import org.bukkit.entity.Player;
 
 import at.er.ytbattle.battle.Battle;
 
-public class RemindTimer extends Thread implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class RemindTimer extends Thread {
     private static RemindTimer REMIND_TIMER;
 
     private static final long every = 1000 * 60 * 15;

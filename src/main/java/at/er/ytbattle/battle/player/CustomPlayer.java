@@ -1,9 +1,5 @@
 package at.er.ytbattle.battle.player;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.HashSet;
@@ -55,16 +51,12 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
-public class CustomPlayer implements Player, Externalizable {
+public class CustomPlayer implements Player {
 
     private UUID uuid;
-    private Player player;
+    private transient Player player;
 
     private String lastValidName;
-
-    public CustomPlayer() {
-
-    }
 
     public CustomPlayer(Player player) {
         this.player = player;
@@ -116,18 +108,6 @@ public class CustomPlayer implements Player, Externalizable {
         } catch (Exception e) {
         }
         return this.lastValidName;
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeUTF(this.getUniqueId().toString());
-        out.writeUTF(this.getLastValidName());
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        this.uuid = UUID.fromString(in.readUTF());
-        this.lastValidName = in.readUTF();
     }
 
     @Override

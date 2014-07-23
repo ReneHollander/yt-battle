@@ -13,7 +13,6 @@ import org.bukkit.material.Wool;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.player.BattlePlayerManager;
 
 public class PlayerMoveListener implements Listener {
 
@@ -23,7 +22,7 @@ public class PlayerMoveListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
+        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
 
         if (Battle.instance().getGame().isStarted()) {
             if (Battle.instance().getGame().getTeamManager().isInTeam(player)) {

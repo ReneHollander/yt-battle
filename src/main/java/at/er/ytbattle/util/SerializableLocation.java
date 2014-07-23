@@ -1,9 +1,5 @@
 package at.er.ytbattle.util;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -11,14 +7,12 @@ import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
 
-public final class SerializableLocation implements Externalizable {
-    private static final long serialVersionUID = 1L;
-
+public final class SerializableLocation {
     private String world;
     private UUID uuid;
     private double x, y, z;
     private float yaw, pitch;
-    private Location loc;
+    private transient Location loc;
 
     public SerializableLocation() {
 
@@ -64,27 +58,5 @@ public final class SerializableLocation implements Externalizable {
             loc = new Location(world, x, y, z, yaw, pitch);
         }
         return loc;
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeUTF(world);
-        out.writeUTF(uuid.toString());
-        out.writeDouble(x);
-        out.writeDouble(y);
-        out.writeDouble(z);
-        out.writeFloat(yaw);
-        out.writeFloat(pitch);
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        world = in.readUTF();
-        uuid = UUID.fromString(in.readUTF());
-        x = in.readDouble();
-        y = in.readDouble();
-        z = in.readDouble();
-        yaw = in.readFloat();
-        pitch = in.readFloat();
     }
 }

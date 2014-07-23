@@ -1,6 +1,5 @@
 package at.er.ytbattle.battle.player;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,28 +14,28 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class BattlePlayerManager implements Listener, Serializable {
+import at.er.ytbattle.battle.Battle;
 
-    private static final long serialVersionUID = 1123813768710789814L;
-
-    private transient static BattlePlayerManager instance;
+public class BattlePlayerManager implements Listener {
 
     private Map<UUID, BattlePlayer> players;
 
-    public BattlePlayerManager(JavaPlugin plugin) {
-        instance = this;
-
+    public BattlePlayerManager() {
         this.players = new HashMap<UUID, BattlePlayer>();
 
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        Battle.instance().getServer().getPluginManager().registerEvents(this, Battle.instance());
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             BattlePlayer battlePlayer = new BattlePlayer(p);
 
             this.players.put(p.getUniqueId(), battlePlayer);
         }
+    }
+
+    private Object readResolve() {
+        Battle.instance().getServer().getPluginManager().registerEvents(this, Battle.instance());
+        return this;
     }
 
     public BattlePlayer getBattlePlayer(UUID uuid) {
@@ -75,13 +74,5 @@ public class BattlePlayerManager implements Listener, Serializable {
         Player player = event.getPlayer();
 
         this.players.remove(player.getUniqueId());
-    }
-
-    public static BattlePlayerManager instance() {
-        return instance;
-    }
-
-    public static void setInstance(BattlePlayerManager newInstance) {
-        instance = newInstance;
     }
 }

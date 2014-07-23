@@ -1,7 +1,7 @@
 package at.er.ytbattle.battle;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,14 +36,12 @@ import at.er.ytbattle.battle.event.PlayerShearListener;
 import at.er.ytbattle.battle.event.PrepareItemCraftListener;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.player.BattlePlayerManager;
-import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
 import at.er.ytbattle.battle.timer.RemindTimer;
-import at.er.ytbattle.util.Deserialize;
 import at.er.ytbattle.util.PlayerArmor;
-import at.er.ytbattle.util.Serialize;
 
 import com.google.common.base.Functions;
 import com.google.common.collect.Lists;
+import com.thoughtworks.xstream.XStream;
 
 public class Battle extends JavaPlugin {
 
@@ -55,6 +53,8 @@ public class Battle extends JavaPlugin {
 
     public HashMap<Player, PlayerArmor> playerArmor;
 
+    // TODO player doesnt have colored tab list name
+
     @Override
     public void onEnable() {
 
@@ -62,7 +62,7 @@ public class Battle extends JavaPlugin {
 
         this.playerArmor = new HashMap<Player, PlayerArmor>();
 
-        new BattlePlayerManager(this);
+        new BattlePlayerManager();
 
         this.loadConfig();
         this.loadGame();
@@ -77,8 +77,7 @@ public class Battle extends JavaPlugin {
         this.setTags();
         this.updateScoreboard();
 
-        new InvincibilityTimerManager(this, getConfig().getInt("config.invincibility-timer-duration"));
-
+        this.setTags();
     }
 
     @Override
@@ -130,11 +129,6 @@ public class Battle extends JavaPlugin {
         this.getConfig().addDefault("config.wool-place-min-height", 50);
         this.getConfig().addDefault("config.base-block-chest-content", defaultChestContent);
 
-        this.getConfig().addDefault("saves.spawn.world", "");
-        this.getConfig().addDefault("saves.spawn.x", 0);
-        this.getConfig().addDefault("saves.spawn.y", 0);
-        this.getConfig().addDefault("saves.spawn.z", 0);
-
         this.getConfig().options().header("Battle Plugin by EXSolo and Rene8888");
 
         this.getConfig().options().copyDefaults(true);
@@ -180,64 +174,60 @@ public class Battle extends JavaPlugin {
     }
 
     public void loadGame() {
-
-        File save = new File(getDataFolder(), "battle.save");
-
+        File save = new File(getDataFolder(), "savegame.xml");
         if (save.exists()) {
+            XStream xstream = new XStream();
+            xstream.setMode(XStream.ID_REFERENCES);
             try {
-                Object o = Deserialize.readFromFile(save, false);
-                if (o instanceof Game) {
-                    Game g = (Game) o;
-                    if (g.isSaved()) {
-                        game = g;
-                        System.out.println("Loaded battle.save!");
-                    }
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                Game g = (Game) xstream.fromXML(save);
+                System.out.println("Loaded savegame.xml!");
+                this.game = g;
+            } catch (Exception e) {
+                System.err.println("Error while trying to load the battle.save");
+                e.printStackTrace(System.err);
+
+                this.game = new Game();
             }
         } else {
-            System.out.println("No battle.save file detected...");
-            System.out.println("Skipping data loading...");
-            this.game = new Game(this, new TeamManager(this));
+            this.game = new Game();
         }
-
     }
 
     public void saveGame() {
         if (!dontSave) {
             if (game.isStarted()) {
+                XStream xstream = new XStream();
+                xstream.setMode(XStream.ID_REFERENCES);
                 try {
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.setDisplayName(p.getName());
-                    }
-                    File file = new File(getDataFolder(), "battle.save");
-                    game.setSaved(true);
-                    Serialize.writeToFile(game, file, false);
-                } catch (IOException e) {
-                    game.setSaved(false);
-                    e.printStackTrace();
+                    xstream.toXML(this.game, new FileOutputStream(new File(getDataFolder(), "savegame.xml")));
+                } catch (Exception e) {
+                    System.err.println("Error while trying to write the savegame.xml");
+                    e.printStackTrace(System.err);
                 }
             }
         }
     }
 
+    public void setupScoreboard() {
+
+    }
+
     public void updateScoreboard() {
         Scoreboard sb = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective lifes = sb.registerNewObjective("stats", "dummy");
-
         lifes.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         if (game.isStarted() == false || dontSave) {
             lifes.setDisplayName(ChatColor.BOLD + "Battle Infos");
 
-            lifes.getScore(ChatColor.ITALIC + "Battle v" + getDescription().getVersion()).setScore(5);
-            lifes.getScore(ChatColor.ITALIC + "").setScore(4);
-            lifes.getScore(ChatColor.ITALIC + "by").setScore(3);
-            lifes.getScore(ChatColor.ITALIC + "EXSolo").setScore(2);
-            lifes.getScore(ChatColor.ITALIC + "Rene8888").setScore(1);
+            lifes.getScore(ChatColor.ITALIC + "Battle v" + getDescription().getVersion()).setScore(8);
+            lifes.getScore(ChatColor.ITALIC + "").setScore(7);
+            lifes.getScore(ChatColor.ITALIC + "by").setScore(6);
+            lifes.getScore(ChatColor.ITALIC + "EXSolo").setScore(5);
+            lifes.getScore(ChatColor.ITALIC + "Rene8888").setScore(4);
+            lifes.getScore(ChatColor.ITALIC + "").setScore(3);
+            lifes.getScore(ChatColor.ITALIC + "Download: ").setScore(2);
+            lifes.getScore(ChatColor.ITALIC + "ix.lt/battle").setScore(1);
         } else {
             lifes.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
 

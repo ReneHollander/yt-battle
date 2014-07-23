@@ -1,6 +1,5 @@
 package at.er.ytbattle.battle;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +9,7 @@ import org.bukkit.DyeColor;
 
 import at.er.ytbattle.battle.player.BattlePlayer;
 
-public class TeamManager implements Serializable {
-
-    private static final long serialVersionUID = 8263676998251210643L;
+public class TeamManager {
 
     private Map<TeamColor, Team> teams;
 

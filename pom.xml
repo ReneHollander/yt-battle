@@ -25,6 +25,7 @@
 		</repository>
 	</repositories>
 	<dependencies>
+		<!-- Bukkit and Craftbukkit Dependencies -->
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
@@ -35,9 +36,16 @@
 			<artifactId>craftbukkit</artifactId>
 			<version>1.7.10-R0.1-SNAPSHOT</version>
 		</dependency>
+		<!-- Serialization API -->
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.7</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
+			<!-- Set the compiler targets to 1.7, java 8 doesn't work! -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -47,6 +55,7 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+			<!-- set classpath folder and main class for Bukkit and gui -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -61,6 +70,7 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<!-- copy the dependencies and packaged jars to the apropriate locations -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -166,6 +176,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- copy launch script and config files to bukkit test env -->
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.6</version>

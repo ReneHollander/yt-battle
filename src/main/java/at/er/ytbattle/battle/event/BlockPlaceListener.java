@@ -19,7 +19,6 @@ import org.bukkit.material.Wool;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.player.BattlePlayerManager;
 
 public class BlockPlaceListener implements Listener {
 
@@ -29,7 +28,7 @@ public class BlockPlaceListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent event) {
-        BattlePlayer player = BattlePlayerManager.instance().getBattlePlayer(event.getPlayer());
+        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
         if (event.getBlock().getType() == Material.GLASS && player.getWorld() == Battle.instance().getGame().getSpawn().getLocation().getWorld() && Battle.instance().getGame().isStarted()) {
             event.setCancelled(true);
             player.sendMessage(Battle.prefix() + "You are unable to place a Block of the Bordermaterial.");
