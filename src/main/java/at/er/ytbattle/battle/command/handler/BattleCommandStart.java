@@ -91,7 +91,6 @@ public class BattleCommandStart extends AbstractCommand {
                 }
                 if (timer > 0) {
                     Battle.instance().getGame().getSpawn().getLocation().getWorld().setPVP(false);
-
                     new GraceTimer(timer * 60);
                 }
                 if (reminder == true) {

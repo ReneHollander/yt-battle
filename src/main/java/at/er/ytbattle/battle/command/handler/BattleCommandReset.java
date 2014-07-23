@@ -17,7 +17,7 @@ public class BattleCommandReset extends AbstractCommand {
         Battle.instance().unsetTags();
         Battle.instance().updateScoreboard();
 
-        File file = new File(Battle.instance().getDataFolder(), "battle.save");
+        File file = new File(Battle.instance().getDataFolder(), "savegame.xml");
 
         if (file.exists()) {
             if (!file.delete())
