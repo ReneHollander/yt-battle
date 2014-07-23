@@ -1,5 +1,5 @@
-Willkommen beim offizielle YouTube-Battle Plugin
--------------------------
+Willkommen beim offiziellen YouTube-Battle Plugin
+-------------------------------------------------
 
 **Download der letzten Version**: [YT-Battle 1.9.0 für Craftbukkit 1.7.10-R0.1 || DEV BUILD 711aa376211726a77bb01988cf05286bfd9bf901](http://files.rene8888.at/yt-battle/yt-battle-latest-build-711aa376211726a77bb01988cf05286bfd9bf901.zip)
 
