@@ -10,15 +10,15 @@ import at.er.ytbattle.battle.player.BattlePlayer;
 
 public class BlockPlaceTimer implements Runnable {
 
-    private Team t;
+    private Team team;
 
     private int initTime;
     private int time;
 
     private transient int handleID;
 
-    public BlockPlaceTimer(Team t, int time) {
-        this.t = t;
+    public BlockPlaceTimer(Team team, int time) {
+        this.team = team;
 
         this.time = time;
         this.initTime = time;
@@ -34,30 +34,30 @@ public class BlockPlaceTimer implements Runnable {
     @Override
     public void run() {
         if (time == this.initTime) {
-            for (BattlePlayer player : t.getPlayers()) {
+            for (BattlePlayer player : team.getPlayers()) {
                 player.sendMessage(Battle.prefix() + "You have " + time / 60 + " minutes left to place a wool.");
             }
         } else {
             if (time % 600 == 0 && time >= 600) {
-                for (BattlePlayer player : t.getPlayers()) {
+                for (BattlePlayer player : team.getPlayers()) {
                     player.sendMessage(Battle.prefix() + "You have " + time / 60 + " minutes left to place a wool.");
                 }
             }
 
             if (time % 60 == 0 && time >= 60 && time < 600) {
-                for (BattlePlayer player : t.getPlayers()) {
+                for (BattlePlayer player : team.getPlayers()) {
                     player.sendMessage(Battle.prefix() + "You have " + time / 60 + " minutes left to place a wool.");
                 }
             }
 
             if (time % 10 == 0 && time > 0 && time < 60) {
-                for (BattlePlayer player : t.getPlayers()) {
+                for (BattlePlayer player : team.getPlayers()) {
                     player.sendMessage(Battle.prefix() + "You have " + time + " seconds left to place a wool.");
                 }
             }
 
             if (time == 0) {
-                for (BattlePlayer player : t.getPlayers()) {
+                for (BattlePlayer player : team.getPlayers()) {
 
                     // TODO fix whiter effect duration length
 
