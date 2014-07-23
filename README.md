@@ -1,14 +1,27 @@
-Willkommen beim offizielle YouTube-Battle Plugin
--------------------------
+Willkommen beim offiziellen YouTube-Battle Plugin
+-------------------------------------------------
 
-**Download der letzten Version**: [YT-Battle 1.9.0 für Craftbukkit 1.7.10-R0.1](http://www.google.at)
+**Download der letzten Version**: [YT-Battle 1.9.0 für Craftbukkit 1.7.10-R0.1 || DEV BUILD 711aa376211726a77bb01988cf05286bfd9bf901](http://files.rene8888.at/yt-battle/yt-battle-latest-build-711aa376211726a77bb01988cf05286bfd9bf901.zip)
 
 ##Informationen
+
+###Autoren
+* EXSolo:
+	- Website: [exsoloscript.com](http://exsoloscript.com/)
+	- YouTube: [EXSoloScript](https://www.youtube.com/user/EXSoloScript)
+	- Skype: exsoloyt
+
+* Rene8888:
+	- Website: [rene8888.at](http://rene8888.at/)
+	- YouTube: [Rene8004](https://www.youtube.com/user/Rene8004/)
+	- Skype: simpsons_fan2
+	- Twitter: [Rene8004](https://twitter.com/Rene8004)
 
 ###Den Server konfigurieren
 ####Installation:
 Verwendet wird die Craftbukkit Version `1.7.10-R0.1`. Das Plugin muss mitsamt dem `lib` Ordner in den `plugins` Ordner verschoben werden. Am sichersten ist es, wenn vorher alle anderen Plugins wie Permission System, World Edit, Essentials usw entfernt werden. Sonst kann es zu Problemen kommen!  
 Dann kann schon der Server gestartet werden. Die Konfiguration erfolgt nun INGAME:
+
 1. Zuerst muss der Spawn Punkt mit dem Kommando `/battle spawn` gesetzt werden.
 2. Durch einen Fehler in der momentanen Version von WorldEdit, können wir den Border nicht automatisch generieren. Als Border Material wird Bedrock empfohlen.
 3. Damit jeder Spieler im Richtigen Team ist, muss jeder Spieler folgendes Kommando ausführen: `/battle join <farbe>`. Folgende Team Farben sind verfügbar: `white, yellow, green, cyan, purple, blue, red, black`
@@ -37,7 +50,7 @@ Um eine neue Wolle zu erhalten, wird das Kommando `/battle life` verwendet.
 	2. Sollten Lücken im Bedrock Rand durch irgendwelche Umstände entstehen, so ist es dem Spieler nicht erlaubt durch diese Lücken irgendwelche Handlungen zu vollziehen. (z.B. kein Durchgehen, kein Abbauen auf der andern Seite, keine Tiere rüberlocken ect.)
 
 ##Regeln zur Nutzung
-Solltest du das Plugin verwenden und Videos darüber machen, musst du mit einem Direktlink in der Beschreibung oder dergleichen auf diese Seite (`https://github.com/Rene8888/yt-battle`) verweisen. Das muss jeder tun der Mitspielt! Kein adf.ly, bit.ly oder dergleichen. Änderungen am Code (wie in der Lizenz beschrieben) müssen Öffentlich zugänglich sein. Außerdem sollst du Änderungen nicht verkaufen oder irgendwie anders daran Geld verdienen. Monetarisierung der Videos ist okay, aber das Plugin darf nicht verkauft werden!
+Solltest du das Plugin verwenden und Videos darüber machen, musst du mit einem Direktlink in der Beschreibung oder dergleichen auf diese Seite (`https://github.com/Rene8888/yt-battle`) oder auf den verkürzten Link (`http://ix.lt/battle`) verweisen. Das muss jeder tun der Mitspielt! Änderungen am Code (wie in der Lizenz beschrieben) müssen Öffentlich zugänglich sein. Außerdem sollst du Änderungen nicht verkaufen oder irgendwie anders daran Geld verdienen. Monetarisierung der Videos ist okay, aber das Plugin darf nicht verkauft werden!
 
 ##Mitwirken
 ####Pull Requests
@@ -46,7 +59,8 @@ Damit das gut Funktioniert, bitte ich dich, den Eclipse Code Formatter zu verwen
 Auch bitte ich dich, alles gut zu testen und zu dokumentieren! Jetzt kannst du deinen Pull Request ausführen. Wenn alles passt wird der Request nach maximal 1-2 Tagen angenommen. Die Änderung wird dann bei der nächsten Version im Download inkludiert. Sollte es sich um einen Major Bugfix handeln, wird sofort ein neuer Download bereitgestellt.
  
 ####Issues
-Solltest du einen Fehler finden, kannst du ihn ganz einfach reporten: 
+Solltest du einen Fehler finden, kannst du ihn ganz einfach reporten:
+
 1. Navigiere zur [Issue Page](https://github.com/Rene8888/yt-battle/issues)
 2. Überprüfe ob das Problem nicht bereits reportet wurde
 3. Erstelle ein neues Problem (`New Issue` Button)
