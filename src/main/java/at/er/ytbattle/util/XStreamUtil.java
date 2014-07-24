@@ -4,9 +4,9 @@ import at.er.ytbattle.battle.Game;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamColor;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.BlockPlaceTimer;
-import at.er.ytbattle.battle.timer.BlockPlaceTimerManager;
-import at.er.ytbattle.battle.timer.InvincibilityTimer;
+import at.er.ytbattle.battle.timer.manager.BlockPlaceTimerManager;
+import at.er.ytbattle.battle.timer.timeables.BlockPlaceTimer;
+import at.er.ytbattle.battle.timer.timeables.InvincibilityTimer;
 
 import com.thoughtworks.xstream.XStream;
 

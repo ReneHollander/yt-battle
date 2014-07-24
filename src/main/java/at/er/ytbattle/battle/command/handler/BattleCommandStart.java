@@ -17,8 +17,8 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.GraceTimer;
-import at.er.ytbattle.battle.timer.RemindTimer;
+import at.er.ytbattle.battle.timer.timeables.GraceTimer;
+import at.er.ytbattle.battle.timer.timeables.RemindTimer;
 import at.er.ytbattle.util.SerializableLocation;
 
 public class BattleCommandStart extends AbstractCommand {

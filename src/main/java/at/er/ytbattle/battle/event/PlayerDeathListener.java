@@ -17,8 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.FireworkTimer;
-import at.er.ytbattle.battle.timer.RemindTimer;
+import at.er.ytbattle.battle.timer.timeables.FireworkTimer;
+import at.er.ytbattle.battle.timer.timeables.RemindTimer;
 import at.er.ytbattle.util.PlayerArmor;
 
 public class PlayerDeathListener implements Listener {

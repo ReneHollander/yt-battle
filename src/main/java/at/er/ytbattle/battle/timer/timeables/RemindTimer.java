@@ -1,4 +1,4 @@
-package at.er.ytbattle.battle.timer;
+package at.er.ytbattle.battle.timer.timeables;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

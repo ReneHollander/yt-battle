@@ -1,10 +1,10 @@
-package at.er.ytbattle.battle.timer;
+package at.er.ytbattle.util.timer;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import at.er.ytbattle.battle.timer.TimerManager.TimeScale;
+import at.er.ytbattle.util.timer.TimerManager.TimeScale;
 
 public abstract class Timeable extends TimerTask {
 

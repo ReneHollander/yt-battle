@@ -1,7 +1,7 @@
 package at.er.ytbattle.battle;
 
 import at.er.ytbattle.battle.player.BattlePlayerManager;
-import at.er.ytbattle.battle.timer.InvincibilityTimerManager;
+import at.er.ytbattle.battle.timer.manager.InvincibilityTimerManager;
 import at.er.ytbattle.util.SerializableLocation;
 
 public class Game {

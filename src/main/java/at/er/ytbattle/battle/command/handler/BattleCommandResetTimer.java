@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.RemindTimer;
+import at.er.ytbattle.battle.timer.timeables.RemindTimer;
 
 public class BattleCommandResetTimer extends AbstractCommand {
 

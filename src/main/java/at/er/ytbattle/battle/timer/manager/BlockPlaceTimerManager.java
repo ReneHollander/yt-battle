@@ -1,4 +1,4 @@
-package at.er.ytbattle.battle.timer;
+package at.er.ytbattle.battle.timer.manager;
 
 import java.util.HashSet;
 
@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.battle.timer.timeables.BlockPlaceTimer;
 
 public class BlockPlaceTimerManager {
 

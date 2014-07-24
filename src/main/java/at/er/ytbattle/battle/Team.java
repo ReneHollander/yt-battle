@@ -3,7 +3,7 @@ package at.er.ytbattle.battle;
 import java.util.ArrayList;
 
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.BlockPlaceTimerManager;
+import at.er.ytbattle.battle.timer.manager.BlockPlaceTimerManager;
 
 public class Team {
 

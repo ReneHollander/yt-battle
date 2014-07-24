@@ -35,7 +35,7 @@ import at.er.ytbattle.battle.event.PlayerRespawnListener;
 import at.er.ytbattle.battle.event.PlayerShearListener;
 import at.er.ytbattle.battle.event.PrepareItemCraftListener;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.RemindTimer;
+import at.er.ytbattle.battle.timer.timeables.RemindTimer;
 import at.er.ytbattle.util.PlayerArmor;
 import at.er.ytbattle.util.XStreamUtil;
 

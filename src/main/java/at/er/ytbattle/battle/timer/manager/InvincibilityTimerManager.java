@@ -1,9 +1,10 @@
-package at.er.ytbattle.battle.timer;
+package at.er.ytbattle.battle.timer.manager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.battle.timer.timeables.InvincibilityTimer;
 
 public class InvincibilityTimerManager {
 

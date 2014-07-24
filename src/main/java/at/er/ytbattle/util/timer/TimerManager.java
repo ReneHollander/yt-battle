@@ -1,4 +1,4 @@
-package at.er.ytbattle.battle.timer;
+package at.er.ytbattle.util.timer;
 
 import java.util.HashSet;
 
