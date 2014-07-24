@@ -103,10 +103,8 @@ public class CustomPlayer implements Player {
     }
 
     public String getLastValidName() {
-        try {
+        if (this.isLoaded())
             this.lastValidName = this.getPlayer().getName();
-        } catch (Exception e) {
-        }
         return this.lastValidName;
     }
 
@@ -116,7 +114,8 @@ public class CustomPlayer implements Player {
 
     @Override
     public void closeInventory() {
-        this.getPlayer().closeInventory();
+        if (this.isLoaded())
+            this.getPlayer().closeInventory();
     }
 
     @Override
@@ -181,7 +180,8 @@ public class CustomPlayer implements Player {
 
     @Override
     public void openInventory(InventoryView arg0) {
-        this.getPlayer().openInventory(arg0);
+        if (this.isLoaded())
+            this.getPlayer().openInventory(arg0);
     }
 
     @Override
@@ -191,17 +191,20 @@ public class CustomPlayer implements Player {
 
     @Override
     public void setGameMode(GameMode arg0) {
-        this.getPlayer().setGameMode(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setGameMode(arg0);
     }
 
     @Override
     public void setItemInHand(ItemStack arg0) {
-        this.getPlayer().setItemInHand(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setItemInHand(arg0);
     }
 
     @Override
     public void setItemOnCursor(ItemStack arg0) {
-        this.getPlayer().setItemOnCursor(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setItemOnCursor(arg0);
     }
 
     @Override
@@ -217,7 +220,8 @@ public class CustomPlayer implements Player {
     @Deprecated
     @Override
     public void _INVALID_setLastDamage(int arg0) {
-        this.getPlayer()._INVALID_setLastDamage(arg0);
+        if (this.isLoaded())
+            this.getPlayer()._INVALID_setLastDamage(arg0);
     }
 
     @Override
@@ -350,27 +354,32 @@ public class CustomPlayer implements Player {
 
     @Override
     public void removePotionEffect(PotionEffectType arg0) {
-        this.getPlayer().removePotionEffect(arg0);
+        if (this.isLoaded())
+            this.getPlayer().removePotionEffect(arg0);
     }
 
     @Override
     public void setCanPickupItems(boolean arg0) {
-        this.getPlayer().setCanPickupItems(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setCanPickupItems(arg0);
     }
 
     @Override
     public void setCustomName(String arg0) {
-        this.getPlayer().setCustomName(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setCustomName(arg0);
     }
 
     @Override
     public void setCustomNameVisible(boolean arg0) {
-        this.getPlayer().setCustomNameVisible(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setCustomNameVisible(arg0);
     }
 
     @Override
     public void setLastDamage(double arg0) {
-        this.getPlayer().setLastDamage(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setLastDamage(arg0);
     }
 
     @Override
@@ -380,27 +389,32 @@ public class CustomPlayer implements Player {
 
     @Override
     public void setMaximumAir(int arg0) {
-        this.getPlayer().setMaximumAir(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setMaximumAir(arg0);
     }
 
     @Override
     public void setMaximumNoDamageTicks(int arg0) {
-        this.getPlayer().setMaximumNoDamageTicks(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setMaximumNoDamageTicks(arg0);
     }
 
     @Override
     public void setNoDamageTicks(int arg0) {
-        this.getPlayer().setNoDamageTicks(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setNoDamageTicks(arg0);
     }
 
     @Override
     public void setRemainingAir(int arg0) {
-        this.getPlayer().setRemainingAir(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setRemainingAir(arg0);
     }
 
     @Override
     public void setRemoveWhenFarAway(boolean arg0) {
-        this.getPlayer().setRemoveWhenFarAway(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setRemoveWhenFarAway(arg0);
     }
 
     @Deprecated
@@ -528,27 +542,32 @@ public class CustomPlayer implements Player {
 
     @Override
     public void playEffect(EntityEffect arg0) {
-        this.getPlayer().playEffect(arg0);
+        if (this.isLoaded())
+            this.getPlayer().playEffect(arg0);
     }
 
     @Override
     public void remove() {
-        this.getPlayer().remove();
+        if (this.isLoaded())
+            this.getPlayer().remove();
     }
 
     @Override
     public void setFallDistance(float arg0) {
-        this.getPlayer().setFallDistance(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setFallDistance(arg0);
     }
 
     @Override
     public void setFireTicks(int arg0) {
-        this.getPlayer().setFireTicks(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setFireTicks(arg0);
     }
 
     @Override
     public void setLastDamageCause(EntityDamageEvent arg0) {
-        this.getPlayer().setLastDamageCause(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setLastDamageCause(arg0);
     }
 
     @Override
@@ -558,12 +577,14 @@ public class CustomPlayer implements Player {
 
     @Override
     public void setTicksLived(int arg0) {
-        this.getPlayer().setTicksLived(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setTicksLived(arg0);
     }
 
     @Override
     public void setVelocity(Vector arg0) {
-        this.getPlayer().setVelocity(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setVelocity(arg0);
     }
 
     @Override
@@ -598,24 +619,28 @@ public class CustomPlayer implements Player {
 
     @Override
     public void removeMetadata(String arg0, Plugin arg1) {
-        this.getPlayer().removeMetadata(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().removeMetadata(arg0, arg1);
     }
 
     @Override
     public void setMetadata(String arg0, MetadataValue arg1) {
-        this.getPlayer().setMetadata(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().setMetadata(arg0, arg1);
     }
 
     @Deprecated
     @Override
     public void _INVALID_damage(int arg0) {
-        this.getPlayer()._INVALID_damage(arg0);
+        if (this.isLoaded())
+            this.getPlayer()._INVALID_damage(arg0);
     }
 
     @Deprecated
     @Override
     public void _INVALID_damage(int arg0, Entity arg1) {
-        this.getPlayer()._INVALID_damage(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer()._INVALID_damage(arg0, arg1);
     }
 
     @Deprecated
@@ -633,23 +658,27 @@ public class CustomPlayer implements Player {
     @Deprecated
     @Override
     public void _INVALID_setHealth(int arg0) {
-        this.getPlayer()._INVALID_setHealth(arg0);
+        if (this.isLoaded())
+            this.getPlayer()._INVALID_setHealth(arg0);
     }
 
     @Deprecated
     @Override
     public void _INVALID_setMaxHealth(int arg0) {
-        this.getPlayer()._INVALID_setMaxHealth(arg0);
+        if (this.isLoaded())
+            this.getPlayer()._INVALID_setMaxHealth(arg0);
     }
 
     @Override
     public void damage(double arg0) {
-        this.getPlayer().damage(arg0);
+        if (this.isLoaded())
+            this.getPlayer().damage(arg0);
     }
 
     @Override
     public void damage(double arg0, Entity arg1) {
-        this.getPlayer().damage(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().damage(arg0, arg1);
     }
 
     @Override
@@ -664,17 +693,20 @@ public class CustomPlayer implements Player {
 
     @Override
     public void resetMaxHealth() {
-        this.getPlayer().resetMaxHealth();
+        if (this.isLoaded())
+            this.getPlayer().resetMaxHealth();
     }
 
     @Override
     public void setHealth(double arg0) {
-        this.getPlayer().setHealth(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setHealth(arg0);
     }
 
     @Override
     public void setMaxHealth(double arg0) {
-        this.getPlayer().setMaxHealth(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setMaxHealth(arg0);
     }
 
     @Override
@@ -734,12 +766,14 @@ public class CustomPlayer implements Player {
 
     @Override
     public void recalculatePermissions() {
-        this.getPlayer().recalculatePermissions();
+        if (this.isLoaded())
+            this.getPlayer().recalculatePermissions();
     }
 
     @Override
     public void removeAttachment(PermissionAttachment arg0) {
-        this.getPlayer().removeAttachment(arg0);
+        if (this.isLoaded())
+            this.getPlayer().removeAttachment(arg0);
     }
 
     @Override
@@ -749,22 +783,26 @@ public class CustomPlayer implements Player {
 
     @Override
     public void setOp(boolean arg0) {
-        this.getPlayer().setOp(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setOp(arg0);
     }
 
     @Override
     public void abandonConversation(Conversation arg0) {
-        this.getPlayer().abandonConversation(arg0);
+        if (this.isLoaded())
+            this.getPlayer().abandonConversation(arg0);
     }
 
     @Override
     public void abandonConversation(Conversation arg0, ConversationAbandonedEvent arg1) {
-        this.getPlayer().abandonConversation(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().abandonConversation(arg0, arg1);
     }
 
     @Override
     public void acceptConversationInput(String arg0) {
-        this.getPlayer().acceptConversationInput(arg0);
+        if (this.isLoaded())
+            this.getPlayer().acceptConversationInput(arg0);
     }
 
     @Override
@@ -779,12 +817,14 @@ public class CustomPlayer implements Player {
 
     @Override
     public void sendMessage(String arg0) {
-        this.getPlayer().sendMessage(arg0);
+        if (this.isLoaded())
+            this.getPlayer().sendMessage(arg0);
     }
 
     @Override
     public void sendMessage(String[] arg0) {
-        this.getPlayer().sendMessage(arg0);
+        if (this.isLoaded())
+            this.getPlayer().sendMessage(arg0);
     }
 
     @Override
@@ -820,12 +860,14 @@ public class CustomPlayer implements Player {
     @Deprecated
     @Override
     public void setBanned(boolean arg0) {
-        this.getPlayer().setBanned(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setBanned(arg0);
     }
 
     @Override
     public void setWhitelisted(boolean arg0) {
-        this.getPlayer().setWhitelisted(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setWhitelisted(arg0);
     }
 
     @Override
@@ -840,12 +882,14 @@ public class CustomPlayer implements Player {
 
     @Override
     public void sendPluginMessage(Plugin arg0, String arg1, byte[] arg2) {
-        this.getPlayer().sendPluginMessage(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().sendPluginMessage(arg0, arg1, arg2);
     }
 
     @Override
     public void awardAchievement(Achievement arg0) {
-        this.getPlayer().awardAchievement(arg0);
+        if (this.isLoaded())
+            this.getPlayer().awardAchievement(arg0);
     }
 
     @Override
@@ -855,37 +899,44 @@ public class CustomPlayer implements Player {
 
     @Override
     public void chat(String arg0) {
-        this.getPlayer().chat(arg0);
+        if (this.isLoaded())
+            this.getPlayer().chat(arg0);
     }
 
     @Override
     public void decrementStatistic(Statistic arg0) throws IllegalArgumentException {
-        this.getPlayer().decrementStatistic(arg0);
+        if (this.isLoaded())
+            this.getPlayer().decrementStatistic(arg0);
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, int arg1) throws IllegalArgumentException {
-        this.getPlayer().decrementStatistic(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().decrementStatistic(arg0, arg1);
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, Material arg1) throws IllegalArgumentException {
-        this.getPlayer().decrementStatistic(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().decrementStatistic(arg0, arg1);
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, EntityType arg1) throws IllegalArgumentException {
-        this.getPlayer().decrementStatistic(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().decrementStatistic(arg0, arg1);
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, Material arg1, int arg2) throws IllegalArgumentException {
-        this.getPlayer().decrementStatistic(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().decrementStatistic(arg0, arg1, arg2);
     }
 
     @Override
     public void decrementStatistic(Statistic arg0, EntityType arg1, int arg2) {
-        this.getPlayer().decrementStatistic(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().decrementStatistic(arg0, arg1, arg2);
     }
 
     @Override
@@ -1000,12 +1051,14 @@ public class CustomPlayer implements Player {
 
     @Override
     public void giveExp(int arg0) {
-        this.getPlayer().giveExp(arg0);
+        if (this.isLoaded())
+            this.getPlayer().giveExp(arg0);
     }
 
     @Override
     public void giveExpLevels(int arg0) {
-        this.getPlayer().giveExpLevels(arg0);
+        if (this.isLoaded())
+            this.getPlayer().giveExpLevels(arg0);
     }
 
     @Override
@@ -1015,37 +1068,44 @@ public class CustomPlayer implements Player {
 
     @Override
     public void hidePlayer(Player arg0) {
-        this.getPlayer().hidePlayer(arg0);
+        if (this.isLoaded())
+            this.getPlayer().hidePlayer(arg0);
     }
 
     @Override
     public void incrementStatistic(Statistic arg0) throws IllegalArgumentException {
-        this.getPlayer().incrementStatistic(arg0);
+        if (this.isLoaded())
+            this.getPlayer().incrementStatistic(arg0);
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, int arg1) throws IllegalArgumentException {
-        this.getPlayer().incrementStatistic(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().incrementStatistic(arg0, arg1);
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, Material arg1) throws IllegalArgumentException {
-        this.getPlayer().incrementStatistic(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().incrementStatistic(arg0, arg1);
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, EntityType arg1) throws IllegalArgumentException {
-        this.getPlayer().incrementStatistic(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().incrementStatistic(arg0, arg1);
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, Material arg1, int arg2) throws IllegalArgumentException {
-        this.getPlayer().incrementStatistic(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().incrementStatistic(arg0, arg1, arg2);
     }
 
     @Override
     public void incrementStatistic(Statistic arg0, EntityType arg1, int arg2) throws IllegalArgumentException {
-        this.getPlayer().incrementStatistic(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().incrementStatistic(arg0, arg1, arg2);
     }
 
     @Override
@@ -1086,12 +1146,14 @@ public class CustomPlayer implements Player {
 
     @Override
     public void kickPlayer(String arg0) {
-        this.getPlayer().kickPlayer(arg0);
+        if (this.isLoaded())
+            this.getPlayer().kickPlayer(arg0);
     }
 
     @Override
     public void loadData() {
-        this.getPlayer().loadData();
+        if (this.isLoaded())
+            this.getPlayer().loadData();
     }
 
     @Override
@@ -1102,66 +1164,78 @@ public class CustomPlayer implements Player {
     @Deprecated
     @Override
     public void playEffect(Location arg0, Effect arg1, int arg2) {
-        this.getPlayer().playEffect(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().playEffect(arg0, arg1, arg2);
     }
 
     @Override
     public <T> void playEffect(Location arg0, Effect arg1, T arg2) {
-        this.getPlayer().playEffect(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().playEffect(arg0, arg1, arg2);
     }
 
     @Deprecated
     @Override
     public void playNote(Location arg0, byte arg1, byte arg2) {
-        this.getPlayer().playNote(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().playNote(arg0, arg1, arg2);
     }
 
     @Override
     public void playNote(Location arg0, Instrument arg1, Note arg2) {
-        this.getPlayer().playNote(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().playNote(arg0, arg1, arg2);
     }
 
     @Override
     public void playSound(Location arg0, Sound arg1, float arg2, float arg3) {
-        this.getPlayer().playSound(arg0, arg1, arg2, arg3);
+        if (this.isLoaded())
+            this.getPlayer().playSound(arg0, arg1, arg2, arg3);
     }
 
     @Deprecated
     @Override
     public void playSound(Location arg0, String arg1, float arg2, float arg3) {
-        this.getPlayer().playSound(arg0, arg1, arg2, arg3);
+        if (this.isLoaded())
+            this.getPlayer().playSound(arg0, arg1, arg2, arg3);
     }
 
     @Override
     public void removeAchievement(Achievement arg0) {
-        this.getPlayer().removeAchievement(arg0);
+        if (this.isLoaded())
+            this.getPlayer().removeAchievement(arg0);
     }
 
     @Override
     public void resetPlayerTime() {
-        this.getPlayer().resetPlayerTime();
+        if (this.isLoaded())
+            this.getPlayer().resetPlayerTime();
     }
 
     @Override
     public void resetPlayerWeather() {
-        this.getPlayer().resetPlayerWeather();
+        if (this.isLoaded())
+            this.getPlayer().resetPlayerWeather();
     }
 
     @Override
     public void saveData() {
-        this.getPlayer().saveData();
+        if (this.isLoaded())
+            this.getPlayer().saveData();
     }
 
     @Deprecated
     @Override
     public void sendBlockChange(Location arg0, Material arg1, byte arg2) {
-        this.getPlayer().sendBlockChange(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().sendBlockChange(arg0, arg1, arg2);
     }
 
     @Deprecated
     @Override
     public void sendBlockChange(Location arg0, int arg1, byte arg2) {
-        this.getPlayer().sendBlockChange(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().sendBlockChange(arg0, arg1, arg2);
     }
 
     @Deprecated
@@ -1172,169 +1246,202 @@ public class CustomPlayer implements Player {
 
     @Override
     public void sendMap(MapView arg0) {
-        this.getPlayer().sendMap(arg0);
+        if (this.isLoaded())
+            this.getPlayer().sendMap(arg0);
     }
 
     @Override
     public void sendRawMessage(String arg0) {
-        this.getPlayer().sendRawMessage(arg0);
+        if (this.isLoaded())
+            this.getPlayer().sendRawMessage(arg0);
     }
 
     @Override
     public void sendSignChange(Location arg0, String[] arg1) throws IllegalArgumentException {
-        this.getPlayer().sendSignChange(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().sendSignChange(arg0, arg1);
     }
 
     @Override
     public void setAllowFlight(boolean arg0) {
-        this.getPlayer().setAllowFlight(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setAllowFlight(arg0);
     }
 
     @Override
     public void setBedSpawnLocation(Location arg0) {
-        this.getPlayer().setBedSpawnLocation(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setBedSpawnLocation(arg0);
     }
 
     @Override
     public void setBedSpawnLocation(Location arg0, boolean arg1) {
-        this.getPlayer().setBedSpawnLocation(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().setBedSpawnLocation(arg0, arg1);
     }
 
     @Override
     public void setCompassTarget(Location arg0) {
-        this.getPlayer().setCompassTarget(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setCompassTarget(arg0);
     }
 
     @Override
     public void setDisplayName(String arg0) {
-        this.getPlayer().setDisplayName(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setDisplayName(arg0);
     }
 
     @Override
     public void setExhaustion(float arg0) {
-        this.getPlayer().setExhaustion(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setExhaustion(arg0);
     }
 
     @Override
     public void setExp(float arg0) {
-        this.getPlayer().setExp(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setExp(arg0);
     }
 
     @Override
     public void setFlySpeed(float arg0) throws IllegalArgumentException {
-        this.getPlayer().setFlySpeed(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setFlySpeed(arg0);
     }
 
     @Override
     public void setFlying(boolean arg0) {
-        this.getPlayer().setFlying(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setFlying(arg0);
     }
 
     @Override
     public void setFoodLevel(int arg0) {
-        this.getPlayer().setFoodLevel(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setFoodLevel(arg0);
     }
 
     @Override
     public void setHealthScale(double arg0) throws IllegalArgumentException {
-        this.getPlayer().setHealthScale(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setHealthScale(arg0);
     }
 
     @Override
     public void setHealthScaled(boolean arg0) {
-        this.getPlayer().setHealthScaled(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setHealthScaled(arg0);
     }
 
     @Override
     public void setLevel(int arg0) {
-        this.getPlayer().setLevel(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setLevel(arg0);
     }
 
     @Override
     public void setPlayerListName(String arg0) {
-        this.getPlayer().setPlayerListName(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setPlayerListName(arg0);
     }
 
     @Override
     public void setPlayerTime(long arg0, boolean arg1) {
-        this.getPlayer().setPlayerTime(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().setPlayerTime(arg0, arg1);
     }
 
     @Override
     public void setPlayerWeather(WeatherType arg0) {
-        this.getPlayer().setPlayerWeather(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setPlayerWeather(arg0);
     }
 
     @Override
     public void setResourcePack(String arg0) {
-        this.getPlayer().setResourcePack(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setResourcePack(arg0);
     }
 
     @Override
     public void setSaturation(float arg0) {
-        this.getPlayer().setSaturation(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setSaturation(arg0);
     }
 
     @Override
     public void setScoreboard(Scoreboard arg0) throws IllegalArgumentException, IllegalStateException {
-        this.getPlayer().setScoreboard(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setScoreboard(arg0);
     }
 
     @Override
     public void setSleepingIgnored(boolean arg0) {
-        this.getPlayer().setSleepingIgnored(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setSleepingIgnored(arg0);
     }
 
     @Override
     public void setSneaking(boolean arg0) {
-        this.getPlayer().setSneaking(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setSneaking(arg0);
     }
 
     @Override
     public void setSprinting(boolean arg0) {
-        this.getPlayer().setSprinting(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setSprinting(arg0);
     }
 
     @Override
     public void setStatistic(Statistic arg0, int arg1) throws IllegalArgumentException {
-        this.getPlayer().setStatistic(arg0, arg1);
+        if (this.isLoaded())
+            this.getPlayer().setStatistic(arg0, arg1);
     }
 
     @Override
     public void setStatistic(Statistic arg0, Material arg1, int arg2) throws IllegalArgumentException {
-        this.getPlayer().setStatistic(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().setStatistic(arg0, arg1, arg2);
     }
 
     @Override
     public void setStatistic(Statistic arg0, EntityType arg1, int arg2) {
-        this.getPlayer().setStatistic(arg0, arg1, arg2);
+        if (this.isLoaded())
+            this.getPlayer().setStatistic(arg0, arg1, arg2);
     }
 
     @Deprecated
     @Override
     public void setTexturePack(String arg0) {
-        this.getPlayer().setTexturePack(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setTexturePack(arg0);
     }
 
     @Override
     public void setTotalExperience(int arg0) {
-        this.getPlayer().setTotalExperience(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setTotalExperience(arg0);
     }
 
     @Override
     public void setWalkSpeed(float arg0) throws IllegalArgumentException {
-        this.getPlayer().setWalkSpeed(arg0);
+        if (this.isLoaded())
+            this.getPlayer().setWalkSpeed(arg0);
     }
 
     @Override
     public void showPlayer(Player arg0) {
-        this.getPlayer().showPlayer(arg0);
+        if (this.isLoaded())
+            this.getPlayer().showPlayer(arg0);
     }
 
     @Deprecated
     @Override
     public void updateInventory() {
-        this.getPlayer().updateInventory();
+        if (this.isLoaded())
+            this.getPlayer().updateInventory();
     }
 
 }

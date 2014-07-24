@@ -15,11 +15,11 @@ public class TimerManager {
 
     public void registerTimer(Timeable timer) {
         timer.setTimerManager(this);
-        this.timers.get(timer.getManagerId()).add(timer);
+        this.getTimers(timer.getManagerId()).add(timer);
     }
 
     public void unregisterTimer(Timeable timer) {
-        this.timers.get(timer.getManagerId()).remove(timer);
+        this.getTimers(timer.getManagerId()).remove(timer);
     }
 
     public ArrayList<Timeable> getAllTimers() {
@@ -32,6 +32,14 @@ public class TimerManager {
         return timerlist;
     }
 
+    public HashSet<Timeable> getTimers(int managerId) {
+        HashSet<Timeable> hs = this.timers.get(managerId);
+        if (hs == null) {
+            this.timers.put(managerId, new HashSet<Timeable>());
+        }
+        return this.timers.get(managerId);
+    }
+
     public void startAllTimers() {
         for (Map.Entry<Integer, HashSet<Timeable>> entry : this.timers.entrySet()) {
             for (Timeable timeable : entry.getValue()) {
@@ -40,8 +48,8 @@ public class TimerManager {
         }
     }
 
-    public void startTimers(int id) {
-        for (Timeable timeable : this.timers.get(id)) {
+    public void startTimers(int managerId) {
+        for (Timeable timeable : this.getTimers(managerId)) {
             timeable.startTimer();
         }
     }
@@ -54,11 +62,23 @@ public class TimerManager {
         }
     }
 
+    public void stopTimers(int managerId) {
+        for (Timeable timeable : this.getTimers(managerId)) {
+            timeable.stopTimer();
+        }
+    }
+
     public void pauseAllTimers() {
         for (Map.Entry<Integer, HashSet<Timeable>> entry : this.timers.entrySet()) {
             for (Timeable timeable : entry.getValue()) {
                 timeable.pauseTimer();
             }
+        }
+    }
+
+    public void pauseTimers(int managerId) {
+        for (Timeable timeable : this.getTimers(managerId)) {
+            timeable.pauseTimer();
         }
     }
 
@@ -70,6 +90,12 @@ public class TimerManager {
         }
     }
 
+    public void resumeTimers(int managerId) {
+        for (Timeable timeable : this.getTimers(managerId)) {
+            timeable.resumeTimer();
+        }
+    }
+
     public void removeAllTimers() {
         for (Map.Entry<Integer, HashSet<Timeable>> entry : this.timers.entrySet()) {
             for (Timeable timeable : entry.getValue()) {
@@ -78,7 +104,13 @@ public class TimerManager {
         }
     }
 
-    enum TimeScale {
+    public void removeTimers(int managerId) {
+        for (Timeable timeable : this.getTimers(managerId)) {
+            timeable.removeTimer();
+        }
+    }
+
+    public enum TimeScale {
         MILISECONDS(1), GAMETICK(50), REDSTONETICK(100), SECOND(1000), MINUTE(60000);
 
         private int multiplier;

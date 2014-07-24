@@ -54,8 +54,8 @@ public abstract class Timeable extends TimerTask {
     public abstract void tick(long elapsedTime);
 
     public void run() {
-        this.elapsedTime += every;
         this.tick(this.elapsedTime);
+        this.elapsedTime += every;
     }
 
     public Timer getTimer() {

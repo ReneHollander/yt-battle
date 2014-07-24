@@ -4,7 +4,6 @@ import at.er.ytbattle.battle.Game;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamColor;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.manager.BlockPlaceTimerManager;
 import at.er.ytbattle.battle.timer.timeables.BlockPlaceTimer;
 import at.er.ytbattle.battle.timer.timeables.InvincibilityTimer;
 
@@ -28,9 +27,9 @@ public class XStreamUtil {
 
         xstream.useAttributeFor(Team.class, "teamColor");
 
-        xstream.useAttributeFor(BlockPlaceTimerManager.class, "timetoplace");
-        xstream.useAttributeFor(BlockPlaceTimer.class, "initTime");
-        xstream.useAttributeFor(BlockPlaceTimer.class, "time");
+//        xstream.useAttributeFor(BlockPlaceTimerManager.class, "timetoplace");
+//        xstream.useAttributeFor(BlockPlaceTimer.class, "initTime");
+//        xstream.useAttributeFor(BlockPlaceTimer.class, "time");
 
         xstream.useAttributeFor(SerializableLocation.class, "world");
         xstream.useAttributeFor(SerializableLocation.class, "uuid");

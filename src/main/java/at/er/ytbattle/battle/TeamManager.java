@@ -13,16 +13,16 @@ public class TeamManager {
 
     private Map<TeamColor, Team> teams;
 
-    public TeamManager(Battle battle) {
+    public TeamManager() {
         this.teams = new HashMap<TeamColor, Team>();
-        this.teams.put(TeamColor.WHITE, new Team(battle, TeamColor.WHITE, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.YELLOW, new Team(battle, TeamColor.YELLOW, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.GREEN, new Team(battle, TeamColor.GREEN, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.CYAN, new Team(battle, TeamColor.CYAN, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.PURPLE, new Team(battle, TeamColor.PURPLE, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.BLUE, new Team(battle, TeamColor.BLUE, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.RED, new Team(battle, TeamColor.RED, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.BLACK, new Team(battle, TeamColor.BLACK, new ArrayList<BattlePlayer>(), 0));
+        this.teams.put(TeamColor.WHITE, new Team(TeamColor.WHITE, new ArrayList<BattlePlayer>(), 0));
+        this.teams.put(TeamColor.YELLOW, new Team(TeamColor.YELLOW, new ArrayList<BattlePlayer>(), 0));
+        this.teams.put(TeamColor.GREEN, new Team(TeamColor.GREEN, new ArrayList<BattlePlayer>(), 0));
+        this.teams.put(TeamColor.CYAN, new Team(TeamColor.CYAN, new ArrayList<BattlePlayer>(), 0));
+        this.teams.put(TeamColor.PURPLE, new Team(TeamColor.PURPLE, new ArrayList<BattlePlayer>(), 0));
+        this.teams.put(TeamColor.BLUE, new Team(TeamColor.BLUE, new ArrayList<BattlePlayer>(), 0));
+        this.teams.put(TeamColor.RED, new Team(TeamColor.RED, new ArrayList<BattlePlayer>(), 0));
+        this.teams.put(TeamColor.BLACK, new Team(TeamColor.BLACK, new ArrayList<BattlePlayer>(), 0));
     }
 
     public Team getTeam(TeamColor teamColor) {

@@ -3,9 +3,11 @@ package at.er.ytbattle.battle;
 import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.manager.InvincibilityTimerManager;
 import at.er.ytbattle.util.SerializableLocation;
+import at.er.ytbattle.util.timer.TimerManager;
 
 public class Game {
 
+    private TimerManager timeManager;
     private BattlePlayerManager battlePlayerManager;
     private TeamManager teamManager;
     private InvincibilityTimerManager invincibilityTimerManager;
@@ -15,13 +17,20 @@ public class Game {
     private boolean saved;
 
     public Game() {
-        this.battlePlayerManager = new BattlePlayerManager();
-        this.teamManager = new TeamManager(Battle.instance());
-        this.invincibilityTimerManager = new InvincibilityTimerManager(Battle.instance().getConfig().getInt("config.invincibility-timer-duration"));
-
         this.spawn = null;
         this.started = false;
         this.saved = false;
+    }
+
+    public void initManagers() {
+        this.timeManager = new TimerManager();
+        this.battlePlayerManager = new BattlePlayerManager();
+        this.teamManager = new TeamManager();
+        this.invincibilityTimerManager = new InvincibilityTimerManager(Battle.instance().getConfig().getInt("config.invincibility-timer-duration"));
+    }
+
+    public TimerManager getTimerManager() {
+        return this.timeManager;
     }
 
     public BattlePlayerManager getBattlePlayerManager() {

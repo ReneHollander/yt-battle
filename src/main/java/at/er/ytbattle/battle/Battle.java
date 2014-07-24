@@ -77,10 +77,13 @@ public class Battle extends JavaPlugin {
         this.updateScoreboard();
 
         this.setTags();
+        
+        this.getGame().getTimerManager().resumeAllTimers();
     }
 
     @Override
     public void onDisable() {
+        this.getGame().getTimerManager().pauseAllTimers();
         try {
             RemindTimer.getRT().stopTimer();
         } catch (Exception e) {
@@ -185,9 +188,11 @@ public class Battle extends JavaPlugin {
                 e.printStackTrace(System.err);
 
                 this.game = new Game();
+                this.game.initManagers();
             }
         } else {
             this.game = new Game();
+            this.game.initManagers();
         }
     }
 
