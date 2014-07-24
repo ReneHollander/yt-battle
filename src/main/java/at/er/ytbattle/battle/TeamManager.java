@@ -15,14 +15,10 @@ public class TeamManager {
 
     public TeamManager() {
         this.teams = new HashMap<TeamColor, Team>();
-        this.teams.put(TeamColor.WHITE, new Team(TeamColor.WHITE, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.YELLOW, new Team(TeamColor.YELLOW, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.GREEN, new Team(TeamColor.GREEN, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.CYAN, new Team(TeamColor.CYAN, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.PURPLE, new Team(TeamColor.PURPLE, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.BLUE, new Team(TeamColor.BLUE, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.RED, new Team(TeamColor.RED, new ArrayList<BattlePlayer>(), 0));
-        this.teams.put(TeamColor.BLACK, new Team(TeamColor.BLACK, new ArrayList<BattlePlayer>(), 0));
+        for (TeamColor teamColor : TeamColor.values()) {
+            Team team = new Team(teamColor);
+            this.teams.put(teamColor, team);
+        }
     }
 
     public Team getTeam(TeamColor teamColor) {

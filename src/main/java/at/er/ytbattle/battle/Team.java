@@ -13,12 +13,12 @@ public class Team {
     private boolean lost;
     private BlockPlaceTimerManager bptm;
 
-    public Team(TeamColor teamColor, ArrayList<BattlePlayer> players, int lifes) {
+    public Team(TeamColor teamColor) {
         this.teamColor = teamColor;
-        this.players = players;
-        this.lifes = lifes;
+        this.players = new ArrayList<BattlePlayer>();
+        this.lifes = 0;
         this.lost = false;
-        
+
         this.bptm = new BlockPlaceTimerManager(this, Battle.instance().getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60);
     }
 
