@@ -78,6 +78,7 @@ public abstract class Timeable extends TimerTask {
         this.stopTimer();
         this.timerManager.unregisterTimer(this);
         this.timerManager = null;
+        this.managerId = -1;
         this.id = -1;
         this.timeScale = null;
         this.every = 0;
