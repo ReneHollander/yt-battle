@@ -1,5 +1,6 @@
 package at.er.ytbattle.util.timer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -12,13 +13,23 @@ public class TimerManager {
         this.timers = new HashMap<Integer, HashSet<Timeable>>();
     }
 
-    public void registerTimer(int id, Timeable timer) {
+    public void registerTimer(Timeable timer) {
         timer.setTimerManager(this);
-        this.timers.get(id).add(timer);
+        this.timers.get(timer.getManagerId()).add(timer);
     }
 
     public void unregisterTimer(Timeable timer) {
-        this.timers.remove(timer);
+        this.timers.get(timer.getManagerId()).remove(timer);
+    }
+
+    public ArrayList<Timeable> getAllTimers() {
+        ArrayList<Timeable> timerlist = new ArrayList<Timeable>();
+        for (Map.Entry<Integer, HashSet<Timeable>> entry : this.timers.entrySet()) {
+            for (Timeable timeable : entry.getValue()) {
+                timerlist.add(timeable);
+            }
+        }
+        return timerlist;
     }
 
     public void startAllTimers() {
@@ -26,6 +37,12 @@ public class TimerManager {
             for (Timeable timeable : entry.getValue()) {
                 timeable.startTimer();
             }
+        }
+    }
+
+    public void startTimers(int id) {
+        for (Timeable timeable : this.timers.get(id)) {
+            timeable.startTimer();
         }
     }
 

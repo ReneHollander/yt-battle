@@ -11,13 +11,15 @@ public abstract class Timeable extends TimerTask {
     private transient Timer timer;
 
     private TimerManager timerManager;
+    private int managerId;
     private int id;
     private TimeScale timeScale;
     private int every;
     private long elapsedTime;
     private boolean running;
 
-    public Timeable(TimeScale timeScale, int every) {
+    public Timeable(int managerId, TimeScale timeScale, int every) {
+        this.managerId = managerId;
         this.id = new Random().nextInt(Integer.MAX_VALUE);
         this.timeScale = timeScale;
         this.every = every;
@@ -39,6 +41,10 @@ public abstract class Timeable extends TimerTask {
 
     public int getEvery() {
         return this.every;
+    }
+
+    public int getManagerId() {
+        return this.managerId;
     }
 
     public boolean isRunning() {
