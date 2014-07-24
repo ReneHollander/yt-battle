@@ -55,7 +55,7 @@ public class Battle extends JavaPlugin {
 
     // TODO player doesnt have colored tab list name
     // TODO add resume command to resume all timers after a reload
-    
+
     @Override
     public void onEnable() {
 

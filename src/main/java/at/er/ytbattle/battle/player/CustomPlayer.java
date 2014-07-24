@@ -55,7 +55,7 @@ public class CustomPlayer implements Player {
 
     private UUID uuid;
     private String lastValidName;
-    
+
     private transient Player player;
 
     public CustomPlayer(Player player) {
@@ -109,7 +109,7 @@ public class CustomPlayer implements Player {
         }
         return this.lastValidName;
     }
-    
+
     public void store() {
         this.player = null;
     }
