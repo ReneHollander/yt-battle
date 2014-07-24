@@ -1,18 +1,20 @@
 package at.er.ytbattle.util.timer;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class TimerManager {
 
-    private HashSet<Timeable> timers;
+    private HashMap<Integer, HashSet<Timeable>> timers;
 
     public TimerManager() {
-        this.timers = new HashSet<Timeable>();
+        this.timers = new HashMap<Integer, HashSet<Timeable>>();
     }
 
-    public void registerTimer(Timeable timer) {
+    public void registerTimer(int id, Timeable timer) {
         timer.setTimerManager(this);
-        this.timers.add(timer);
+        this.timers.get(id).add(timer);
     }
 
     public void unregisterTimer(Timeable timer) {
@@ -20,32 +22,42 @@ public class TimerManager {
     }
 
     public void startAllTimers() {
-        for (Timeable t : this.timers) {
-            t.startTimer();
+        for (Map.Entry<Integer, HashSet<Timeable>> entry : this.timers.entrySet()) {
+            for (Timeable timeable : entry.getValue()) {
+                timeable.startTimer();
+            }
         }
     }
 
     public void stopAllTimers() {
-        for (Timeable t : this.timers) {
-            t.stopTimer();
+        for (Map.Entry<Integer, HashSet<Timeable>> entry : this.timers.entrySet()) {
+            for (Timeable timeable : entry.getValue()) {
+                timeable.stopTimer();
+            }
         }
     }
 
     public void pauseAllTimers() {
-        for (Timeable t : this.timers) {
-            t.pauseTimer();
+        for (Map.Entry<Integer, HashSet<Timeable>> entry : this.timers.entrySet()) {
+            for (Timeable timeable : entry.getValue()) {
+                timeable.pauseTimer();
+            }
         }
     }
 
     public void resumeAllTimers() {
-        for (Timeable t : this.timers) {
-            t.resumeTimer();
+        for (Map.Entry<Integer, HashSet<Timeable>> entry : this.timers.entrySet()) {
+            for (Timeable timeable : entry.getValue()) {
+                timeable.resumeTimer();
+            }
         }
     }
 
     public void removeAllTimers() {
-        for (Timeable t : this.timers) {
-            t.removeTimer();
+        for (Map.Entry<Integer, HashSet<Timeable>> entry : this.timers.entrySet()) {
+            for (Timeable timeable : entry.getValue()) {
+                timeable.removeTimer();
+            }
         }
     }
 
