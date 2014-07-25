@@ -18,7 +18,6 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.timeables.FireworkTimer;
-import at.er.ytbattle.battle.timer.timeables.RemindTimer;
 import at.er.ytbattle.util.PlayerArmor;
 
 public class PlayerDeathListener implements Listener {
@@ -106,7 +105,6 @@ public class PlayerDeathListener implements Listener {
                     p.setAllowFlight(true);
                     p.setFlying(true);
                 }
-                RemindTimer.getRT().stopTimer();
                 Battle.instance().getGame().setStarted(false);
                 FireworkTimer ft = new FireworkTimer();
                 int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), ft, 0, 20L);

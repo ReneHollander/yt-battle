@@ -95,7 +95,7 @@ public class BattleCommandStart extends AbstractCommand {
                 }
                 if (reminder == true) {
                     Bukkit.broadcastMessage(Battle.prefix() + "Starting battle reminder. Scheduling every 15 minutes!");
-                    new RemindTimer();
+                    new RemindTimer().startReminder();
                 }
                 Bukkit.broadcastMessage(Battle.prefix() + "The game will warn you to place your wools in time! Remind to place ALL the wools before reloading or restarting!");
                 for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {

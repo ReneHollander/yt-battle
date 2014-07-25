@@ -35,7 +35,6 @@ import at.er.ytbattle.battle.event.PlayerRespawnListener;
 import at.er.ytbattle.battle.event.PlayerShearListener;
 import at.er.ytbattle.battle.event.PrepareItemCraftListener;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.timeables.RemindTimer;
 import at.er.ytbattle.util.PlayerArmor;
 import at.er.ytbattle.util.XStreamUtil;
 
@@ -77,17 +76,13 @@ public class Battle extends JavaPlugin {
         this.updateScoreboard();
 
         this.setTags();
-        
+
         this.getGame().getTimerManager().resumeAllTimers();
     }
 
     @Override
     public void onDisable() {
         this.getGame().getTimerManager().pauseAllTimers();
-        try {
-            RemindTimer.getRT().stopTimer();
-        } catch (Exception e) {
-        }
         saveGame();
     }
 

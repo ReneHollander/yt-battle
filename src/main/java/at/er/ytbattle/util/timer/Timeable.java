@@ -77,6 +77,8 @@ public abstract class Timeable {
     }
 
     public void startTimer() {
+        if (this.timerManager == null)
+            throw new IllegalStateException("register timer through timer manager first!");
         this.customTimerTask = new CustomTimerTask(this, this.lastCount);
         if (this.hasTimer()) {
             this.timer.cancel();
