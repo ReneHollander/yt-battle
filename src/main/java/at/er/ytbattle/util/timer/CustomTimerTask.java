@@ -23,20 +23,28 @@ public class CustomTimerTask extends TimerTask {
     public void run() {
         if (firstRun == true) {
             if (this.timeable.elapsedTime == 0) {
-                this.timeable.tick(0);
+                this.tickTimeable(0);
             }
             firstRun = false;
         }
         if (multiplier == 1 && firstRun == false) {
-            this.timeable.tick(this.timeable.elapsedTime);
+            this.tickTimeable(this.timeable.elapsedTime);
             this.timeable.elapsedTime += this.timeable.every;
         } else {
             if (count >= multiplier) {
                 count = 0;
+                this.tickTimeable(this.timeable.elapsedTime);
                 this.timeable.elapsedTime += this.timeable.every;
-                this.timeable.tick(this.timeable.elapsedTime);
             }
             count++;
+        }
+    }
+
+    private void tickTimeable(long elapsedTime) {
+        try {
+            this.timeable.tick(elapsedTime);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
