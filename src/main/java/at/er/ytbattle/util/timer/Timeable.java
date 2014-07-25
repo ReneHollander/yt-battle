@@ -1,8 +1,8 @@
 package at.er.ytbattle.util.timer;
 
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 import at.er.ytbattle.util.timer.TimerManager.TimeScale;
 
@@ -11,18 +11,23 @@ public abstract class Timeable extends TimerTask {
     private transient Timer timer;
 
     private TimerManager timerManager;
-    private int managerId;
-    private int id;
+    private Object managerIdentifier;
+    private Object identifier;
     private TimeScale timeScale;
     private int every;
     private long elapsedTime;
     private boolean running;
 
-    public Timeable(int managerId, TimeScale timeScale, int every) {
-        this.managerId = managerId;
-        this.id = new Random().nextInt(Integer.MAX_VALUE);
+    public Timeable(Object managerIdentifier, TimeScale timeScale, int every) {
+        this(managerIdentifier, timeScale, every, UUID.randomUUID());
+    }
+
+    public Timeable(Object managerIdentifier, TimeScale timeScale, int every, Object identifier) {
+        this.managerIdentifier = managerIdentifier;
         this.timeScale = timeScale;
         this.every = every;
+        this.identifier = identifier;
+
         this.elapsedTime = 0;
         this.running = false;
     }
@@ -43,12 +48,16 @@ public abstract class Timeable extends TimerTask {
         return this.every;
     }
 
-    public int getManagerId() {
-        return this.managerId;
+    public Object getManagerIdentifier() {
+        return this.managerIdentifier;
     }
 
     public boolean isRunning() {
         return this.running;
+    }
+
+    public Object getIdentifier() {
+        return this.identifier;
     }
 
     public abstract void tick(long elapsedTime);
@@ -60,7 +69,7 @@ public abstract class Timeable extends TimerTask {
 
     public Timer getTimer() {
         if (this.timer == null) {
-            this.timer = new Timer("timeable " + this.id, true);
+            this.timer = new Timer("timeable " + this.identifier.toString(), true);
         }
         return this.timer;
     }
@@ -78,8 +87,8 @@ public abstract class Timeable extends TimerTask {
         this.stopTimer();
         this.timerManager.unregisterTimer(this);
         this.timerManager = null;
-        this.managerId = -1;
-        this.id = -1;
+        this.managerIdentifier = null;
+        this.identifier = null;
         this.timeScale = null;
         this.every = 0;
         this.elapsedTime = 0;

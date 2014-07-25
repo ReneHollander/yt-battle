@@ -1,11 +1,8 @@
 package at.er.ytbattle.battle.timer.manager;
 
-import java.util.HashSet;
-
 import org.bukkit.Sound;
 
 import at.er.ytbattle.battle.Battle;
-import at.er.ytbattle.battle.Reference;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.timeables.BlockPlaceTimer;
@@ -16,26 +13,23 @@ public class BlockPlaceTimerManager {
     private Team team;
     private int timetoplace;
 
-    private HashSet<Timeable> timers;
-
     public BlockPlaceTimerManager(Team team, int timetoplace) {
         this.team = team;
         this.timetoplace = timetoplace;
-
-        Battle.instance();
-        Battle.instance().getGame().toString();
-        Battle.instance().getGame().getTimerManager();
-        Battle.instance().getGame().getTimerManager().toString();
-        this.timers = Battle.instance().getGame().getTimerManager().getTimers(Reference.BLOCK_PLACE_TIMER_MANAGEER_ID);
     }
 
     public void woolPlace() {
-        if (this.timers.size() > 0) {
-            Timeable timeable = this.findFirstTimer();
+        if (Battle.instance().getGame().getTimerManager().getSize(this.team) > 0) {
+            Timeable timeable = Battle.instance().getGame().getTimerManager().findLongestRunningTimer(this.team);
             timeable.removeTimer();
             for (BattlePlayer p : team.getPlayers()) {
                 p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
-                p.sendMessage(Battle.prefix() + "Wool was placed. Place " + this.getRemainingWoolCount() + " more to disable the timer.");
+                int remainingWoolCount = this.getRemainingWoolCount();
+                if (remainingWoolCount == 0) {
+                    p.sendMessage(Battle.prefix() + "Wool was placed. You don't have to place any more wool for now!");
+                } else {
+                    p.sendMessage(Battle.prefix() + "Wool was placed. Place " + this.getRemainingWoolCount() + " more to disable the timer.");
+                }
             }
         }
     }
@@ -46,20 +40,8 @@ public class BlockPlaceTimerManager {
         bpt.startTimer();
     }
 
-    private Timeable findFirstTimer() {
-        long ref = this.timetoplace;
-        Timeable last = null;
-        for (Timeable timeable : this.timers) {
-            if (timeable.getElapsedTime() >= ref) {
-                last = timeable;
-                ref = timeable.getElapsedTime();
-            }
-        }
-        return last;
-    }
-
     public int getRemainingWoolCount() {
-        return this.timers.size();
+        return Battle.instance().getGame().getTimerManager().getSize(this.team);
     }
 
     public void setupInitialWool() {

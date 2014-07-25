@@ -12,6 +12,8 @@ public class BattleCommandReset extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
+        Battle.instance().getGame().getTimerManager().removeAllTimers();
+        
         Battle.instance().dontSave(true);
 
         Battle.instance().unsetTags();

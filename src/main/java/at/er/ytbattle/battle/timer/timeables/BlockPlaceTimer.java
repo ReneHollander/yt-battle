@@ -4,7 +4,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import at.er.ytbattle.battle.Battle;
-import at.er.ytbattle.battle.Reference;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.util.timer.Timeable;
@@ -16,7 +15,7 @@ public class BlockPlaceTimer extends Timeable {
     private int timeToPlace;
 
     public BlockPlaceTimer(Team team, int timeToPlace) {
-        super(Reference.BLOCK_PLACE_TIMER_MANAGEER_ID, TimeScale.SECOND, 1);
+        super(team, TimeScale.SECOND, 1);
         this.team = team;
         this.timeToPlace = timeToPlace;
     }

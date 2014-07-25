@@ -1,38 +1,35 @@
 package at.er.ytbattle.battle.timer.manager;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.timeables.InvincibilityTimer;
+import at.er.ytbattle.util.timer.Timeable;
 
 public class InvincibilityTimerManager {
 
-    private Map<BattlePlayer, InvincibilityTimer> timers;
+    public static final int MANAGER_ID = 943156;
 
     private int time;
 
     public InvincibilityTimerManager(int time) {
-        this.timers = new HashMap<BattlePlayer, InvincibilityTimer>();
         this.time = time;
     }
 
     public void stopTimer(BattlePlayer p) {
-        InvincibilityTimer it = timers.get(p);
-        if (it != null) {
-            it.stopTimer();
-            timers.remove(p);
+        Timeable timeable = Battle.instance().getGame().getTimerManager().getTimer(MANAGER_ID, p);
+        if (timeable != null) {
+            timeable.removeTimer();
         }
     }
 
     public boolean timerRunning(BattlePlayer p) {
-        return timers.containsKey(p.getName());
+        return Battle.instance().getGame().getTimerManager().hasTimer(MANAGER_ID, p);
     }
 
     public void createTimer(BattlePlayer p) {
-        this.stopTimer(p);
+        Battle.instance().getGame().getTimerManager().removeTimer(MANAGER_ID, p);
         InvincibilityTimer it = new InvincibilityTimer(p, time);
-        timers.put(p, it);
-
+        Battle.instance().getGame().getTimerManager().registerTimer(it);
+        it.startTimer();
     }
 }
