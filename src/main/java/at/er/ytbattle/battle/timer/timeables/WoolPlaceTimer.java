@@ -22,7 +22,9 @@ public class WoolPlaceTimer extends Timeable {
 
     @Override
     public void tick(long elapsedTime) {
-        // TODO fix woolplacetimer countdown
+        // TODO maybe fix countdown spelling
+        // TODO fix player offline exeptions
+        // TODO add annoying sound
         if (elapsedTime == 0) {
             for (BattlePlayer player : team.getPlayers()) {
                 player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");
@@ -37,7 +39,7 @@ public class WoolPlaceTimer extends Timeable {
                 for (BattlePlayer player : team.getPlayers()) {
                     player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");
                 }
-            } else if (elapsedTime % 60 == 0 && elapsedTime > this.timeToPlace - 600) {
+            } else if (elapsedTime % 60 == 0 && elapsedTime > this.timeToPlace - 300) {
                 for (BattlePlayer player : team.getPlayers()) {
                     player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");
                 }
