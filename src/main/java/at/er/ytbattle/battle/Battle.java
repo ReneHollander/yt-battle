@@ -76,8 +76,6 @@ public class Battle extends JavaPlugin {
         this.updateScoreboard();
 
         this.setTags();
-
-        this.getGame().getTimerManager().resumeAllTimers();
     }
 
     @Override
