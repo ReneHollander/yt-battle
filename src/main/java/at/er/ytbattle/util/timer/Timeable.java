@@ -1,22 +1,24 @@
 package at.er.ytbattle.util.timer;
 
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.UUID;
 
 import at.er.ytbattle.util.timer.TimerManager.TimeScale;
 
-public abstract class Timeable extends TimerTask {
+public abstract class Timeable {
 
     private transient Timer timer;
+    private transient CustomTimerTask customTimerTask;
 
     private TimerManager timerManager;
     private Object managerIdentifier;
     private Object identifier;
-    private TimeScale timeScale;
-    private int every;
-    private long elapsedTime;
+    protected TimeScale timeScale;
+    protected int every;
+    protected long elapsedTime;
     private boolean running;
+
+    private int lastCount;
 
     public Timeable(Object managerIdentifier, TimeScale timeScale, int every) {
         this(managerIdentifier, timeScale, every, UUID.randomUUID());
@@ -30,6 +32,7 @@ public abstract class Timeable extends TimerTask {
 
         this.elapsedTime = 0;
         this.running = false;
+        this.lastCount = 0;
     }
 
     public void setTimerManager(TimerManager timerManager) {
@@ -62,11 +65,6 @@ public abstract class Timeable extends TimerTask {
 
     public abstract void tick(long elapsedTime);
 
-    public void run() {
-        this.tick(this.elapsedTime);
-        this.elapsedTime += every;
-    }
-
     public Timer getTimer() {
         if (this.timer == null) {
             this.timer = new Timer("timeable " + this.identifier.toString(), true);
@@ -79,7 +77,13 @@ public abstract class Timeable extends TimerTask {
     }
 
     public void startTimer() {
-        this.getTimer().scheduleAtFixedRate(this, 0, this.getTimeScale().getMultiplier() * this.getEvery());
+        this.customTimerTask = new CustomTimerTask(this, this.lastCount);
+        if (this.hasTimer()) {
+            this.timer.cancel();
+            this.timer.purge();
+            this.timer = null;
+        }
+        this.getTimer().scheduleAtFixedRate(this.customTimerTask, 0, 50);
         this.running = true;
     }
 
@@ -87,19 +91,23 @@ public abstract class Timeable extends TimerTask {
         this.stopTimer();
         this.timerManager.unregisterTimer(this);
         this.timerManager = null;
+        this.customTimerTask = null;
         this.managerIdentifier = null;
         this.identifier = null;
         this.timeScale = null;
         this.every = 0;
         this.elapsedTime = 0;
         this.running = false;
+        this.lastCount = 0;
     }
 
     public void stopTimer() {
         if (this.hasTimer()) {
             this.getTimer().cancel();
+            this.getTimer().purge();
             this.timer = null;
         }
+        this.lastCount = 0;
         this.running = false;
     }
 
@@ -107,11 +115,13 @@ public abstract class Timeable extends TimerTask {
         this.stopTimer();
         this.elapsedTime = 0;
         this.running = false;
+        this.lastCount = 0;
     }
 
     public void pauseTimer() {
-        this.startTimer();
+        this.stopTimer();
         this.running = false;
+        this.lastCount = this.customTimerTask.getCount();
     }
 
     public void resumeTimer() {

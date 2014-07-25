@@ -7,9 +7,10 @@ import at.er.ytbattle.util.timer.TimerManager;
 
 public class Game {
 
-    private TimerManager timeManager;
     private BattlePlayerManager battlePlayerManager;
     private TeamManager teamManager;
+
+    private TimerManager timeManager;
     private InvincibilityTimerManager invincibilityTimerManager;
 
     private SerializableLocation spawn;
@@ -23,9 +24,10 @@ public class Game {
     }
 
     public void initManagers() {
-        this.timeManager = new TimerManager();
         this.battlePlayerManager = new BattlePlayerManager();
         this.teamManager = new TeamManager();
+
+        this.timeManager = new TimerManager();
         this.invincibilityTimerManager = new InvincibilityTimerManager(Battle.instance().getConfig().getInt("config.invincibility-timer-duration"));
     }
 

@@ -148,7 +148,7 @@ public class TimerManager {
     }
 
     public enum TimeScale {
-        MILISECONDS(1), GAMETICK(50), REDSTONETICK(100), SECOND(1000), MINUTE(60000);
+        GAMETICK(1), REDSTONETICK(2), SECOND(20), MINUTE(1200);
 
         private int multiplier;
 
