@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.battle.player.BattlePlayer;
 
 public class PlayerJoinListener implements Listener {
 
@@ -16,7 +17,9 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Battle.instance().setTags();
+        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+        Battle.instance().setDisplayAndListName(player);
+        Battle.instance().addToScoreboard(player);
         Battle.instance().updateScoreboard();
     }
 

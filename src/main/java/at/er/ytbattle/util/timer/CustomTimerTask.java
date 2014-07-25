@@ -5,8 +5,7 @@ import java.util.TimerTask;
 public class CustomTimerTask extends TimerTask {
 
     private Timeable timeable;
-    private int multiplier;
-
+    private int every;
     private int count;
 
     private boolean firstRun;
@@ -14,30 +13,24 @@ public class CustomTimerTask extends TimerTask {
     public CustomTimerTask(Timeable timeable, int count) {
         this.timeable = timeable;
         this.count = count;
-        this.multiplier = this.timeable.timeScale.getMultiplier();
+        this.every = this.timeable.timeScale.getMultiplier() * this.timeable.getEvery();
 
-        this.firstRun = true;
+        this.firstRun = this.timeable.elapsedTime == 0 && this.count == 0;
     }
 
     @Override
     public void run() {
-        if (firstRun == true) {
-            if (this.timeable.elapsedTime == 0) {
-                this.tickTimeable(0);
-            }
-            firstRun = false;
-        }
-        if (multiplier == 1 && firstRun == false) {
+        if (this.firstRun) {
             this.tickTimeable(this.timeable.elapsedTime);
-            this.timeable.elapsedTime += this.timeable.every;
+            this.firstRun = false;
         } else {
-            if (count >= multiplier) {
+            if (count >= every) {
                 count = 0;
-                this.tickTimeable(this.timeable.elapsedTime);
                 this.timeable.elapsedTime += this.timeable.every;
+                this.tickTimeable(this.timeable.elapsedTime);
             }
-            count++;
         }
+        count++;
     }
 
     private void tickTimeable(long elapsedTime) {

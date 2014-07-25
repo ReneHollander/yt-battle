@@ -23,7 +23,7 @@ public class BattleCommandJoin extends AbstractCommand {
                 Team t = Battle.instance().getGame().getTeamManager().getTeam(tc);
                 Battle.instance().removeFromLists(player);
                 t.addPlayer(player);
-                Battle.instance().setDisplayAndListName(player, t);
+                Battle.instance().setDisplayAndListName(player);
                 Bukkit.broadcastMessage(Battle.prefix() + "Player " + player.getName() + " joined the " + t.getTeamColor().getChatColor() + t.getTeamColor().getLongName() + ChatColor.RESET + " Team!");
                 return true;
             } else {

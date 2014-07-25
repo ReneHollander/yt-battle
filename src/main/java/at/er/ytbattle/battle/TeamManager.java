@@ -63,6 +63,16 @@ public class TeamManager {
         return team == this.getLastTeam();
     }
 
+    public int getTeamCount() {
+        int teamcount = 0;
+        for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
+            if (t.getTeamSize() > 0) {
+                teamcount++;
+            }
+        }
+        return teamcount;
+    }
+
     public Team getLastTeam() {
         int livingcount = 0;
         Team living = null;

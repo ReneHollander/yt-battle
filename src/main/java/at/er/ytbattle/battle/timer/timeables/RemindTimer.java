@@ -19,9 +19,11 @@ public class RemindTimer extends Timeable {
 
     @Override
     public void tick(long elapsedTime) {
-        Bukkit.broadcastMessage(Battle.prefix() + ChatColor.DARK_RED + "The battle is going on for " + elapsedTime + " minutes");
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.playSound(player.getLocation(), Sound.NOTE_PLING, 10, 1);
+        if (elapsedTime != 0) {
+            Bukkit.broadcastMessage(Battle.prefix() + ChatColor.DARK_RED + "The battle is going on for " + elapsedTime + " minutes");
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10, 1);
+            }
         }
     }
 

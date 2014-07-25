@@ -46,36 +46,32 @@ public class Battle extends JavaPlugin {
 
     private static Battle instance;
 
+    public HashMap<Player, PlayerArmor> playerArmor;
     public boolean dontSave;
 
     private Game game;
 
-    public HashMap<Player, PlayerArmor> playerArmor;
+    private Scoreboard scoreboard;
+    private Objective battleStats;
 
     // TODO player doesnt have colored tab list name
     // TODO add resume command to resume all timers after a reload
 
     @Override
     public void onEnable() {
-
         instance = this;
 
+        this.dontSave = false;
         this.playerArmor = new HashMap<Player, PlayerArmor>();
 
         this.loadConfig();
         this.loadGame();
-
-        this.dontSave = false;
-
+        this.setupScoreboard();
         this.addCraftings();
         this.registerCommands();
         this.registerEvents();
-
-        this.setDisplayNames();
         this.setTags();
         this.updateScoreboard();
-
-        this.setTags();
     }
 
     @Override
@@ -204,39 +200,46 @@ public class Battle extends JavaPlugin {
     }
 
     public void setupScoreboard() {
+        this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        this.battleStats = this.scoreboard.registerNewObjective("stats", "dummy");
+        this.battleStats.setDisplaySlot(DisplaySlot.SIDEBAR);
 
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.setScoreboard(this.scoreboard);
+        }
+    }
+
+    public void addToScoreboard(Player p) {
+        p.setScoreboard(this.scoreboard);
     }
 
     public void updateScoreboard() {
-        Scoreboard sb = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective lifes = sb.registerNewObjective("stats", "dummy");
-        lifes.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-        if (game.isStarted() == false || dontSave) {
-            lifes.setDisplayName(ChatColor.BOLD + "Battle Infos");
-
-            lifes.getScore(ChatColor.ITALIC + "Battle v" + getDescription().getVersion()).setScore(8);
-            lifes.getScore(ChatColor.ITALIC + "").setScore(7);
-            lifes.getScore(ChatColor.ITALIC + "by").setScore(6);
-            lifes.getScore(ChatColor.ITALIC + "EXSolo").setScore(5);
-            lifes.getScore(ChatColor.ITALIC + "Rene8888").setScore(4);
-            lifes.getScore(ChatColor.ITALIC + "").setScore(3);
-            lifes.getScore(ChatColor.ITALIC + "Download: ").setScore(2);
-            lifes.getScore(ChatColor.ITALIC + "ix.lt/battle").setScore(1);
-        } else {
-            lifes.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
-
-            for (Team t : this.game.getTeamManager().getTeams()) {
-                if (t.getPlayers().size() > 0) {
-                    lifes.getScore(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName()).setScore(t.getLifes());
+        if (game.isStarted() == false) {
+            if (this.battleStats.getDisplayName().equals(ChatColor.BOLD + "Battle Teamstats")) {
+                for (String entry : this.scoreboard.getEntries()) {
+                    this.scoreboard.resetScores(entry);
                 }
             }
-        }
-
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            try {
-                p.setScoreboard(sb);
-            } catch (Exception e) {
+            this.battleStats.setDisplayName(ChatColor.BOLD + "Battle Infos");
+            this.battleStats.getScore(ChatColor.ITALIC + "Battle v" + getDescription().getVersion()).setScore(8);
+            this.battleStats.getScore(ChatColor.ITALIC + "").setScore(7);
+            this.battleStats.getScore(ChatColor.ITALIC + "by").setScore(6);
+            this.battleStats.getScore(ChatColor.ITALIC + "EXSolo").setScore(5);
+            this.battleStats.getScore(ChatColor.ITALIC + "Rene8888").setScore(4);
+            this.battleStats.getScore(ChatColor.ITALIC + "").setScore(3);
+            this.battleStats.getScore(ChatColor.ITALIC + "Download: ").setScore(2);
+            this.battleStats.getScore(ChatColor.ITALIC + "ix.lt/battle").setScore(1);
+        } else {
+            if (this.battleStats.getDisplayName().equals(ChatColor.BOLD + "Battle Infos")) {
+                for (String entry : this.scoreboard.getEntries()) {
+                    this.scoreboard.resetScores(entry);
+                }
+            }
+            this.battleStats.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
+            for (Team t : this.game.getTeamManager().getTeams()) {
+                if (t.getPlayers().size() > 0) {
+                    this.battleStats.getScore(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName()).setScore(t.getLifes());
+                }
             }
         }
     }
@@ -256,22 +259,23 @@ public class Battle extends JavaPlugin {
     }
 
     public void setTags() {
-        for (Team t : this.game.getTeamManager().getTeams()) {
-            for (BattlePlayer player : t.getPlayers()) {
-                if (player != null && player.isLoaded()) {
-                    setDisplayAndListName(player, t);
-                }
-            }
+        for (BattlePlayer player : Battle.instance().getGame().getBattlePlayerManager().getAllBattlePlayers()) {
+            setDisplayAndListName(player);
         }
     }
 
-    public void setDisplayAndListName(BattlePlayer player, Team team) {
-        String display = team.getTeamColor().getChatColor() + player.getName();
-        if (display.length() > 15) {
-            display = display.substring(0, 15);
+    public void setDisplayAndListName(BattlePlayer player) {
+        if (player != null && player.hasPlayer()) {
+            Team t = Battle.instance.getGame().getTeamManager().getTeamByPlayer(player);
+            if (t != null) {
+                String display = t.getTeamColor().getChatColor() + player.getName();
+                if (display.length() > 15) {
+                    display = display.substring(0, 15);
+                }
+                player.setPlayerListName(display);
+                player.setDisplayName(display + ChatColor.RESET);
+            }
         }
-        player.setPlayerListName(display);
-        player.setDisplayName(display + ChatColor.RESET);
     }
 
     public static String prefix() {
@@ -284,12 +288,6 @@ public class Battle extends JavaPlugin {
 
     public void setGame(Game game) {
         this.game = game;
-    }
-
-    public void setDisplayNames() {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            p.setDisplayName(p.getName());
-        }
     }
 
     @SuppressWarnings("deprecation")

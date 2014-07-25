@@ -33,7 +33,7 @@ public class WoolPlaceTimer extends Timeable {
                 player.sendMessage(Battle.prefix() + "Place a wool to disable the whiter effect!");
             }
         } else {
-            if (elapsedTime % 600 == 0) {
+            if (elapsedTime % 300 == 0) {
                 for (BattlePlayer player : team.getPlayers()) {
                     player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");
                 }
