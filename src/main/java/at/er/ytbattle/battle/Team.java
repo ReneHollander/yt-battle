@@ -3,7 +3,7 @@ package at.er.ytbattle.battle;
 import java.util.ArrayList;
 
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.manager.BlockPlaceTimerManager;
+import at.er.ytbattle.battle.timer.manager.WoolPlaceTimerManager;
 
 public class Team {
 
@@ -11,7 +11,7 @@ public class Team {
     private ArrayList<BattlePlayer> players;
     private int lifes;
     private boolean lost;
-    private BlockPlaceTimerManager bptm;
+    private WoolPlaceTimerManager bptm;
 
     public Team(TeamColor teamColor) {
         this.teamColor = teamColor;
@@ -19,7 +19,7 @@ public class Team {
         this.lifes = 0;
         this.lost = false;
 
-        this.bptm = new BlockPlaceTimerManager(this, Battle.instance().getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60);
+        this.bptm = new WoolPlaceTimerManager(this, Battle.instance().getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60);
     }
 
     public TeamColor getTeamColor() {
@@ -62,7 +62,7 @@ public class Team {
         this.bptm.setupInitialWool();
     }
 
-    public BlockPlaceTimerManager getBlockPlaceTimerManager() {
+    public WoolPlaceTimerManager getBlockPlaceTimerManager() {
         return this.bptm;
     }
 

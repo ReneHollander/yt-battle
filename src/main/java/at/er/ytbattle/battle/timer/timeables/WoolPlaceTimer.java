@@ -9,12 +9,12 @@ import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.util.timer.Timeable;
 import at.er.ytbattle.util.timer.TimerManager.TimeScale;
 
-public class BlockPlaceTimer extends Timeable {
+public class WoolPlaceTimer extends Timeable {
 
     private Team team;
     private int timeToPlace;
 
-    public BlockPlaceTimer(Team team, int timeToPlace) {
+    public WoolPlaceTimer(Team team, int timeToPlace) {
         super(team, TimeScale.SECOND, 1);
         this.team = team;
         this.timeToPlace = timeToPlace;
@@ -22,6 +22,7 @@ public class BlockPlaceTimer extends Timeable {
 
     @Override
     public void tick(long elapsedTime) {
+        // TODO fix woolplacetimer countdown
         if (elapsedTime == 0) {
             for (BattlePlayer player : team.getPlayers()) {
                 player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");

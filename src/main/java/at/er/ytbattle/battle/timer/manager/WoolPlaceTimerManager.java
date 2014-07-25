@@ -5,15 +5,15 @@ import org.bukkit.Sound;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.timeables.BlockPlaceTimer;
+import at.er.ytbattle.battle.timer.timeables.WoolPlaceTimer;
 import at.er.ytbattle.util.timer.Timeable;
 
-public class BlockPlaceTimerManager {
+public class WoolPlaceTimerManager {
 
     private Team team;
     private int timetoplace;
 
-    public BlockPlaceTimerManager(Team team, int timetoplace) {
+    public WoolPlaceTimerManager(Team team, int timetoplace) {
         this.team = team;
         this.timetoplace = timetoplace;
     }
@@ -35,7 +35,7 @@ public class BlockPlaceTimerManager {
     }
 
     public void woolBreak() {
-        BlockPlaceTimer bpt = new BlockPlaceTimer(this.team, this.timetoplace);
+        WoolPlaceTimer bpt = new WoolPlaceTimer(this.team, this.timetoplace);
         Battle.instance().getGame().getTimerManager().registerTimer(bpt);
         bpt.startTimer();
     }
@@ -46,7 +46,7 @@ public class BlockPlaceTimerManager {
 
     public void setupInitialWool() {
         for (int i = 0; i < this.team.getPlayers().size(); i++) {
-            BlockPlaceTimer bpt = new BlockPlaceTimer(this.team, this.timetoplace);
+            WoolPlaceTimer bpt = new WoolPlaceTimer(this.team, this.timetoplace);
             Battle.instance().getGame().getTimerManager().registerTimer(bpt);
             bpt.startTimer();
         }
