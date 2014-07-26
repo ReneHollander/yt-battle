@@ -4,8 +4,8 @@ import at.er.ytbattle.battle.Game;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamColor;
 import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.timeables.WoolPlaceTimer;
 import at.er.ytbattle.battle.timer.timeables.InvincibilityTimer;
+import at.er.ytbattle.battle.timer.timeables.WoolPlaceTimer;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -27,9 +27,9 @@ public class XStreamUtil {
 
         xstream.useAttributeFor(Team.class, "teamColor");
 
-//        xstream.useAttributeFor(BlockPlaceTimerManager.class, "timetoplace");
-//        xstream.useAttributeFor(BlockPlaceTimer.class, "initTime");
-//        xstream.useAttributeFor(BlockPlaceTimer.class, "time");
+        // xstream.useAttributeFor(BlockPlaceTimerManager.class, "timetoplace");
+        // xstream.useAttributeFor(BlockPlaceTimer.class, "initTime");
+        // xstream.useAttributeFor(BlockPlaceTimer.class, "time");
 
         xstream.useAttributeFor(SerializableLocation.class, "world");
         xstream.useAttributeFor(SerializableLocation.class, "uuid");
