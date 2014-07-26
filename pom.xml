@@ -3,9 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>at.er</groupId>
 	<artifactId>yt-battle</artifactId>
-	<version>1.9.0</version>
+	<version>${battle.version.string}</version>
 	<name>YT-Battle</name>
 	<description>YT-Battle Plugin for the battle series</description>
+	<properties>
+		<bukkit.version>1.7.10-R0.1-SNAPSHOT</bukkit.version>
+		<battle.version>1.9.0</battle.version>
+		<battle.version.string>${battle.version}-CB-${bukkit.version}</battle.version.string>
+	</properties>
 	<developers>
 		<developer>
 			<id>EXSolo</id>
@@ -29,12 +34,12 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.7.10-R0.1-SNAPSHOT</version>
+			<version>${bukkit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.7.10-R0.1-SNAPSHOT</version>
+			<version>${bukkit.version}</version>
 		</dependency>
 		<!-- Serialization API -->
 		<dependency>
@@ -44,6 +49,12 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<!-- Set the compiler targets to 1.7, java 8 doesn't work! -->
 			<plugin>
@@ -70,6 +81,31 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<!-- Clean all previos build artifacts -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<verbose>true</verbose>
+					<filesets>
+						<fileset>
+							<directory>${basedir}/final</directory>
+							<followSymlinks>false</followSymlinks>
+							<includes>
+								<include>*</include>
+								<include>*/</include>
+							</includes>
+						</fileset>
+						<fileset>
+							<directory>${basedir}/bukkit</directory>
+							<followSymlinks>false</followSymlinks>
+							<includes>
+								<include>plugins/</include>
+								<include>logs/</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
 			<!-- copy the dependencies and packaged jars to the apropriate locations -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -91,7 +127,7 @@
 									<type>${project.packaging}</type>
 								</artifactItem>
 							</artifactItems>
-							<outputDirectory>${basedir}/final/plugins/</outputDirectory>
+							<outputDirectory>${basedir}/final/build/</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
@@ -120,7 +156,7 @@
 						</goals>
 						<configuration>
 							<excludeGroupIds>org.bukkit</excludeGroupIds>
-							<outputDirectory>${basedir}/final/plugins/lib</outputDirectory>
+							<outputDirectory>${basedir}/final/build/lib</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
@@ -132,26 +168,6 @@
 						<configuration>
 							<excludeGroupIds>org.bukkit</excludeGroupIds>
 							<outputDirectory>${basedir}/bukkit/plugins/lib</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy_craftbukkitserver_to_final</id>
-						<phase>install</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.bukkit</groupId>
-									<artifactId>craftbukkit</artifactId>
-									<overWrite>true</overWrite>
-									<outputDirectory>${basedir}/final/</outputDirectory>
-									<destFileName>server.jar</destFileName>
-								</artifactItem>
-							</artifactItems>
-							<overWriteReleases>true</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
 						</configuration>
 					</execution>
 					<execution>
@@ -172,6 +188,25 @@
 							</artifactItems>
 							<overWriteReleases>true</overWriteReleases>
 							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- pack the plugin into a zip -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>truezip-maven-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<id>pack_plugin</id>
+						<goals>
+							<goal>cp</goal>
+						</goals>
+						<phase>install</phase>
+						<configuration>
+							<from>${basedir}/final/build</from>
+							<to>${basedir}/final/yt-battle-${battle.version.string}.zip</to>
 						</configuration>
 					</execution>
 				</executions>
