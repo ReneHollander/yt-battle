@@ -241,13 +241,6 @@ public class Battle extends JavaPlugin {
         }
     }
 
-    public void removeFromLists(BattlePlayer player) {
-        try {
-            this.game.getTeamManager().getTeamByPlayer(player).removePlayer(player);
-        } catch (Exception e) {
-        }
-    }
-
     public void unsetTags() {
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.setPlayerListName(p.getName());

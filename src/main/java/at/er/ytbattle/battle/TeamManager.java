@@ -51,6 +51,10 @@ public class TeamManager {
         return teamList;
     }
 
+    public void removePlayerFromTeam(BattlePlayer player) {
+        this.getTeamByPlayer(player).removePlayer(player);
+    }
+
     public boolean isInTeam(BattlePlayer p) {
         if (this.getTeamByPlayer(p) == null) {
             return false;

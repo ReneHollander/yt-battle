@@ -16,6 +16,7 @@ import at.er.ytbattle.battle.command.handler.BattleCommandLeave;
 import at.er.ytbattle.battle.command.handler.BattleCommandLife;
 import at.er.ytbattle.battle.command.handler.BattleCommandList;
 import at.er.ytbattle.battle.command.handler.BattleCommandPause;
+import at.er.ytbattle.battle.command.handler.BattleCommandRandomTeams;
 import at.er.ytbattle.battle.command.handler.BattleCommandReset;
 import at.er.ytbattle.battle.command.handler.BattleCommandResume;
 import at.er.ytbattle.battle.command.handler.BattleCommandSetspawn;
@@ -43,6 +44,7 @@ public class CommandManager implements CommandExecutor {
         this.addCommandHandler("reset", new BattleCommandReset());
         this.addCommandHandler("pause", new BattleCommandPause());
         this.addCommandHandler("resume", new BattleCommandResume());
+        this.addCommandHandler("randteam", new BattleCommandRandomTeams());
     }
 
     private void addCommandHandler(String label, AbstractCommand abc) {

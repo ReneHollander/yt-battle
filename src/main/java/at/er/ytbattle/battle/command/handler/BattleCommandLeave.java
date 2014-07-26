@@ -11,7 +11,7 @@ public class BattleCommandLeave extends AbstractCommand {
         if (Battle.instance().getGame().getTeamManager().isInTeam(player)) {
             player.setDisplayName(player.getName());
             player.setPlayerListName(player.getName());
-            Battle.instance().removeFromLists(player);
+            Battle.instance().getGame().getTeamManager().removePlayerFromTeam(player);
             player.sendMessage(Battle.prefix() + "You have left the Battle");
             return true;
         } else {
