@@ -54,9 +54,6 @@ public class Battle extends JavaPlugin {
     private Scoreboard scoreboard;
     private Objective battleStats;
 
-    // TODO player doesnt have colored tab list name
-    // TODO add resume command to resume all timers after a reload
-
     @Override
     public void onEnable() {
         instance = this;

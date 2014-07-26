@@ -1,5 +1,6 @@
 package at.er.ytbattle.battle.timer.timeables;
 
+import org.bukkit.Sound;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -22,30 +23,36 @@ public class WoolPlaceTimer extends Timeable {
 
     @Override
     public void tick(long elapsedTime) {
-        // TODO maybe fix countdown spelling
-        // TODO fix player offline exeptions
-        // TODO add annoying sound
         if (elapsedTime == 0) {
             for (BattlePlayer player : team.getPlayers()) {
                 player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");
             }
         } else if (elapsedTime >= this.timeToPlace) {
             for (BattlePlayer player : team.getPlayers()) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 40, 0));
-                player.sendMessage(Battle.prefix() + "Place a wool to disable the whiter effect!");
+                if (player.hasPlayer()) {
+                    player.playSound(player.getLocation(), Sound.IRONGOLEM_HIT, 10, 0.5F);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 40, 0));
+                    player.sendMessage(Battle.prefix() + "Place a wool to disable the whiter effect!");
+                }
             }
         } else {
             if (elapsedTime % 300 == 0) {
                 for (BattlePlayer player : team.getPlayers()) {
-                    player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");
+                    if (player.hasPlayer()) {
+                        player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");
+                    }
                 }
             } else if (elapsedTime % 60 == 0 && elapsedTime > this.timeToPlace - 300) {
                 for (BattlePlayer player : team.getPlayers()) {
-                    player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");
+                    if (player.hasPlayer()) {
+                        player.sendMessage(Battle.prefix() + "You have " + ((this.timeToPlace - elapsedTime) / 60) + " minutes left to place a wool.");
+                    }
                 }
             } else if (elapsedTime % 10 == 0 && elapsedTime > this.timeToPlace - 60) {
                 for (BattlePlayer player : team.getPlayers()) {
-                    player.sendMessage(Battle.prefix() + "You have " + (this.timeToPlace - elapsedTime) + " seconds left to place a wool.");
+                    if (player.hasPlayer()) {
+                        player.sendMessage(Battle.prefix() + "You have " + (this.timeToPlace - elapsedTime) + " seconds left to place a wool.");
+                    }
                 }
             }
         }
