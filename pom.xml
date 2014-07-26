@@ -7,10 +7,14 @@
 	<name>YT-Battle</name>
 	<description>YT-Battle Plugin for the battle series</description>
 	<properties>
+		<!-- current bukkit version -->
 		<bukkit.version>1.7.10-R0.1-SNAPSHOT</bukkit.version>
+		<!-- curring plugin version -->
 		<battle.version>1.9.0</battle.version>
+		<!-- version string for filtering and filename -->
 		<battle.version.string>${battle.version}-CB-${bukkit.version}</battle.version.string>
 	</properties>
+	<!-- developers currently working on the project -->
 	<developers>
 		<developer>
 			<id>EXSolo</id>
@@ -24,6 +28,7 @@
 		</developer>
 	</developers>
 	<repositories>
+		<!-- bukkit repo to get the bukkit builds -->
 		<repository>
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public/</url>
@@ -49,6 +54,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<!-- filter ressources to add version string -->
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -88,6 +94,7 @@
 					<verbose>true</verbose>
 					<filesets>
 						<fileset>
+							<!-- clean final folder for correctly packaged zips -->
 							<directory>${basedir}/final</directory>
 							<followSymlinks>false</followSymlinks>
 							<includes>
@@ -96,6 +103,7 @@
 							</includes>
 						</fileset>
 						<fileset>
+							<!-- clean bukkit plugin and log folder to prevent errors -->
 							<directory>${basedir}/bukkit</directory>
 							<followSymlinks>false</followSymlinks>
 							<includes>
@@ -113,6 +121,7 @@
 				<version>2.8</version>
 				<executions>
 					<execution>
+						<!-- copy the packaged plugin into the final folder for later zip packaging -->
 						<id>copy_plugin_to_final</id>
 						<phase>install</phase>
 						<goals>
@@ -131,6 +140,7 @@
 						</configuration>
 					</execution>
 					<execution>
+						<!-- copy the packaged plugin into the test enviroment for testing -->
 						<id>copy_plugin_to_testenv</id>
 						<phase>install</phase>
 						<goals>
@@ -149,6 +159,7 @@
 						</configuration>
 					</execution>
 					<execution>
+						<!-- copy plugin dependencies into final folder for later zip packaging -->
 						<id>copy_dependencies_to_final</id>
 						<phase>install</phase>
 						<goals>
@@ -160,6 +171,7 @@
 						</configuration>
 					</execution>
 					<execution>
+						<!-- copy plugin dependencies to test enviroment for testing -->
 						<id>copy_dependencies_to_testenv</id>
 						<phase>install</phase>
 						<goals>
@@ -171,6 +183,7 @@
 						</configuration>
 					</execution>
 					<execution>
+						<!-- copy the current bukkit version into test enviroment -->
 						<id>copy_craftbukkitserver_to_testenv</id>
 						<phase>install</phase>
 						<goals>
