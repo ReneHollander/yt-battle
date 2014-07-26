@@ -1,7 +1,10 @@
 Willkommen beim offiziellen YouTube-Battle Plugin
 -------------------------------------------------
 
-**Download der letzten Version**: [YT-Battle 1.9.0 für Craftbukkit 1.7.10-R0.1 || DEV BUILD ad67d0ee07cb49a37a75847f6970e208cb483b1a](http://files.rene8888.at/yt-battle/yt-battle-latest-build-ad67d0ee07cb49a37a75847f6970e208cb483b1a.zip)
+###Download
+**Latest Stable Build**: none yet
+**Latest Beta Build**: none yet
+**Latest Dev Build**: [YT-Battle 1.9.0 for CB 1.7.10-R0.1-SNAPSHOT](http://files.rene8888.at/yt-battle/dev/yt-battle-1.9.0-CB-1.7.10-R0.1-SNAPSHOT.zip)
 
 ##Informationen
 
