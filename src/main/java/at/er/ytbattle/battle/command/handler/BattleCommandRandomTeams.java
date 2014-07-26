@@ -10,6 +10,7 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.util.BattleUtils;
 
 public class BattleCommandRandomTeams extends AbstractCommand {
 
@@ -22,7 +23,7 @@ public class BattleCommandRandomTeams extends AbstractCommand {
                 Team t = teams.get(r.nextInt(teams.size()));
                 Battle.instance().getGame().getTeamManager().removePlayerFromTeam(player);
                 t.addPlayer(player);
-                Battle.instance().setDisplayAndListName(player);
+                BattleUtils.setDisplayAndListName(player);
                 Bukkit.broadcastMessage(Battle.prefix() + "Player " + player.getName() + " joined the " + t.getTeamColor().getChatColor() + t.getTeamColor().getLongName() + ChatColor.RESET + " Team!");
             }
             return true;

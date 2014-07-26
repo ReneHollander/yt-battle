@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.util.BattleUtils;
 
 public class PlayerInteractListener implements Listener {
 
@@ -39,7 +40,7 @@ public class PlayerInteractListener implements Listener {
             } else {
                 player.getInventory().setItemInHand(new ItemStack(Material.AIR));
             }
-            Battle.instance().updateScoreboard();
+            BattleUtils.updateScoreboard();
         }
     }
 

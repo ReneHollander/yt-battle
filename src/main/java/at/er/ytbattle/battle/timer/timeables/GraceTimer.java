@@ -11,14 +11,10 @@ public class GraceTimer implements Runnable {
 
     private int time;
 
-    public GraceTimer() {
-        this.time = -1;
-
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), this, 0, 20);
-    }
-
     public GraceTimer(int timeSec) {
         this.time = timeSec;
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), this, 0, 20);
     }
 
     @Override

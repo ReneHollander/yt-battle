@@ -19,6 +19,7 @@ import org.bukkit.material.Wool;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.util.BattleUtils;
 
 public class BlockPlaceListener implements Listener {
 
@@ -125,10 +126,7 @@ public class BlockPlaceListener implements Listener {
         w.getBlockAt(tmp).setType(Material.CHEST);
 
         Chest c = (Chest) w.getBlockAt(tmp).getState();
-
-        if (Battle.instance().getChestContent() != null) {
-            c.getInventory().setContents(Battle.instance().getChestContent().getContents());
-        }
+        c.getInventory().setContents(BattleUtils.getStarterChestContents());
     }
 
 }

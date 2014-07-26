@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.util.BattleUtils;
 
 public class BattleCommandReset extends AbstractCommand {
 
@@ -16,8 +17,8 @@ public class BattleCommandReset extends AbstractCommand {
 
         Battle.instance().dontSave(true);
 
-        Battle.instance().unsetTags();
-        Battle.instance().updateScoreboard();
+        BattleUtils.unsetTags();
+        BattleUtils.updateScoreboard();
 
         File file = new File(Battle.instance().getDataFolder(), "savegame.xml");
 

@@ -5,25 +5,21 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Wool;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
 
 import at.er.ytbattle.battle.command.CommandManager;
 import at.er.ytbattle.battle.event.BlockBreakListener;
 import at.er.ytbattle.battle.event.BlockPlaceListener;
+import at.er.ytbattle.battle.event.EntityDamageListener;
 import at.er.ytbattle.battle.event.EntityDeathListener;
 import at.er.ytbattle.battle.event.EntityExplodeListener;
 import at.er.ytbattle.battle.event.PlayerChatListener;
@@ -34,12 +30,10 @@ import at.er.ytbattle.battle.event.PlayerMoveListener;
 import at.er.ytbattle.battle.event.PlayerRespawnListener;
 import at.er.ytbattle.battle.event.PlayerShearListener;
 import at.er.ytbattle.battle.event.PrepareItemCraftListener;
-import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.util.BattleUtils;
 import at.er.ytbattle.util.PlayerArmor;
 import at.er.ytbattle.util.XStreamUtil;
 
-import com.google.common.base.Functions;
-import com.google.common.collect.Lists;
 import com.thoughtworks.xstream.XStream;
 
 public class Battle extends JavaPlugin {
@@ -51,9 +45,6 @@ public class Battle extends JavaPlugin {
 
     private Game game;
 
-    private Scoreboard scoreboard;
-    private Objective battleStats;
-
     @Override
     public void onEnable() {
         instance = this;
@@ -63,22 +54,17 @@ public class Battle extends JavaPlugin {
 
         this.loadConfig();
         this.loadGame();
-        this.setupScoreboard();
         this.addCraftings();
         this.registerCommands();
         this.registerEvents();
-        this.setTags();
-        this.updateScoreboard();
+        BattleUtils.setTags();
+        BattleUtils.updateScoreboard();
     }
 
     @Override
     public void onDisable() {
         this.getGame().getTimerManager().pauseAllTimers();
         saveGame();
-    }
-
-    public static Battle instance() {
-        return instance;
     }
 
     public void registerEvents() {
@@ -94,6 +80,7 @@ public class Battle extends JavaPlugin {
         new PlayerRespawnListener();
         new PlayerShearListener();
         new PrepareItemCraftListener();
+        new EntityDamageListener();
     }
 
     public void loadConfig() {
@@ -128,10 +115,6 @@ public class Battle extends JavaPlugin {
         getCommand("b").setExecutor(new CommandManager());
     }
 
-    public void dontSave(boolean b) {
-        this.dontSave = b;
-    }
-
     public void addCraftings() {
 
         ItemStack tear = new ItemStack(Material.GHAST_TEAR, 1);
@@ -159,6 +142,10 @@ public class Battle extends JavaPlugin {
         food.addIngredient(Material.ROTTEN_FLESH);
         food.addIngredient(Material.GOLD_NUGGET);
         Bukkit.getServer().addRecipe(food);
+    }
+
+    public void dontSave(boolean b) {
+        this.dontSave = b;
     }
 
     public void loadGame() {
@@ -196,78 +183,6 @@ public class Battle extends JavaPlugin {
         }
     }
 
-    public void setupScoreboard() {
-        this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        this.battleStats = this.scoreboard.registerNewObjective("stats", "dummy");
-        this.battleStats.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            p.setScoreboard(this.scoreboard);
-        }
-    }
-
-    public void addToScoreboard(Player p) {
-        p.setScoreboard(this.scoreboard);
-    }
-
-    public void updateScoreboard() {
-        if (game.isStarted() == false) {
-            if (this.battleStats.getDisplayName().equals(ChatColor.BOLD + "Battle Teamstats")) {
-                for (String entry : this.scoreboard.getEntries()) {
-                    this.scoreboard.resetScores(entry);
-                }
-            }
-            this.battleStats.setDisplayName(ChatColor.BOLD + "Battle Infos");
-            this.battleStats.getScore(ChatColor.ITALIC + "Battle v" + getDescription().getVersion()).setScore(8);
-            this.battleStats.getScore(ChatColor.ITALIC + "").setScore(7);
-            this.battleStats.getScore(ChatColor.ITALIC + "by").setScore(6);
-            this.battleStats.getScore(ChatColor.ITALIC + "EXSolo").setScore(5);
-            this.battleStats.getScore(ChatColor.ITALIC + "Rene8888").setScore(4);
-            this.battleStats.getScore(ChatColor.ITALIC + "").setScore(3);
-            this.battleStats.getScore(ChatColor.ITALIC + "Download: ").setScore(2);
-            this.battleStats.getScore(ChatColor.ITALIC + "ix.lt/battle").setScore(1);
-        } else {
-            if (this.battleStats.getDisplayName().equals(ChatColor.BOLD + "Battle Infos")) {
-                for (String entry : this.scoreboard.getEntries()) {
-                    this.scoreboard.resetScores(entry);
-                }
-            }
-            this.battleStats.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
-            for (Team t : this.game.getTeamManager().getTeams()) {
-                if (t.getPlayers().size() > 0) {
-                    this.battleStats.getScore(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName()).setScore(t.getLifes());
-                }
-            }
-        }
-    }
-
-    public void unsetTags() {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            p.setPlayerListName(p.getName());
-            p.setDisplayName(p.getName());
-        }
-    }
-
-    public void setTags() {
-        for (BattlePlayer player : Battle.instance().getGame().getBattlePlayerManager().getAllBattlePlayers()) {
-            setDisplayAndListName(player);
-        }
-    }
-
-    public void setDisplayAndListName(BattlePlayer player) {
-        if (player != null && player.hasPlayer()) {
-            Team t = Battle.instance.getGame().getTeamManager().getTeamByPlayer(player);
-            if (t != null) {
-                String display = t.getTeamColor().getChatColor() + player.getName();
-                if (display.length() > 15) {
-                    display = display.substring(0, 15);
-                }
-                player.setPlayerListName(display);
-                player.setDisplayName(display + ChatColor.RESET);
-            }
-        }
-    }
-
     public static String prefix() {
         return ChatColor.GOLD + "[Battle] " + ChatColor.WHITE;
     }
@@ -280,36 +195,8 @@ public class Battle extends JavaPlugin {
         this.game = game;
     }
 
-    @SuppressWarnings("deprecation")
-    public Inventory getChestContent() {
-        Inventory inv = Bukkit.createInventory(null, 54);
-
-        List<?> confList = this.getConfig().getList("config.base-block-chest-content");
-
-        try {
-
-            List<String> itemIDs = Lists.transform(confList, Functions.toStringFunction());
-
-            for (String s : itemIDs) {
-
-                String[] cont = s.split(":");
-
-                if (cont.length > 1) {
-                    ItemStack item = new ItemStack(Integer.parseInt(cont[0]), Integer.parseInt(cont[1]));
-
-                    inv.addItem(item);
-                } else if (cont.length > 0) {
-                    ItemStack item = new ItemStack(Integer.parseInt(cont[0]));
-
-                    inv.addItem(item);
-                }
-            }
-
-            return inv;
-
-        } catch (Exception ex) {
-            System.err.println("Error occured while loading base block chest content from config");
-            return null;
-        }
+    public static Battle instance() {
+        return instance;
     }
+
 }

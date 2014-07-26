@@ -52,7 +52,10 @@ public class TeamManager {
     }
 
     public void removePlayerFromTeam(BattlePlayer player) {
-        this.getTeamByPlayer(player).removePlayer(player);
+        Team t = this.getTeamByPlayer(player);
+        if (t != null) {
+            t.removePlayer(player);
+        }
     }
 
     public boolean isInTeam(BattlePlayer p) {

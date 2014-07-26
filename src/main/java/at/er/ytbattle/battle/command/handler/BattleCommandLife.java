@@ -7,6 +7,7 @@ import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.TeamManager;
 import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.util.BattleUtils;
 
 public class BattleCommandLife extends AbstractCommand {
 
@@ -28,7 +29,7 @@ public class BattleCommandLife extends AbstractCommand {
                 } else {
                     player.sendMessage(Battle.prefix() + "Your team hasn't enough lifes left!");
                 }
-                Battle.instance().updateScoreboard();
+                BattleUtils.updateScoreboard();
             } else {
                 player.sendMessage(Battle.prefix() + "You aren't in a Team anymore!");
             }

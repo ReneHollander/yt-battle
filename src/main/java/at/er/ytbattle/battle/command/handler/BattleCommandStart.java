@@ -20,6 +20,7 @@ import at.er.ytbattle.battle.command.AbstractCommand;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.timeables.GraceTimer;
 import at.er.ytbattle.battle.timer.timeables.RemindTimer;
+import at.er.ytbattle.util.BattleUtils;
 import at.er.ytbattle.util.SerializableLocation;
 
 public class BattleCommandStart extends AbstractCommand {
@@ -31,13 +32,6 @@ public class BattleCommandStart extends AbstractCommand {
             if (Battle.instance().getGame().getTeamManager().getTeamCount() > 0) {
 
                 Bukkit.broadcastMessage(Battle.prefix() + "The Battle has been started! Let the games begin!");
-
-                try {
-                    int timer = Integer.parseInt(args[0]);
-                    Battle.instance().getGame().getSpawn().getLocation().getWorld().setPVP(false);
-                    new GraceTimer(timer * 60);
-                } catch (Exception e) {
-                }
 
                 int startlifes = Battle.instance().getConfig().getInt("config.lifes-at-start");
                 boolean reminder = Battle.instance().getConfig().getBoolean("config.enable-remind-scheduler");
@@ -51,6 +45,13 @@ public class BattleCommandStart extends AbstractCommand {
                     Location spawn = player.getLocation();
                     Battle.instance().getGame().setSpawn(new SerializableLocation(spawn));
                     spawn.getWorld().setSpawnLocation((int) spawn.getX(), (int) spawn.getY(), (int) spawn.getZ());
+                }
+
+                try {
+                    int timer = Integer.parseInt(args[0]);
+                    Battle.instance().getGame().getSpawn().getLocation().getWorld().setPVP(false);
+                    new GraceTimer(timer * 60);
+                } catch (Exception e) {
                 }
 
                 Battle.instance().getGame().getSpawn().getLocation().getWorld().setTime(200);
@@ -67,11 +68,11 @@ public class BattleCommandStart extends AbstractCommand {
                         t.setupInitialWool();
 
                         for (BattlePlayer p : t.getPlayers()) {
+                            p.closeInventory();
                             p.teleport(Battle.instance().getGame().getSpawn().getLocation());
                             p.setGameMode(GameMode.SURVIVAL);
                             p.setAllowFlight(false);
                             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 1));
-                            p.closeInventory();
                             p.getInventory().clear();
                             p.getInventory().setHelmet(new ItemStack(Material.AIR));
                             p.getInventory().setChestplate(new ItemStack(Material.AIR));
@@ -89,8 +90,8 @@ public class BattleCommandStart extends AbstractCommand {
                 }
 
                 Battle.instance().getGame().setStarted(true);
-                Battle.instance().setTags();
-                Battle.instance().updateScoreboard();
+                BattleUtils.setTags();
+                BattleUtils.updateScoreboard();
 
                 Location soundLocation = Battle.instance().getGame().getSpawn().getLocation();
 

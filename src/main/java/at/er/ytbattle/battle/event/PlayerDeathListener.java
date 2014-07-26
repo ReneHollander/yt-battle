@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -18,6 +17,7 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.timeables.FireworkTimer;
+import at.er.ytbattle.util.BattleUtils;
 import at.er.ytbattle.util.PlayerArmor;
 
 public class PlayerDeathListener implements Listener {
@@ -97,10 +97,10 @@ public class PlayerDeathListener implements Listener {
                 }
             }
 
-            if (Battle.instance().getGame().getTeamManager().isLastTeam(t)) {
+            Team lastTeam = Battle.instance().getGame().getTeamManager().getLastTeam();
+            if (lastTeam != null) {
                 Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getLongName() + " has won the Battle!");
-                for (BattlePlayer p : t.getPlayers()) {
-                    p.setDisplayName(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + p.getName());
+                for (BattlePlayer p : Battle.instance().getGame().getBattlePlayerManager().getAllBattlePlayers()) {
                     p.teleport(spawn);
                     p.setAllowFlight(true);
                     p.setFlying(true);
@@ -113,7 +113,7 @@ public class PlayerDeathListener implements Listener {
             }
         }
 
-        Battle.instance().updateScoreboard();
+        BattleUtils.updateScoreboard();
 
     }
 }

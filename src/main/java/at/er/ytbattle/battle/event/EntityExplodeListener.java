@@ -22,8 +22,9 @@ public class EntityExplodeListener implements Listener {
         if (event.getEntityType() == EntityType.CREEPER)
             event.blockList().clear();
         for (Block block : event.blockList()) {
-            if (block.getType() == Material.WOOL || block.getType() == Material.GLASS)
+            if (block.getType() == Material.WOOL) {
                 event.blockList().remove(block);
+            }
         }
     }
 
