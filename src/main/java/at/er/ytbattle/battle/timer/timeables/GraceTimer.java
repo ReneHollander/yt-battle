@@ -37,8 +37,8 @@ public class GraceTimer implements Runnable {
         }
 
         if (time == 0) {
-            Battle.instance().getGame().getSpawn().getLocation().getWorld().setPVP(true);
-            for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
+            Battle.game().getSpawn().getLocation().getWorld().setPVP(true);
+            for (Team t : Battle.game().getTeamManager().getTeams()) {
                 for (BattlePlayer p : t.getPlayers()) {
                     p.playSound(p.getLocation(), Sound.AMBIENCE_THUNDER, 10, 1);
                 }
@@ -52,7 +52,7 @@ public class GraceTimer implements Runnable {
     }
 
     private void note() {
-        for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
+        for (Team t : Battle.game().getTeamManager().getTeams()) {
             for (BattlePlayer p : t.getPlayers()) {
                 p.playSound(p.getLocation(), Sound.NOTE_SNARE_DRUM, 10, 1);
             }

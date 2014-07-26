@@ -10,7 +10,7 @@ public class BattleCommandResume extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
-        Battle.instance().getGame().getTimerManager().resumeAllTimers();
+        Battle.game().getTimerManager().resumeAllTimers();
         Bukkit.broadcastMessage(Battle.prefix() + "The game got resumed!");
         return true;
     }

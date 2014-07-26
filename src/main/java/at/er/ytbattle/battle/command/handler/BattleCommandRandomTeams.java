@@ -16,12 +16,12 @@ public class BattleCommandRandomTeams extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer bp) {
-        if (Battle.instance().getGame().isStarted() == false) {
-            ArrayList<Team> teams = Battle.instance().getGame().getTeamManager().getTeams();
+        if (Battle.game().isStarted() == false) {
+            ArrayList<Team> teams = Battle.game().getTeamManager().getTeams();
             Random r = new Random();
-            for (BattlePlayer player : Battle.instance().getGame().getBattlePlayerManager().getAllBattlePlayers()) {
+            for (BattlePlayer player : Battle.game().getBattlePlayerManager().getAllBattlePlayers()) {
                 Team t = teams.get(r.nextInt(teams.size()));
-                Battle.instance().getGame().getTeamManager().removePlayerFromTeam(player);
+                Battle.game().getTeamManager().removePlayerFromTeam(player);
                 t.addPlayer(player);
                 BattleUtils.setDisplayAndListName(player);
                 Bukkit.broadcastMessage(Battle.prefix() + "Player " + player.getName() + " joined the " + t.getTeamColor().getChatColor() + t.getTeamColor().getLongName() + ChatColor.RESET + " Team!");

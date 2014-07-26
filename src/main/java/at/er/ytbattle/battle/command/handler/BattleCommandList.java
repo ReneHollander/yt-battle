@@ -12,7 +12,7 @@ public class BattleCommandList extends AbstractCommand {
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
         String list = "";
-        for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
+        for (Team t : Battle.game().getTeamManager().getTeams()) {
             for (BattlePlayer p : t.getPlayers()) {
                 list = list + p.getName() + ", ";
             }

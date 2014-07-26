@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.battle.timer.manager.WoolPlaceTimerManager;
+import at.er.ytbattle.util.ConfigurationHelper;
 
 public class Team {
 
@@ -19,7 +20,7 @@ public class Team {
         this.lifes = 0;
         this.lost = false;
 
-        this.bptm = new WoolPlaceTimerManager(this, Battle.instance().getConfig().getInt("config.minutes-till-broken-wool-effects-appears") * 60);
+        this.bptm = new WoolPlaceTimerManager(this, Battle.configurationHelper().getConfigFile().getInt(ConfigurationHelper.GAME_WOOL_TIMETOPLACE_PATH) * 60);
     }
 
     public TeamColor getTeamColor() {

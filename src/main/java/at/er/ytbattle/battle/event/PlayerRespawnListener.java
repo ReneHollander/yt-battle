@@ -24,11 +24,11 @@ public class PlayerRespawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+        BattlePlayer player = Battle.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
 
-        if (Battle.instance().getGame().isStarted() && Battle.instance().getGame().getTeamManager().isInTeam(player)) {
+        if (Battle.game().isStarted() && Battle.game().getTeamManager().isInTeam(player)) {
 
-            Team t = Battle.instance().getGame().getTeamManager().getTeamByPlayer(player);
+            Team t = Battle.game().getTeamManager().getTeamByPlayer(player);
             if (Battle.instance().playerArmor.get(player) != null) {
                 PlayerArmor armor = Battle.instance().playerArmor.get(player);
                 player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
@@ -39,8 +39,8 @@ public class PlayerRespawnListener implements Listener {
                 Battle.instance().playerArmor.remove(player);
             }
 
-            Battle.instance().getGame().getInvincibilityTimerManager().createTimer(player);
-            event.setRespawnLocation(Battle.instance().getGame().getSpawn().getLocation());
+            Battle.game().getInvincibilityTimerManager().createTimer(player);
+            event.setRespawnLocation(Battle.game().getSpawn().getLocation());
             player.getInventory().addItem(new Wool(t.getTeamColor().getDyeColor()).toItemStack(1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 2));
         }

@@ -2,6 +2,7 @@ package at.er.ytbattle.battle;
 
 import at.er.ytbattle.battle.player.BattlePlayerManager;
 import at.er.ytbattle.battle.timer.manager.InvincibilityTimerManager;
+import at.er.ytbattle.util.ConfigurationHelper;
 import at.er.ytbattle.util.SerializableLocation;
 import at.er.ytbattle.util.timer.TimerManager;
 
@@ -28,7 +29,7 @@ public class Game {
         this.teamManager = new TeamManager();
 
         this.timeManager = new TimerManager();
-        this.invincibilityTimerManager = new InvincibilityTimerManager(Battle.instance().getConfig().getInt("config.invincibility-timer-duration"));
+        this.invincibilityTimerManager = new InvincibilityTimerManager(Battle.configurationHelper().getConfigFile().getInt(ConfigurationHelper.GAME_INVINCIBILITY_DURATION_PATH));
     }
 
     public TimerManager getTimerManager() {

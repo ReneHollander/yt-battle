@@ -19,8 +19,8 @@ public class WoolPlaceTimerManager {
     }
 
     public void woolPlace() {
-        if (Battle.instance().getGame().getTimerManager().getSize(this.team) > 0) {
-            Timeable timeable = Battle.instance().getGame().getTimerManager().findLongestRunningTimer(this.team);
+        if (Battle.game().getTimerManager().getSize(this.team) > 0) {
+            Timeable timeable = Battle.game().getTimerManager().findLongestRunningTimer(this.team);
             timeable.removeTimer();
             for (BattlePlayer p : team.getPlayers()) {
                 p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
@@ -36,18 +36,18 @@ public class WoolPlaceTimerManager {
 
     public void woolBreak() {
         WoolPlaceTimer bpt = new WoolPlaceTimer(this.team, this.timetoplace);
-        Battle.instance().getGame().getTimerManager().registerTimer(bpt);
+        Battle.game().getTimerManager().registerTimer(bpt);
         bpt.startTimer();
     }
 
     public int getRemainingWoolCount() {
-        return Battle.instance().getGame().getTimerManager().getSize(this.team);
+        return Battle.game().getTimerManager().getSize(this.team);
     }
 
     public void setupInitialWool() {
         for (int i = 0; i < this.team.getPlayers().size(); i++) {
             WoolPlaceTimer bpt = new WoolPlaceTimer(this.team, this.timetoplace);
-            Battle.instance().getGame().getTimerManager().registerTimer(bpt);
+            Battle.game().getTimerManager().registerTimer(bpt);
             bpt.startTimer();
         }
     }

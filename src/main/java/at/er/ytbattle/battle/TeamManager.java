@@ -72,7 +72,7 @@ public class TeamManager {
 
     public int getTeamCount() {
         int teamcount = 0;
-        for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
+        for (Team t : Battle.game().getTeamManager().getTeams()) {
             if (t.getTeamSize() > 0) {
                 teamcount++;
             }

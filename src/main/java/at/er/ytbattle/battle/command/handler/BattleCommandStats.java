@@ -12,15 +12,15 @@ public class BattleCommandStats extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
-        if (Battle.instance().getGame().isStarted()) {
+        if (Battle.game().isStarted()) {
             String list = "";
             String winners = "";
 
-            if (Battle.instance().getGame().getTeamManager().getTeams().size() > 1) {
+            if (Battle.game().getTeamManager().getTeams().size() > 1) {
                 if (args.length == 0) {
                     player.sendMessage(Battle.prefix() + "Please select a team: /battle stats <teamname>");
                 } else {
-                    Team t = Battle.instance().getGame().getTeamManager().getTeam(TeamColor.getTeamByShortName(args[0].toLowerCase()));
+                    Team t = Battle.game().getTeamManager().getTeam(TeamColor.getTeamByShortName(args[0].toLowerCase()));
                     if (t != null) {
                         for (BattlePlayer p : t.getPlayers()) {
                             list += p.getName() + " (" + p.getHealth() * 10.0 / 2.0 + "%), ";
@@ -33,7 +33,7 @@ public class BattleCommandStats extends AbstractCommand {
                     }
                 }
             } else {
-                winners = Battle.instance().getGame().getTeamManager().getLastTeam().getTeamColor().getLongName();
+                winners = Battle.game().getTeamManager().getLastTeam().getTeamColor().getLongName();
                 player.sendMessage(Battle.prefix() + "The " + winners + " team has won the battle - Stats are disabled now!");
             }
         } else {

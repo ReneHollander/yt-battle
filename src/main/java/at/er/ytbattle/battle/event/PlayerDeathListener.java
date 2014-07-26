@@ -28,13 +28,13 @@ public class PlayerDeathListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDeath(PlayerDeathEvent event) {
-        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getEntity());
+        BattlePlayer player = Battle.game().getBattlePlayerManager().getBattlePlayer(event.getEntity());
 
-        if (Battle.instance().getGame().isStarted() && Battle.instance().getGame().getTeamManager().isInTeam(player)) {
+        if (Battle.game().isStarted() && Battle.game().getTeamManager().isInTeam(player)) {
 
-            Location spawn = Battle.instance().getGame().getSpawn().getLocation();
+            Location spawn = Battle.game().getSpawn().getLocation();
 
-            Team t = Battle.instance().getGame().getTeamManager().getTeamByPlayer(player);
+            Team t = Battle.game().getTeamManager().getTeamByPlayer(player);
 
             ItemStack helmet = player.getInventory().getHelmet();
             ItemStack chestplate = player.getInventory().getChestplate();
@@ -97,15 +97,15 @@ public class PlayerDeathListener implements Listener {
                 }
             }
 
-            Team lastTeam = Battle.instance().getGame().getTeamManager().getLastTeam();
+            Team lastTeam = Battle.game().getTeamManager().getLastTeam();
             if (lastTeam != null) {
                 Bukkit.broadcastMessage(Battle.prefix() + "Team " + t.getTeamColor().getLongName() + " has won the Battle!");
-                for (BattlePlayer p : Battle.instance().getGame().getBattlePlayerManager().getAllBattlePlayers()) {
+                for (BattlePlayer p : Battle.game().getBattlePlayerManager().getAllBattlePlayers()) {
                     p.teleport(spawn);
                     p.setAllowFlight(true);
                     p.setFlying(true);
                 }
-                Battle.instance().getGame().setStarted(false);
+                Battle.game().setStarted(false);
                 FireworkTimer ft = new FireworkTimer();
                 int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Battle.instance(), ft, 0, 20L);
                 ft.setID(id);

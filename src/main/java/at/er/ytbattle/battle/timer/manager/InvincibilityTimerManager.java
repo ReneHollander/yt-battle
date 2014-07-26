@@ -16,20 +16,20 @@ public class InvincibilityTimerManager {
     }
 
     public void stopTimer(BattlePlayer p) {
-        Timeable timeable = Battle.instance().getGame().getTimerManager().getTimer(MANAGER_ID, p);
+        Timeable timeable = Battle.game().getTimerManager().getTimer(MANAGER_ID, p);
         if (timeable != null) {
             timeable.removeTimer();
         }
     }
 
     public boolean timerRunning(BattlePlayer p) {
-        return Battle.instance().getGame().getTimerManager().hasTimer(MANAGER_ID, p);
+        return Battle.game().getTimerManager().hasTimer(MANAGER_ID, p);
     }
 
     public void createTimer(BattlePlayer p) {
-        Battle.instance().getGame().getTimerManager().removeTimer(MANAGER_ID, p);
+        Battle.game().getTimerManager().removeTimer(MANAGER_ID, p);
         InvincibilityTimer it = new InvincibilityTimer(p, time);
-        Battle.instance().getGame().getTimerManager().registerTimer(it);
+        Battle.game().getTimerManager().registerTimer(it);
         it.startTimer();
     }
 }

@@ -28,7 +28,7 @@ public class RemindTimer extends Timeable {
     }
 
     public void startReminder() {
-        Battle.instance().getGame().getTimerManager().registerTimer(this);
+        Battle.game().getTimerManager().registerTimer(this);
         this.startTimer();
     }
 

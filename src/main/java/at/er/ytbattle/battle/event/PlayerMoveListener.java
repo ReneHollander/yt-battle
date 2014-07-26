@@ -22,13 +22,13 @@ public class PlayerMoveListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+        BattlePlayer player = Battle.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
 
-        if (Battle.instance().getGame().isStarted()) {
-            if (Battle.instance().getGame().getTeamManager().isInTeam(player)) {
+        if (Battle.game().isStarted()) {
+            if (Battle.game().getTeamManager().isInTeam(player)) {
                 if (player.getInventory().contains(Material.WOOL)) {
 
-                    Team t = Battle.instance().getGame().getTeamManager().getTeamByPlayer(player);
+                    Team t = Battle.game().getTeamManager().getTeamByPlayer(player);
 
                     boolean found = false;
 

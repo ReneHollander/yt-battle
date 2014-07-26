@@ -2,7 +2,6 @@ package at.er.ytbattle.battle;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -31,6 +30,7 @@ import at.er.ytbattle.battle.event.PlayerRespawnListener;
 import at.er.ytbattle.battle.event.PlayerShearListener;
 import at.er.ytbattle.battle.event.PrepareItemCraftListener;
 import at.er.ytbattle.util.BattleUtils;
+import at.er.ytbattle.util.ConfigurationHelper;
 import at.er.ytbattle.util.PlayerArmor;
 import at.er.ytbattle.util.XStreamUtil;
 
@@ -39,20 +39,20 @@ import com.thoughtworks.xstream.XStream;
 public class Battle extends JavaPlugin {
 
     private static Battle instance;
+    private static ConfigurationHelper configurationHelper;
+    private static Game game;
 
     public HashMap<Player, PlayerArmor> playerArmor;
     public boolean dontSave;
 
-    private Game game;
-
     @Override
     public void onEnable() {
         instance = this;
+        configurationHelper = new ConfigurationHelper();
 
         this.dontSave = false;
         this.playerArmor = new HashMap<Player, PlayerArmor>();
 
-        this.loadConfig();
         this.loadGame();
         this.addCraftings();
         this.registerCommands();
@@ -63,7 +63,7 @@ public class Battle extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.getGame().getTimerManager().pauseAllTimers();
+        Battle.game().getTimerManager().pauseAllTimers();
         saveGame();
     }
 
@@ -83,36 +83,10 @@ public class Battle extends JavaPlugin {
         new EntityDamageListener();
     }
 
-    public void loadConfig() {
-        ArrayList<String> defaultChestContent = new ArrayList<String>();
-
-        defaultChestContent.add("392:16");
-        defaultChestContent.add("272");
-        defaultChestContent.add("273");
-        defaultChestContent.add("274");
-        defaultChestContent.add("275");
-
-        this.getConfig().addDefault("config.enable-remind-scheduler", true);
-
-        this.getConfig().addDefault("config.enable-automatic-save", true);
-        this.getConfig().addDefault("config.enable-automatic-load", false);
-        this.getConfig().addDefault("config.invincibility-timer-duration", 10);
-        this.getConfig().addDefault("config.enable-base-block", true);
-        this.getConfig().addDefault("config.lifes-at-start", 10);
-        this.getConfig().addDefault("config.minutes-till-broken-wool-effects-appears", 15);
-        this.getConfig().addDefault("config.wool-place-remove-radius", 2);
-        this.getConfig().addDefault("config.wool-place-min-height", 50);
-        this.getConfig().addDefault("config.base-block-chest-content", defaultChestContent);
-
-        this.getConfig().options().header("Battle Plugin by EXSolo and Rene8888");
-
-        this.getConfig().options().copyDefaults(true);
-        this.saveConfig();
-    }
-
     public void registerCommands() {
-        getCommand("battle").setExecutor(new CommandManager());
-        getCommand("b").setExecutor(new CommandManager());
+        CommandManager cm = new CommandManager();
+        getCommand("battle").setExecutor(cm);
+        getCommand("b").setExecutor(cm);
     }
 
     public void addCraftings() {
@@ -153,19 +127,18 @@ public class Battle extends JavaPlugin {
         if (save.exists()) {
             XStream xstream = XStreamUtil.createXStream();
             try {
-                Game g = (Game) xstream.fromXML(save);
+                game = (Game) xstream.fromXML(save);
                 System.out.println("Loaded savegame.xml!");
-                this.game = g;
             } catch (Exception e) {
                 System.err.println("Error while trying to load the battle.save");
                 e.printStackTrace(System.err);
 
-                this.game = new Game();
-                this.game.initManagers();
+                game = new Game();
+                Battle.game().initManagers();
             }
         } else {
-            this.game = new Game();
-            this.game.initManagers();
+            game = new Game();
+            Battle.game().initManagers();
         }
     }
 
@@ -174,7 +147,7 @@ public class Battle extends JavaPlugin {
             if (game.isStarted()) {
                 XStream xstream = XStreamUtil.createXStream();
                 try {
-                    xstream.toXML(this.game, new FileOutputStream(new File(getDataFolder(), "savegame.xml")));
+                    xstream.toXML(Battle.game(), new FileOutputStream(new File(getDataFolder(), "savegame.xml")));
                 } catch (Exception e) {
                     System.err.println("Error while trying to write the savegame.xml");
                     e.printStackTrace(System.err);
@@ -187,16 +160,16 @@ public class Battle extends JavaPlugin {
         return ChatColor.GOLD + "[Battle] " + ChatColor.WHITE;
     }
 
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
     public static Battle instance() {
         return instance;
+    }
+
+    public static ConfigurationHelper configurationHelper() {
+        return configurationHelper;
+    }
+
+    public static Game game() {
+        return game;
     }
 
 }

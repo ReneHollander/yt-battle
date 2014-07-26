@@ -18,7 +18,7 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+        BattlePlayer player = Battle.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
         BattleUtils.setDisplayAndListName(player);
         BattleUtils.addToScoreboard(player);
         BattleUtils.updateScoreboard();

@@ -20,6 +20,7 @@ import at.er.ytbattle.battle.Battle;
 import at.er.ytbattle.battle.Team;
 import at.er.ytbattle.battle.player.BattlePlayer;
 import at.er.ytbattle.util.BattleUtils;
+import at.er.ytbattle.util.ConfigurationHelper;
 
 public class BlockPlaceListener implements Listener {
 
@@ -29,14 +30,14 @@ public class BlockPlaceListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent event) {
-        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
-        if (event.getBlock().getType() == Material.GLASS && player.getWorld() == Battle.instance().getGame().getSpawn().getLocation().getWorld() && Battle.instance().getGame().isStarted()) {
+        BattlePlayer player = Battle.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+        if (event.getBlock().getType() == Material.GLASS && player.getWorld() == Battle.game().getSpawn().getLocation().getWorld() && Battle.game().isStarted()) {
             event.setCancelled(true);
             player.sendMessage(Battle.prefix() + "You are unable to place a Block of the Bordermaterial.");
         }
-        if (event.getBlock().getType() == Material.WOOL && Battle.instance().getGame().isStarted() && Battle.instance().getGame().getTeamManager().isInTeam(player)) {
+        if (event.getBlock().getType() == Material.WOOL && Battle.game().isStarted() && Battle.game().getTeamManager().isInTeam(player)) {
             DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
-            Team t = Battle.instance().getGame().getTeamManager().getTeamByPlayer(player);
+            Team t = Battle.game().getTeamManager().getTeamByPlayer(player);
             if (t.getTeamColor().getDyeColor().equals(color)) {
                 boolean placed = this.placeWool(player, event.getBlock().getLocation(), color);
                 if (placed == false) {
@@ -64,7 +65,7 @@ public class BlockPlaceListener implements Listener {
 
     private boolean placeWool(Player p, Location l, DyeColor color) {
 
-        int minHeight = Battle.instance().getConfig().getInt("config.wool-place-min-height");
+        int minHeight = Battle.configurationHelper().getConfigFile().getInt(ConfigurationHelper.GAME_WOOL_MINPLACEHEIGHT_PATH);
 
         if (l.getBlockY() < minHeight) {
             return false;
@@ -83,7 +84,7 @@ public class BlockPlaceListener implements Listener {
 
         World w = l.getWorld();
 
-        int rad = Battle.instance().getConfig().getInt("config.wool-place-remove-radius");
+        int rad = Battle.configurationHelper().getConfigFile().getInt(ConfigurationHelper.GAME_WOOL_REMOVERADIUS_PATH);
 
         for (int x = -rad; x <= rad; x++) {
             for (int y = -rad; y <= rad; y++) {

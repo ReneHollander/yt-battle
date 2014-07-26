@@ -8,8 +8,8 @@ public class BattleCommandSpawn extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
-        if (Battle.instance().getGame().getSpawn() != null && Battle.instance().getGame().isStarted() == false) {
-            player.teleport(Battle.instance().getGame().getSpawn().getLocation());
+        if (Battle.game().getSpawn() != null && Battle.game().isStarted() == false) {
+            player.teleport(Battle.game().getSpawn().getLocation());
         } else {
             player.sendMessage(Battle.prefix() + "Battlespawn hasn't been set yet!");
         }

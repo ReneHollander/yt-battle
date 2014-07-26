@@ -28,7 +28,7 @@ public class BattleUtils {
     @SuppressWarnings("deprecation")
     public static ItemStack[] getStarterChestContents() {
         if (starterChestContents == null) {
-            List<?> confList = Battle.instance().getConfig().getList("config.base-block-chest-content");
+            List<?> confList = Battle.configurationHelper().getConfigFile().getList(ConfigurationHelper.GAME_BASEBLOCK_CONTENTS_PATH);
             ArrayList<ItemStack> contents = new ArrayList<ItemStack>();
             try {
                 List<String> itemIDs = Lists.transform(confList, Functions.toStringFunction());
@@ -59,14 +59,14 @@ public class BattleUtils {
     }
 
     public static void setTags() {
-        for (BattlePlayer player : Battle.instance().getGame().getBattlePlayerManager().getAllBattlePlayers()) {
+        for (BattlePlayer player : Battle.game().getBattlePlayerManager().getAllBattlePlayers()) {
             setDisplayAndListName(player);
         }
     }
 
     public static void setDisplayAndListName(BattlePlayer player) {
         if (player != null && player.hasPlayer()) {
-            Team t = Battle.instance().getGame().getTeamManager().getTeamByPlayer(player);
+            Team t = Battle.game().getTeamManager().getTeamByPlayer(player);
             if (t != null) {
                 String display = t.getTeamColor().getChatColor() + player.getName();
                 if (display.length() > 15) {
@@ -103,7 +103,7 @@ public class BattleUtils {
     public static void updateScoreboard() {
         Scoreboard scoreboard = getBattleScoreboard();
         Objective objective = getBattleStatsObjective();
-        if (Battle.instance().getGame().isStarted() == false) {
+        if (Battle.game().isStarted() == false) {
             if (objective.getDisplayName().equals(ChatColor.BOLD + "Battle Teamstats")) {
                 for (String entry : scoreboard.getEntries()) {
                     scoreboard.resetScores(entry);
@@ -127,7 +127,7 @@ public class BattleUtils {
                 }
             }
             objective.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
-            for (Team t : Battle.instance().getGame().getTeamManager().getTeams()) {
+            for (Team t : Battle.game().getTeamManager().getTeams()) {
                 if (t.getPlayers().size() > 0) {
                     objective.getScore(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName()).setScore(t.getLifes());
                 } else {

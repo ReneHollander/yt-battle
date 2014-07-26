@@ -14,12 +14,12 @@ public class BattleCommandLife extends AbstractCommand {
     private TeamManager teamManager;
 
     public BattleCommandLife() {
-        this.teamManager = Battle.instance().getGame().getTeamManager();
+        this.teamManager = Battle.game().getTeamManager();
     }
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
-        if (Battle.instance().getGame().isStarted()) {
+        if (Battle.game().isStarted()) {
             if (this.teamManager.isInTeam(player)) {
                 Team t = this.teamManager.getTeamByPlayer(player);
                 if (t.getLifes() > 0) {

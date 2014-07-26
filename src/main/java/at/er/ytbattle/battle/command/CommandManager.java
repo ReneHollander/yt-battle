@@ -68,7 +68,7 @@ public class CommandManager implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("battle") || label.equalsIgnoreCase("b")) {
             if (sender instanceof Player) {
-                BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer((Player) sender);
+                BattlePlayer player = Battle.game().getBattlePlayerManager().getBattlePlayer((Player) sender);
 
                 if (args.length == 0) {
                     player.sendMessage(Battle.prefix() + "EXSolo's and Rene8888's Battle Plugin: For a command overview do /battle help");

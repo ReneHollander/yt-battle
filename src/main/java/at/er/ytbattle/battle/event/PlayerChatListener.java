@@ -18,11 +18,11 @@ public class PlayerChatListener implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
-        if (Battle.instance().getGame().isStarted()) {
-            if (Battle.instance().getGame().getTeamManager().isInTeam(player)) {
-                Team t = Battle.instance().getGame().getTeamManager().getTeamByPlayer(player);
-                if (Battle.instance().getGame().getTeamManager().isLastTeam(t)) {
+        BattlePlayer player = Battle.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+        if (Battle.game().isStarted()) {
+            if (Battle.game().getTeamManager().isInTeam(player)) {
+                Team t = Battle.game().getTeamManager().getTeamByPlayer(player);
+                if (Battle.game().getTeamManager().isLastTeam(t)) {
                     event.setFormat(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
                 } else {
                     event.setFormat(t.getTeamColor().getChatColor() + "[Battle]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");

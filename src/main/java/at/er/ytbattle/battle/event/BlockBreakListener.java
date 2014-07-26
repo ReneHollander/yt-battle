@@ -22,20 +22,20 @@ public class BlockBreakListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
-        BattlePlayer player = Battle.instance().getGame().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
-        if (event.getBlock().getType() == Material.WOOL && Battle.instance().getGame().isStarted() && Battle.instance().getGame().getTeamManager().isInTeam(player)) {
+        BattlePlayer player = Battle.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+        if (event.getBlock().getType() == Material.WOOL && Battle.game().isStarted() && Battle.game().getTeamManager().isInTeam(player)) {
             DyeColor color = ((Wool) event.getBlock().getState().getData()).getColor();
-            Team t = Battle.instance().getGame().getTeamManager().getTeamByPlayer(player);
+            Team t = Battle.game().getTeamManager().getTeamByPlayer(player);
 
-            Team victim = Battle.instance().getGame().getTeamManager().getTeamByDyeColor(color);
+            Team victim = Battle.game().getTeamManager().getTeamByDyeColor(color);
             if (t.getTeamColor().getDyeColor().equals(color)) {
                 player.sendMessage(Battle.prefix() + "You can't break your own team's wool!");
                 event.setCancelled(true);
             } else {
                 victim.getBlockPlaceTimerManager().woolBreak();
 
-                if (Battle.instance().getGame().getInvincibilityTimerManager().timerRunning(player)) {
-                    Battle.instance().getGame().getInvincibilityTimerManager().stopTimer(player);
+                if (Battle.game().getInvincibilityTimerManager().timerRunning(player)) {
+                    Battle.game().getInvincibilityTimerManager().stopTimer(player);
                     player.sendMessage(Battle.prefix() + "You have lost your invincibility!");
                 }
 

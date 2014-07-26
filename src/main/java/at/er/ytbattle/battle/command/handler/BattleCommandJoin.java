@@ -14,15 +14,15 @@ public class BattleCommandJoin extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
-        if (Battle.instance().getGame().isStarted() == false) {
+        if (Battle.game().isStarted() == false) {
             if (args.length == 0 || args.length > 1) {
                 player.sendMessage(Battle.prefix() + "Correct usage: /battle join <teamname>");
                 return true;
             }
             TeamColor tc = TeamColor.getTeamByShortName(args[0]);
             if (tc != null) {
-                Team t = Battle.instance().getGame().getTeamManager().getTeam(tc);
-                Battle.instance().getGame().getTeamManager().removePlayerFromTeam(player);
+                Team t = Battle.game().getTeamManager().getTeam(tc);
+                Battle.game().getTeamManager().removePlayerFromTeam(player);
                 t.addPlayer(player);
                 BattleUtils.setDisplayAndListName(player);
                 Bukkit.broadcastMessage(Battle.prefix() + "Player " + player.getName() + " joined the " + t.getTeamColor().getChatColor() + t.getTeamColor().getLongName() + ChatColor.RESET + " Team!");
