@@ -20,7 +20,7 @@ public class BattleCommandReset extends AbstractCommand {
         BattleUtils.unsetTags();
         BattleUtils.updateScoreboard();
 
-        File file = new File(BattlePlugin.instance().getDataFolder(), "savegame.xml");
+        File file = new File(BattlePlugin.instance().getDataFolder(), BattleUtils.SAVE_FILE_NAME);
 
         if (file.exists()) {
             if (!file.delete())

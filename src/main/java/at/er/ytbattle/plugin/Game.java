@@ -22,9 +22,7 @@ public class Game {
         this.spawn = null;
         this.started = false;
         this.saved = false;
-    }
 
-    public void initManagers() {
         this.battlePlayerManager = new BattlePlayerManager();
         this.teamManager = new TeamManager();
 

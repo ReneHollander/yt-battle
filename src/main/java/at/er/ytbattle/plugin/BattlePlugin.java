@@ -50,7 +50,7 @@ public class BattlePlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         configurationHelper = new ConfigurationHelper();
-        this.loadGame();
+        game = loadGame(new File(getDataFolder(), BattleUtils.SAVE_FILE_NAME));
 
         this.dontSave = false;
         this.playerArmor = new HashMap<Player, PlayerArmor>();
@@ -124,24 +124,22 @@ public class BattlePlugin extends JavaPlugin {
         this.dontSave = b;
     }
 
-    public void loadGame() {
-        File save = new File(getDataFolder(), "savegame.xml");
-        if (save.exists()) {
+    private static Game loadGame(File saveFile) {
+        Game game = null;
+        if (saveFile.exists()) {
             XStream xstream = XStreamUtil.createXStream();
             try {
-                game = (Game) xstream.fromXML(save);
-                System.out.println("Loaded savegame.xml!");
+                game = (Game) xstream.fromXML(saveFile);
+                System.out.println("Loaded " + BattleUtils.SAVE_FILE_NAME + "!");
             } catch (Exception e) {
-                System.err.println("Error while trying to load the battle.save");
+                System.err.println("Error while trying to load " + BattleUtils.SAVE_FILE_NAME + "!");
                 e.printStackTrace(System.err);
-
                 game = new Game();
-                BattlePlugin.game().initManagers();
             }
         } else {
             game = new Game();
-            BattlePlugin.game().initManagers();
         }
+        return game;
     }
 
     public void saveGame() {
@@ -149,9 +147,9 @@ public class BattlePlugin extends JavaPlugin {
             if (game.isStarted()) {
                 XStream xstream = XStreamUtil.createXStream();
                 try {
-                    xstream.toXML(BattlePlugin.game(), new FileOutputStream(new File(getDataFolder(), "savegame.xml")));
+                    xstream.toXML(BattlePlugin.game(), new FileOutputStream(new File(getDataFolder(), BattleUtils.SAVE_FILE_NAME)));
                 } catch (Exception e) {
-                    System.err.println("Error while trying to write the savegame.xml");
+                    System.err.println("Error while trying to write " + BattleUtils.SAVE_FILE_NAME + "!");
                     e.printStackTrace(System.err);
                 }
             }
