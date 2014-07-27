@@ -27,10 +27,10 @@ public class PlayerRespawnListener implements Listener {
         BattlePlayer player = BattlePlugin.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
 
         if (BattlePlugin.game().isStarted() && BattlePlugin.game().getTeamManager().isInTeam(player)) {
-
             Team t = BattlePlugin.game().getTeamManager().getTeamByPlayer(player);
-            if (BattlePlugin.instance().playerArmor.get(player) != null) {
-                PlayerArmor armor = BattlePlugin.instance().playerArmor.get(player);
+            PlayerArmor armor = BattlePlugin.instance().playerArmor.get(player);
+
+            if (armor != null) {
                 player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
                 player.getInventory().setHelmet(armor.getHelmet());
                 player.getInventory().setChestplate(armor.getChestplate());

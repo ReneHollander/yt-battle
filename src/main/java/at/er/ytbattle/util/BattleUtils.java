@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -137,5 +138,12 @@ public class BattleUtils {
                 }
             }
         }
+    }
+
+    public static ItemStack removeEnchants(ItemStack input) {
+        for (Enchantment enchantment : input.getEnchantments().keySet()) {
+            input.removeEnchantment(enchantment);
+        }
+        return input;
     }
 }
