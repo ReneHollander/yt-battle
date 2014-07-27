@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import net.minecraft.util.gnu.trove.set.hash.TIntHashSet;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,7 +20,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import at.er.ytbattle.plugin.command.CommandManager;
 import at.er.ytbattle.plugin.event.BlockBreakListener;
 import at.er.ytbattle.plugin.event.BlockPlaceListener;
-import at.er.ytbattle.plugin.event.EntityDamageListener;
 import at.er.ytbattle.plugin.event.EntityDeathListener;
 import at.er.ytbattle.plugin.event.EntityExplodeListener;
 import at.er.ytbattle.plugin.event.InvincibilityListener;
@@ -44,17 +45,20 @@ public class BattlePlugin extends JavaPlugin {
     private static ConfigurationHelper configurationHelper;
     private static Game game;
 
-    public HashMap<Player, PlayerArmor> playerArmor;
     public boolean dontSave;
 
-    @Override
+    public HashMap<Player, PlayerArmor> playerArmor;
+    public TIntHashSet deadPlayersItems;
+
     public void onEnable() {
         instance = this;
         configurationHelper = new ConfigurationHelper();
         game = loadGame(new File(getDataFolder(), BattleUtils.SAVE_FILE_NAME));
 
         this.dontSave = false;
+
         this.playerArmor = new HashMap<Player, PlayerArmor>();
+        this.deadPlayersItems = new TIntHashSet();
 
         this.addCraftings();
         this.registerCommands();
@@ -82,7 +86,6 @@ public class BattlePlugin extends JavaPlugin {
         new PlayerRespawnListener();
         new PlayerShearListener();
         new PrepareItemCraftListener();
-        new EntityDamageListener();
         new InvincibilityListener();
     }
 
