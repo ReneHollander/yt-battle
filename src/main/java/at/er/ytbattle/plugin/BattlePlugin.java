@@ -50,11 +50,11 @@ public class BattlePlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         configurationHelper = new ConfigurationHelper();
+        this.loadGame();
 
         this.dontSave = false;
         this.playerArmor = new HashMap<Player, PlayerArmor>();
 
-        this.loadGame();
         this.addCraftings();
         this.registerCommands();
         this.registerEvents();
