@@ -55,7 +55,6 @@
  * 
  * buttonContainer.add(add); buttonContainer.add(del); buttonContainer.add(save);
  * 
- * // TODO fix player editor // for (String player : t.getPlayers()) { // playersModel.addElement(player); // } lifes.setText("" + t.getLifes());
  * 
  * this.setLayout(new BorderLayout());
  * 
