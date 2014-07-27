@@ -26,6 +26,10 @@ public class InvincibilityTimerManager {
         return Battle.game().getTimerManager().hasTimer(MANAGER_ID, p);
     }
 
+    public InvincibilityTimer getTimerByPlayer(BattlePlayer p) {
+        return (InvincibilityTimer) Battle.game().getTimerManager().getTimer(MANAGER_ID, p);
+    }
+
     public void createTimer(BattlePlayer p) {
         Battle.game().getTimerManager().removeTimer(MANAGER_ID, p);
         InvincibilityTimer it = new InvincibilityTimer(p, time);

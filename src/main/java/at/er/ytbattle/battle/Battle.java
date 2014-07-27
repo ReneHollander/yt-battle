@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import at.er.ytbattle.battle.command.CommandManager;
 import at.er.ytbattle.battle.event.BlockBreakListener;
 import at.er.ytbattle.battle.event.BlockPlaceListener;
+import at.er.ytbattle.battle.event.InvincibilityListener;
 import at.er.ytbattle.battle.event.EntityDamageListener;
 import at.er.ytbattle.battle.event.EntityDeathListener;
 import at.er.ytbattle.battle.event.EntityExplodeListener;
@@ -81,6 +82,7 @@ public class Battle extends JavaPlugin {
         new PlayerShearListener();
         new PrepareItemCraftListener();
         new EntityDamageListener();
+        new InvincibilityListener();
     }
 
     public void registerCommands() {
