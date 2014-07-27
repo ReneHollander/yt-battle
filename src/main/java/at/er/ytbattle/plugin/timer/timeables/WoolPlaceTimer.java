@@ -21,7 +21,7 @@ public class WoolPlaceTimer extends Timeable {
 
     @Override
     public void tick(long elapsedTime) {
-        int duration = BattlePlugin.configurationHelper().getInvincibilityTimerDuration();
+        int duration = BattlePlugin.configurationHelper().getWoolTimeToPlace();
         if (elapsedTime == 0) {
             for (BattlePlayer player : team.getPlayers()) {
                 player.sendMessage(BattlePlugin.prefix() + "You have " + ((duration - elapsedTime) / 60) + " minutes left to place a wool.");
