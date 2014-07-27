@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import at.er.ytbattle.battle.Battle;
+import at.er.ytbattle.plugin.BattlePlugin;
 
 public class ConfigurationHelper {
 
@@ -20,7 +20,7 @@ public class ConfigurationHelper {
     private FileConfiguration configFile;
 
     public ConfigurationHelper() {
-        this.configFile = Battle.instance().getConfig();
+        this.configFile = BattlePlugin.instance().getConfig();
 
         this.setupDefaultConfig();
     }
@@ -48,11 +48,11 @@ public class ConfigurationHelper {
         this.configFile.addDefault(TIMER_REMINDER_ENABLED_PATH, true);
 
         this.configFile.options().copyDefaults(true);
-        Battle.instance().saveConfig();
+        BattlePlugin.instance().saveConfig();
     }
 
     public void reloadConfiguration() {
-        Battle.instance().reloadConfig();
+        BattlePlugin.instance().reloadConfig();
     }
 
     public FileConfiguration getConfigFile() {

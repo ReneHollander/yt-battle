@@ -11,9 +11,9 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import at.er.ytbattle.battle.Battle;
-import at.er.ytbattle.battle.Team;
-import at.er.ytbattle.battle.player.BattlePlayer;
+import at.er.ytbattle.plugin.BattlePlugin;
+import at.er.ytbattle.plugin.Team;
+import at.er.ytbattle.plugin.player.BattlePlayer;
 
 import com.google.common.base.Functions;
 import com.google.common.collect.Lists;
@@ -28,7 +28,7 @@ public class BattleUtils {
     @SuppressWarnings("deprecation")
     public static ItemStack[] getStarterChestContents() {
         if (starterChestContents == null) {
-            List<?> confList = Battle.configurationHelper().getConfigFile().getList(ConfigurationHelper.GAME_BASEBLOCK_CONTENTS_PATH);
+            List<?> confList = BattlePlugin.configurationHelper().getConfigFile().getList(ConfigurationHelper.GAME_BASEBLOCK_CONTENTS_PATH);
             ArrayList<ItemStack> contents = new ArrayList<ItemStack>();
             try {
                 List<String> itemIDs = Lists.transform(confList, Functions.toStringFunction());
@@ -59,14 +59,14 @@ public class BattleUtils {
     }
 
     public static void setTags() {
-        for (BattlePlayer player : Battle.game().getBattlePlayerManager().getAllBattlePlayers()) {
+        for (BattlePlayer player : BattlePlugin.game().getBattlePlayerManager().getAllBattlePlayers()) {
             setDisplayAndListName(player);
         }
     }
 
     public static void setDisplayAndListName(BattlePlayer player) {
         if (player != null && player.hasPlayer()) {
-            Team t = Battle.game().getTeamManager().getTeamByPlayer(player);
+            Team t = BattlePlugin.game().getTeamManager().getTeamByPlayer(player);
             if (t != null) {
                 String display = t.getTeamColor().getChatColor() + player.getName();
                 if (display.length() > 15) {
@@ -103,14 +103,14 @@ public class BattleUtils {
     public static void updateScoreboard() {
         Scoreboard scoreboard = getBattleScoreboard();
         Objective objective = getBattleStatsObjective();
-        if (Battle.game().isStarted() == false) {
+        if (BattlePlugin.game().isStarted() == false) {
             if (objective.getDisplayName().equals(ChatColor.BOLD + "Battle Teamstats")) {
                 for (String entry : scoreboard.getEntries()) {
                     scoreboard.resetScores(entry);
                 }
             }
             objective.setDisplayName(ChatColor.BOLD + "Battle Infos");
-            String version = Battle.instance().getDescription().getVersion();
+            String version = BattlePlugin.instance().getDescription().getVersion();
             version = version.substring(0, version.indexOf('-'));
             objective.getScore(ChatColor.ITALIC + "Battle v" + version).setScore(8);
             objective.getScore(ChatColor.ITALIC + "").setScore(7);
@@ -127,7 +127,7 @@ public class BattleUtils {
                 }
             }
             objective.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
-            for (Team t : Battle.game().getTeamManager().getTeams()) {
+            for (Team t : BattlePlugin.game().getTeamManager().getTeams()) {
                 if (t.getPlayers().size() > 0) {
                     objective.getScore(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName()).setScore(t.getLifes());
                 } else {

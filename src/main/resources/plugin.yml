@@ -4,7 +4,7 @@ description: YT-Battle Plugin
 authors: [EXSolo, Rene8888]
 website: https://github.com/Rene8888/yt-battle
 
-main: at.er.ytbattle.battle.Battle
+main: at.er.ytbattle.plugin.BattlePlugin
 database: false
 
 commands:

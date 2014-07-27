@@ -1,11 +1,11 @@
 package at.er.ytbattle.util;
 
-import at.er.ytbattle.battle.Game;
-import at.er.ytbattle.battle.Team;
-import at.er.ytbattle.battle.TeamColor;
-import at.er.ytbattle.battle.player.BattlePlayer;
-import at.er.ytbattle.battle.timer.timeables.InvincibilityTimer;
-import at.er.ytbattle.battle.timer.timeables.WoolPlaceTimer;
+import at.er.ytbattle.plugin.Game;
+import at.er.ytbattle.plugin.Team;
+import at.er.ytbattle.plugin.TeamColor;
+import at.er.ytbattle.plugin.player.BattlePlayer;
+import at.er.ytbattle.plugin.timer.timeables.InvincibilityTimer;
+import at.er.ytbattle.plugin.timer.timeables.WoolPlaceTimer;
 
 import com.thoughtworks.xstream.XStream;
 
