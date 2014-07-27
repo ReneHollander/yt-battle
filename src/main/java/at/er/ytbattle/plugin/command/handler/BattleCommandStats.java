@@ -3,10 +3,10 @@ package at.er.ytbattle.plugin.command.handler;
 import org.bukkit.ChatColor;
 
 import at.er.ytbattle.plugin.BattlePlugin;
-import at.er.ytbattle.plugin.Team;
-import at.er.ytbattle.plugin.TeamColor;
 import at.er.ytbattle.plugin.command.AbstractCommand;
 import at.er.ytbattle.plugin.player.BattlePlayer;
+import at.er.ytbattle.plugin.team.Team;
+import at.er.ytbattle.plugin.team.TeamColor;
 
 public class BattleCommandStats extends AbstractCommand {
 

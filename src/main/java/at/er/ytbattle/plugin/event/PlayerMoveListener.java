@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Wool;
 
 import at.er.ytbattle.plugin.BattlePlugin;
-import at.er.ytbattle.plugin.Team;
 import at.er.ytbattle.plugin.player.BattlePlayer;
+import at.er.ytbattle.plugin.team.Team;
 
 public class PlayerMoveListener implements Listener {
 

@@ -1,6 +1,7 @@
 package at.er.ytbattle.plugin;
 
 import at.er.ytbattle.plugin.player.BattlePlayerManager;
+import at.er.ytbattle.plugin.team.TeamManager;
 import at.er.ytbattle.plugin.timer.manager.InvincibilityTimerManager;
 import at.er.ytbattle.util.ConfigurationHelper;
 import at.er.ytbattle.util.SerializableLocation;

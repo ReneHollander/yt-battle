@@ -11,8 +11,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import at.er.ytbattle.plugin.BattlePlugin;
-import at.er.ytbattle.plugin.Team;
 import at.er.ytbattle.plugin.player.BattlePlayer;
+import at.er.ytbattle.plugin.team.Team;
 import at.er.ytbattle.util.BattleUtils;
 
 public class PlayerInteractListener implements Listener {

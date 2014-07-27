@@ -30,6 +30,7 @@ import at.er.ytbattle.plugin.event.PlayerMoveListener;
 import at.er.ytbattle.plugin.event.PlayerRespawnListener;
 import at.er.ytbattle.plugin.event.PlayerShearListener;
 import at.er.ytbattle.plugin.event.PrepareItemCraftListener;
+import at.er.ytbattle.plugin.team.TeamColor;
 import at.er.ytbattle.util.BattleUtils;
 import at.er.ytbattle.util.ConfigurationHelper;
 import at.er.ytbattle.util.PlayerArmor;

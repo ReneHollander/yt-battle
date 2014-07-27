@@ -3,8 +3,8 @@ package at.er.ytbattle.plugin.timer.manager;
 import org.bukkit.Sound;
 
 import at.er.ytbattle.plugin.BattlePlugin;
-import at.er.ytbattle.plugin.Team;
 import at.er.ytbattle.plugin.player.BattlePlayer;
+import at.er.ytbattle.plugin.team.Team;
 import at.er.ytbattle.plugin.timer.timeables.WoolPlaceTimer;
 import at.er.ytbattle.util.timer.Timeable;
 

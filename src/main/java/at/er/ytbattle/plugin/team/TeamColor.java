@@ -1,4 +1,4 @@
-package at.er.ytbattle.plugin;
+package at.er.ytbattle.plugin.team;
 
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;

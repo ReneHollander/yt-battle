@@ -1,7 +1,8 @@
-package at.er.ytbattle.plugin;
+package at.er.ytbattle.plugin.team;
 
 import java.util.ArrayList;
 
+import at.er.ytbattle.plugin.BattlePlugin;
 import at.er.ytbattle.plugin.player.BattlePlayer;
 import at.er.ytbattle.plugin.timer.manager.WoolPlaceTimerManager;
 import at.er.ytbattle.util.ConfigurationHelper;

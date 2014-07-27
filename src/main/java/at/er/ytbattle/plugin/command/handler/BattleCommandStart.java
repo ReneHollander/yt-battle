@@ -15,9 +15,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import at.er.ytbattle.plugin.BattlePlugin;
-import at.er.ytbattle.plugin.Team;
 import at.er.ytbattle.plugin.command.AbstractCommand;
 import at.er.ytbattle.plugin.player.BattlePlayer;
+import at.er.ytbattle.plugin.team.Team;
 import at.er.ytbattle.plugin.timer.timeables.GraceTimer;
 import at.er.ytbattle.plugin.timer.timeables.RemindTimer;
 import at.er.ytbattle.util.BattleUtils;

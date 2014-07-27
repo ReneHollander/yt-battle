@@ -1,4 +1,4 @@
-package at.er.ytbattle.plugin;
+package at.er.ytbattle.plugin.team;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import org.bukkit.DyeColor;
 
+import at.er.ytbattle.plugin.BattlePlugin;
 import at.er.ytbattle.plugin.player.BattlePlayer;
 
 public class TeamManager {

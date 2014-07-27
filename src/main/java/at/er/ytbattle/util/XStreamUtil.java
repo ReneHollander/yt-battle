@@ -1,9 +1,9 @@
 package at.er.ytbattle.util;
 
 import at.er.ytbattle.plugin.Game;
-import at.er.ytbattle.plugin.Team;
-import at.er.ytbattle.plugin.TeamColor;
 import at.er.ytbattle.plugin.player.BattlePlayer;
+import at.er.ytbattle.plugin.team.Team;
+import at.er.ytbattle.plugin.team.TeamColor;
 import at.er.ytbattle.plugin.timer.timeables.InvincibilityTimer;
 import at.er.ytbattle.plugin.timer.timeables.WoolPlaceTimer;
 
