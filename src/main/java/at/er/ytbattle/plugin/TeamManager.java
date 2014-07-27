@@ -59,10 +59,11 @@ public class TeamManager {
     }
 
     public boolean isInTeam(BattlePlayer p) {
-        if (this.getTeamByPlayer(p) == null) {
+        Team t = this.getTeamByPlayer(p);
+        if (t == null) {
             return false;
         } else {
-            return true;
+            return !t.hasLost();
         }
     }
 
