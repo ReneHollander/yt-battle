@@ -16,6 +16,8 @@ public class ConfigurationHelper {
     public static final String GAME_BASEBLOCK_ENABLED_PATH = "game.baseblock.enabled";
     public static final String GAME_BASEBLOCK_CONTENTS_PATH = "game.baseblock.contents";
     public static final String TIMER_REMINDER_ENABLED_PATH = "timer.reminder.enabled";
+    public static final String MISC_AUTOREPSAWN_ENABLED_PATH = "misc.autorespawn.enabled";
+    public static final String MISC_AUTOREPSAWN_DELAY_PATH = "misc.autorespawn.delay";
 
     private FileConfiguration configFile;
 
@@ -47,8 +49,19 @@ public class ConfigurationHelper {
 
         this.configFile.addDefault(TIMER_REMINDER_ENABLED_PATH, true);
 
+        this.configFile.addDefault(MISC_AUTOREPSAWN_ENABLED_PATH, true);
+        this.configFile.addDefault(MISC_AUTOREPSAWN_DELAY_PATH, 0);
+
         this.configFile.options().copyDefaults(true);
         BattlePlugin.instance().saveConfig();
+    }
+
+    public int getWoolTimeToPlace() {
+        return this.getConfigFile().getInt(GAME_WOOL_TIMETOPLACE_PATH) * 60;
+    }
+
+    public int getInvincibilityTimerDuration() {
+        return this.getConfigFile().getInt(GAME_INVINCIBILITY_DURATION_PATH);
     }
 
     public void reloadConfiguration() {

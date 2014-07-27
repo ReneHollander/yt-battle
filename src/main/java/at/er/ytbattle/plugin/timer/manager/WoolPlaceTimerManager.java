@@ -11,15 +11,9 @@ import at.er.ytbattle.util.timer.Timeable;
 public class WoolPlaceTimerManager {
 
     private Team team;
-    private int timetoplace;
 
-    public WoolPlaceTimerManager(Team team, int timetoplace) {
+    public WoolPlaceTimerManager(Team team) {
         this.team = team;
-        this.timetoplace = timetoplace;
-    }
-
-    public int getTimeToPlace() {
-        return this.timetoplace;
     }
 
     public void woolPlace() {

@@ -4,8 +4,6 @@ import at.er.ytbattle.plugin.Game;
 import at.er.ytbattle.plugin.player.BattlePlayer;
 import at.er.ytbattle.plugin.team.Team;
 import at.er.ytbattle.plugin.team.TeamColor;
-import at.er.ytbattle.plugin.timer.manager.InvincibilityTimerManager;
-import at.er.ytbattle.plugin.timer.manager.WoolPlaceTimerManager;
 import at.er.ytbattle.plugin.timer.timeables.InvincibilityTimer;
 import at.er.ytbattle.plugin.timer.timeables.RemindTimer;
 import at.er.ytbattle.plugin.timer.timeables.WoolPlaceTimer;
@@ -23,7 +21,7 @@ public class XStreamUtil {
         xstream.alias("battlePlayer", BattlePlayer.class);
         xstream.alias("teamColor", TeamColor.class);
         xstream.alias("team", Team.class);
-        xstream.alias("blockPlaceTimer", WoolPlaceTimer.class);
+        xstream.alias("woolPlaceTimer", WoolPlaceTimer.class);
         xstream.alias("invincibilityTimer", InvincibilityTimer.class);
         xstream.alias("remindTimer", RemindTimer.class);
 
@@ -34,9 +32,6 @@ public class XStreamUtil {
 
         xstream.useAttributeFor(Timeable.class, "timeScale");
         xstream.useAttributeFor(Timeable.class, "every");
-
-        xstream.useAttributeFor(InvincibilityTimerManager.class, "duration");
-        xstream.useAttributeFor(WoolPlaceTimerManager.class, "timetoplace");
 
         xstream.useAttributeFor(SerializableLocation.class, "world");
         xstream.useAttributeFor(SerializableLocation.class, "uuid");

@@ -9,16 +9,6 @@ public class InvincibilityTimerManager {
 
     public static final int MANAGER_ID = 943156;
 
-    private int duration;
-
-    public InvincibilityTimerManager(int duration) {
-        this.duration = duration;
-    }
-
-    public int getDuration() {
-        return this.duration;
-    }
-
     public void stopTimer(BattlePlayer p) {
         Timeable timeable = BattlePlugin.game().getTimerManager().getTimer(MANAGER_ID, p);
         if (timeable != null) {

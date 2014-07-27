@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -145,5 +146,29 @@ public class BattleUtils {
             input.removeEnchantment(enchantment);
         }
         return input;
+    }
+
+    public static void respawnPlayer(Player p, int delay) {
+        final Player player = (Player) p.getPlayer();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    Object nmsPlayer = player.getClass().getMethod("getHandle").invoke(player);
+                    Object packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
+                    Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
+                    for (Object ob : enumClass.getEnumConstants()) {
+                        if (ob.toString().equals("PERFORM_RESPAWN")) {
+                            packet = packet.getClass().getConstructor(enumClass).newInstance(ob);
+                        }
+                    }
+                    Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+                    con.getClass().getMethod("a", packet.getClass()).invoke(con, packet);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.runTaskLater(BattlePlugin.instance(), delay);
     }
 }

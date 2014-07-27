@@ -19,11 +19,11 @@ public class InvincibilityTimer extends Timeable implements Listener {
 
     @Override
     public void tick(long elapsedTime) {
-        if (BattlePlugin.game().getInvincibilityTimerManager().getDuration() == elapsedTime) {
+        if (BattlePlugin.configurationHelper().getInvincibilityTimerDuration() == elapsedTime) {
             player.sendMessage(BattlePlugin.prefix() + "Your invincibility ended!");
             this.removeTimer();
         } else {
-            player.sendMessage(BattlePlugin.prefix() + "Your invincibility ends in " + (BattlePlugin.game().getInvincibilityTimerManager().getDuration() - elapsedTime) + " minutes!");
+            player.sendMessage(BattlePlugin.prefix() + "Your invincibility ends in " + (BattlePlugin.configurationHelper().getInvincibilityTimerDuration() - elapsedTime) + " minutes!");
         }
     }
 }

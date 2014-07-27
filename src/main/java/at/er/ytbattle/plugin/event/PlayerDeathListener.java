@@ -13,6 +13,7 @@ import at.er.ytbattle.plugin.player.BattlePlayer;
 import at.er.ytbattle.plugin.team.Team;
 import at.er.ytbattle.plugin.timer.timeables.FireworkTimer;
 import at.er.ytbattle.util.BattleUtils;
+import at.er.ytbattle.util.ConfigurationHelper;
 import at.er.ytbattle.util.PlayerArmor;
 
 public class PlayerDeathListener implements Listener {
@@ -98,5 +99,9 @@ public class PlayerDeathListener implements Listener {
         }
 
         BattleUtils.updateScoreboard();
+
+        if (BattlePlugin.configurationHelper().getConfigFile().getBoolean(ConfigurationHelper.MISC_AUTOREPSAWN_ENABLED_PATH)) {
+            BattleUtils.respawnPlayer(player, BattlePlugin.configurationHelper().getConfigFile().getInt(ConfigurationHelper.MISC_AUTOREPSAWN_DELAY_PATH));
+        }
     }
 }

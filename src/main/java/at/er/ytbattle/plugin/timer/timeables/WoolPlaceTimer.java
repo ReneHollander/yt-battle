@@ -21,11 +21,12 @@ public class WoolPlaceTimer extends Timeable {
 
     @Override
     public void tick(long elapsedTime) {
+        int duration = BattlePlugin.configurationHelper().getInvincibilityTimerDuration();
         if (elapsedTime == 0) {
             for (BattlePlayer player : team.getPlayers()) {
-                player.sendMessage(BattlePlugin.prefix() + "You have " + ((this.team.getBlockPlaceTimerManager().getTimeToPlace() - elapsedTime) / 60) + " minutes left to place a wool.");
+                player.sendMessage(BattlePlugin.prefix() + "You have " + ((duration - elapsedTime) / 60) + " minutes left to place a wool.");
             }
-        } else if (elapsedTime >= this.team.getBlockPlaceTimerManager().getTimeToPlace()) {
+        } else if (elapsedTime >= duration) {
             for (BattlePlayer player : team.getPlayers()) {
                 if (player.hasPlayer()) {
                     player.playSound(player.getLocation(), Sound.IRONGOLEM_HIT, 10, 0.5F);
@@ -37,19 +38,19 @@ public class WoolPlaceTimer extends Timeable {
             if (elapsedTime % 300 == 0) {
                 for (BattlePlayer player : team.getPlayers()) {
                     if (player.hasPlayer()) {
-                        player.sendMessage(BattlePlugin.prefix() + "You have " + ((this.team.getBlockPlaceTimerManager().getTimeToPlace() - elapsedTime) / 60) + " minutes left to place a wool.");
+                        player.sendMessage(BattlePlugin.prefix() + "You have " + ((duration - elapsedTime) / 60) + " minutes left to place a wool.");
                     }
                 }
-            } else if (elapsedTime % 60 == 0 && elapsedTime > this.team.getBlockPlaceTimerManager().getTimeToPlace() - 300) {
+            } else if (elapsedTime % 60 == 0 && elapsedTime > duration - 300) {
                 for (BattlePlayer player : team.getPlayers()) {
                     if (player.hasPlayer()) {
-                        player.sendMessage(BattlePlugin.prefix() + "You have " + ((this.team.getBlockPlaceTimerManager().getTimeToPlace() - elapsedTime) / 60) + " minutes left to place a wool.");
+                        player.sendMessage(BattlePlugin.prefix() + "You have " + ((duration - elapsedTime) / 60) + " minutes left to place a wool.");
                     }
                 }
-            } else if (elapsedTime % 10 == 0 && elapsedTime > this.team.getBlockPlaceTimerManager().getTimeToPlace() - 60) {
+            } else if (elapsedTime % 10 == 0 && elapsedTime > duration - 60) {
                 for (BattlePlayer player : team.getPlayers()) {
                     if (player.hasPlayer()) {
-                        player.sendMessage(BattlePlugin.prefix() + "You have " + (this.team.getBlockPlaceTimerManager().getTimeToPlace() - elapsedTime) + " seconds left to place a wool.");
+                        player.sendMessage(BattlePlugin.prefix() + "You have " + (duration - elapsedTime) + " seconds left to place a wool.");
                     }
                 }
             }
