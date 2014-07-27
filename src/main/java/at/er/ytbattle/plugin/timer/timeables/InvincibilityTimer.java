@@ -11,21 +11,19 @@ import at.er.ytbattle.util.timer.TimerManager.TimeScale;
 public class InvincibilityTimer extends Timeable implements Listener {
 
     private BattlePlayer player;
-    private int duration;
 
-    public InvincibilityTimer(BattlePlayer player, int duration) {
+    public InvincibilityTimer(BattlePlayer player) {
         super(InvincibilityTimerManager.MANAGER_ID, TimeScale.MINUTE, 1, player);
         this.player = player;
-        this.duration = duration;
     }
 
     @Override
     public void tick(long elapsedTime) {
-        if (this.duration == elapsedTime) {
+        if (BattlePlugin.game().getInvincibilityTimerManager().getDuration() == elapsedTime) {
             player.sendMessage(BattlePlugin.prefix() + "Your invincibility ended!");
             this.removeTimer();
         } else {
-            player.sendMessage(BattlePlugin.prefix() + "Your invincibility ends in " + (this.duration - elapsedTime) + " minutes!");
+            player.sendMessage(BattlePlugin.prefix() + "Your invincibility ends in " + (BattlePlugin.game().getInvincibilityTimerManager().getDuration() - elapsedTime) + " minutes!");
         }
     }
 }

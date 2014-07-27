@@ -12,7 +12,7 @@ public class Game {
     private BattlePlayerManager battlePlayerManager;
     private TeamManager teamManager;
 
-    private TimerManager timeManager;
+    private TimerManager timerManager;
     private InvincibilityTimerManager invincibilityTimerManager;
 
     private SerializableLocation spawn;
@@ -27,12 +27,12 @@ public class Game {
         this.battlePlayerManager = new BattlePlayerManager();
         this.teamManager = new TeamManager();
 
-        this.timeManager = new TimerManager();
+        this.timerManager = new TimerManager();
         this.invincibilityTimerManager = new InvincibilityTimerManager(BattlePlugin.configurationHelper().getConfigFile().getInt(ConfigurationHelper.GAME_INVINCIBILITY_DURATION_PATH));
     }
 
     public TimerManager getTimerManager() {
-        return this.timeManager;
+        return this.timerManager;
     }
 
     public BattlePlayerManager getBattlePlayerManager() {

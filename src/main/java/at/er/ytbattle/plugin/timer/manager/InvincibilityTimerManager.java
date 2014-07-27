@@ -9,10 +9,14 @@ public class InvincibilityTimerManager {
 
     public static final int MANAGER_ID = 943156;
 
-    private int time;
+    private int duration;
 
-    public InvincibilityTimerManager(int time) {
-        this.time = time;
+    public InvincibilityTimerManager(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return this.duration;
     }
 
     public void stopTimer(BattlePlayer p) {
@@ -32,7 +36,7 @@ public class InvincibilityTimerManager {
 
     public void createTimer(BattlePlayer p) {
         BattlePlugin.game().getTimerManager().removeTimer(MANAGER_ID, p);
-        InvincibilityTimer it = new InvincibilityTimer(p, time);
+        InvincibilityTimer it = new InvincibilityTimer(p);
         BattlePlugin.game().getTimerManager().registerTimer(it);
         it.startTimer();
     }

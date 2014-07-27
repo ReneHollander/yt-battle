@@ -18,6 +18,10 @@ public class WoolPlaceTimerManager {
         this.timetoplace = timetoplace;
     }
 
+    public int getTimeToPlace() {
+        return this.timetoplace;
+    }
+
     public void woolPlace() {
         if (BattlePlugin.game().getTimerManager().getSize(this.team) > 0) {
             Timeable timeable = BattlePlugin.game().getTimerManager().findLongestRunningTimer(this.team);
@@ -35,7 +39,7 @@ public class WoolPlaceTimerManager {
     }
 
     public void woolBreak() {
-        WoolPlaceTimer bpt = new WoolPlaceTimer(this.team, this.timetoplace);
+        WoolPlaceTimer bpt = new WoolPlaceTimer(this.team);
         BattlePlugin.game().getTimerManager().registerTimer(bpt);
         bpt.startTimer();
     }
@@ -46,7 +50,7 @@ public class WoolPlaceTimerManager {
 
     public void setupInitialWool() {
         for (int i = 0; i < this.team.getPlayers().size(); i++) {
-            WoolPlaceTimer bpt = new WoolPlaceTimer(this.team, this.timetoplace);
+            WoolPlaceTimer bpt = new WoolPlaceTimer(this.team);
             BattlePlugin.game().getTimerManager().registerTimer(bpt);
             bpt.startTimer();
         }
