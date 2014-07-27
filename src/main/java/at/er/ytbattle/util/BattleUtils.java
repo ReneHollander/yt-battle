@@ -21,7 +21,7 @@ import com.google.common.collect.Lists;
 public class BattleUtils {
 
     public static final String SAVE_FILE_NAME = "savegame.xml";
-    
+
     private static ItemStack[] starterChestContents;
 
     private static Scoreboard scoreboardBattle;
