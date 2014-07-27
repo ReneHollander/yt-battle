@@ -49,7 +49,7 @@ public class ConfigurationHelper {
 
         this.configFile.addDefault(TIMER_REMINDER_ENABLED_PATH, true);
 
-        this.configFile.addDefault(MISC_AUTOREPSAWN_ENABLED_PATH, true);
+        this.configFile.addDefault(MISC_AUTOREPSAWN_ENABLED_PATH, false);
         this.configFile.addDefault(MISC_AUTOREPSAWN_DELAY_PATH, 0);
 
         this.configFile.options().copyDefaults(true);

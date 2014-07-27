@@ -18,6 +18,7 @@ import org.bukkit.material.Wool;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import at.er.ytbattle.plugin.command.CommandManager;
+import at.er.ytbattle.plugin.event.AwesomeTestListener;
 import at.er.ytbattle.plugin.event.BlockBreakListener;
 import at.er.ytbattle.plugin.event.BlockPlaceListener;
 import at.er.ytbattle.plugin.event.EntityDeathListener;
@@ -87,6 +88,8 @@ public class BattlePlugin extends JavaPlugin {
         new PlayerShearListener();
         new PrepareItemCraftListener();
         new InvincibilityListener();
+
+        new AwesomeTestListener();
     }
 
     public void registerCommands() {
