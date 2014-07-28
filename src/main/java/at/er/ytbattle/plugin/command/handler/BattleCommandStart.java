@@ -8,6 +8,8 @@ import org.bukkit.Location;
 import at.er.ytbattle.plugin.BattlePlugin;
 import at.er.ytbattle.plugin.command.AbstractCommand;
 import at.er.ytbattle.plugin.player.BattlePlayer;
+import at.er.ytbattle.plugin.timer.timeables.BattleStartCountdown;
+import at.er.ytbattle.util.ConfigurationHelper;
 import at.er.ytbattle.util.SerializableLocation;
 
 public class BattleCommandStart extends AbstractCommand {
@@ -16,8 +18,6 @@ public class BattleCommandStart extends AbstractCommand {
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
         if (BattlePlugin.game().isStarted() == false) {
             if (BattlePlugin.game().getTeamManager().getTeamCount() > 0) {
-                Bukkit.broadcastMessage(BattlePlugin.prefix() + "The Battle has been started! Let the games begin!");
-
                 int graceTime = 0;
                 if (args.length >= 1) {
                     String graceTimeStr = args[0];
@@ -32,7 +32,12 @@ public class BattleCommandStart extends AbstractCommand {
                     spawn.getWorld().setSpawnLocation((int) spawn.getX(), (int) spawn.getY(), (int) spawn.getZ());
                 }
 
-                BattlePlugin.instance().startGame(graceTime);
+                if (BattlePlugin.configurationHelper().getConfigFile().getBoolean(ConfigurationHelper.MISC_STARTCOUNTDOWN_ENABLED_PATH)) {
+                    new BattleStartCountdown(BattlePlugin.configurationHelper().getConfigFile().getInt(ConfigurationHelper.MISC_STARTCOUNTDOWN_DURATION_PATH), graceTime);
+                } else {
+                    Bukkit.broadcastMessage(BattlePlugin.prefix() + "The Battle has been started! Let the games begin!");
+                    BattlePlugin.instance().startGame(graceTime);
+                }
             } else {
                 player.sendMessage(BattlePlugin.prefix() + "There have to be at least two teams with one or more Player(s) before the battle can be launched!");
             }

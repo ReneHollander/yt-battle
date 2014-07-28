@@ -18,6 +18,8 @@ public class ConfigurationHelper {
     public static final String TIMER_REMINDER_ENABLED_PATH = "timer.reminder.enabled";
     public static final String MISC_AUTOREPSAWN_ENABLED_PATH = "misc.autorespawn.enabled";
     public static final String MISC_AUTOREPSAWN_DELAY_PATH = "misc.autorespawn.delay";
+    public static final String MISC_STARTCOUNTDOWN_ENABLED_PATH = "misc.startcountdown.enabled";
+    public static final String MISC_STARTCOUNTDOWN_DURATION_PATH = "misc.startcountdown.duration";
 
     private FileConfiguration configFile;
 
@@ -51,6 +53,8 @@ public class ConfigurationHelper {
 
         this.configFile.addDefault(MISC_AUTOREPSAWN_ENABLED_PATH, false);
         this.configFile.addDefault(MISC_AUTOREPSAWN_DELAY_PATH, 0);
+        this.configFile.addDefault(MISC_STARTCOUNTDOWN_ENABLED_PATH, true);
+        this.configFile.addDefault(MISC_STARTCOUNTDOWN_DURATION_PATH, 5);
 
         this.configFile.options().copyDefaults(true);
         BattlePlugin.instance().saveConfig();
