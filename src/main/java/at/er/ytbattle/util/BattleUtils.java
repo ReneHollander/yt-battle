@@ -1,5 +1,6 @@
 package at.er.ytbattle.util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,4 +172,9 @@ public class BattleUtils {
             }
         }.runTaskLater(BattlePlugin.instance(), delay);
     }
+
+    public static File getSaveFile() {
+        return new File(BattlePlugin.instance().getDataFolder(), SAVE_FILE_NAME);
+    }
+
 }

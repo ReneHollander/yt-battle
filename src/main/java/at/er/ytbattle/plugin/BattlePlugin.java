@@ -9,13 +9,18 @@ import net.minecraft.util.gnu.trove.set.hash.TIntHashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Wool;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import at.er.ytbattle.plugin.command.CommandManager;
 import at.er.ytbattle.plugin.event.AwesomeTestListener;
@@ -32,7 +37,11 @@ import at.er.ytbattle.plugin.event.PlayerMoveListener;
 import at.er.ytbattle.plugin.event.PlayerRespawnListener;
 import at.er.ytbattle.plugin.event.PlayerShearListener;
 import at.er.ytbattle.plugin.event.PrepareItemCraftListener;
+import at.er.ytbattle.plugin.player.BattlePlayer;
+import at.er.ytbattle.plugin.team.Team;
 import at.er.ytbattle.plugin.team.TeamColor;
+import at.er.ytbattle.plugin.timer.timeables.GraceTimer;
+import at.er.ytbattle.plugin.timer.timeables.RemindTimer;
 import at.er.ytbattle.util.BattleUtils;
 import at.er.ytbattle.util.ConfigurationHelper;
 import at.er.ytbattle.util.PlayerArmor;
@@ -46,7 +55,7 @@ public class BattlePlugin extends JavaPlugin {
     private static ConfigurationHelper configurationHelper;
     private static Game game;
 
-    public boolean dontSave;
+    private boolean dontSave;
 
     public HashMap<Player, PlayerArmor> playerArmor;
     public TIntHashSet deadPlayersItems;
@@ -161,6 +170,99 @@ public class BattlePlugin extends JavaPlugin {
                 }
             }
         }
+    }
+
+    public void startGame(int graceTime) {
+        if (BattlePlugin.game().isStarted() == false) {
+            BattlePlugin.game().setStarted(true);
+
+            int startlifes = BattlePlugin.configurationHelper().getConfigFile().getInt(ConfigurationHelper.GAME_STARTERLIFES_PATH);
+            boolean baseItem = BattlePlugin.configurationHelper().getConfigFile().getBoolean(ConfigurationHelper.GAME_BASEBLOCK_ENABLED_PATH);
+
+            if (BattlePlugin.configurationHelper().getConfigFile().getBoolean(ConfigurationHelper.TIMER_REMINDER_ENABLED_PATH)) {
+                new RemindTimer().startReminder();
+            }
+
+            if (graceTime > 0) {
+                BattlePlugin.game().getSpawn().getLocation().getWorld().setPVP(false);
+                new GraceTimer(graceTime * 60);
+            }
+
+            BattlePlugin.game().getSpawn().getLocation().getWorld().setTime(200);
+
+            ItemStack base = new ItemStack(Material.QUARTZ_ORE);
+            ItemMeta baseMeta = base.getItemMeta();
+            baseMeta.setDisplayName(ChatColor.GRAY + "Base Block");
+            baseMeta.setLore(Arrays.asList("Place me to create a base"));
+            base.setItemMeta(baseMeta);
+
+            for (Team t : BattlePlugin.game().getTeamManager().getTeams()) {
+                if (t.getTeamSize() > 0) {
+                    t.setLifes(startlifes);
+                    t.setupInitialWool();
+
+                    for (BattlePlayer p : t.getPlayers()) {
+                        p.closeInventory();
+                        p.teleport(BattlePlugin.game().getSpawn().getLocation());
+                        p.setGameMode(GameMode.SURVIVAL);
+                        p.setAllowFlight(false);
+                        p.setFlying(false);
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 1));
+                        p.getInventory().clear();
+                        p.getInventory().setHelmet(new ItemStack(Material.AIR));
+                        p.getInventory().setChestplate(new ItemStack(Material.AIR));
+                        p.getInventory().setLeggings(new ItemStack(Material.AIR));
+                        p.getInventory().setBoots(new ItemStack(Material.AIR));
+                        p.getInventory().addItem(new Wool(t.getTeamColor().getDyeColor()).toItemStack(2));
+                        if (baseItem) {
+                            p.getInventory().addItem(base);
+                        }
+                        p.setHealth(20);
+                        p.setFoodLevel(20);
+                        p.setSaturation(20);
+                    }
+                }
+            }
+
+            BattlePlugin.game().setStarted(true);
+            BattleUtils.setTags();
+            BattleUtils.updateScoreboard();
+
+            Location soundLocation = BattlePlugin.game().getSpawn().getLocation();
+            soundLocation.getWorld().playSound(soundLocation, Sound.AMBIENCE_THUNDER, 10, 1);
+            soundLocation.getWorld().playSound(soundLocation, Sound.EXPLODE, 10F, 0.5F);
+        }
+    }
+
+    public void pauseGame() {
+        if (BattlePlugin.game().isPaused() == false) {
+            BattlePlugin.game().setPaused(true);
+            BattlePlugin.game().getTimerManager().pauseAllTimers();
+            BattlePlugin.instance().saveGame();
+            BattlePlugin.instance().dontSave(true);
+        }
+    }
+
+    public void resumeGame() {
+        if (BattlePlugin.game().isPaused()) {
+            BattlePlugin.game().setPaused(false);
+            BattlePlugin.game().getTimerManager().resumeAllTimers();
+            BattlePlugin.instance().dontSave(false);
+        }
+    }
+
+    public void resetGame() {
+        BattlePlugin.game().getTimerManager().removeAllTimers();
+        BattlePlugin.instance().dontSave(true);
+        BattleUtils.unsetTags();
+        BattleUtils.updateScoreboard();
+
+        File saveFile = BattleUtils.getSaveFile();
+        if (saveFile.exists())
+            if (!saveFile.delete())
+                saveFile.deleteOnExit();
+
+        Bukkit.reload();
     }
 
     public static String prefix() {

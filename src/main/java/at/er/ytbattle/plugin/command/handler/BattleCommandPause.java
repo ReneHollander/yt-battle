@@ -10,8 +10,7 @@ public class BattleCommandPause extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
-        BattlePlugin.game().getTimerManager().pauseAllTimers();
-        BattlePlugin.instance().saveGame();
+        BattlePlugin.instance().pauseGame();
         Bukkit.broadcastMessage(BattlePlugin.prefix() + "The game got paused!");
         return true;
     }

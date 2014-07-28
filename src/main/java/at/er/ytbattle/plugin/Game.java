@@ -15,13 +15,14 @@ public class Game {
     private InvincibilityTimerManager invincibilityTimerManager;
 
     private SerializableLocation spawn;
+
     private boolean started;
-    private boolean saved;
+    private boolean paused;
 
     public Game() {
         this.spawn = null;
         this.started = false;
-        this.saved = false;
+        this.paused = false;
 
         this.battlePlayerManager = new BattlePlayerManager();
         this.teamManager = new TeamManager();
@@ -58,12 +59,12 @@ public class Game {
         return spawn;
     }
 
-    public boolean isSaved() {
-        return saved;
+    public boolean isPaused() {
+        return paused;
     }
 
-    public void setSaved(boolean saved) {
-        this.saved = saved;
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     public void setSpawn(SerializableLocation spawn) {

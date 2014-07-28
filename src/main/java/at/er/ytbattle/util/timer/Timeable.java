@@ -105,8 +105,11 @@ public abstract class Timeable {
 
     public void stopTimer() {
         if (this.hasTimer()) {
-            this.getTimer().cancel();
-            this.getTimer().purge();
+            try {
+                this.getTimer().cancel();
+                this.getTimer().purge();
+            } catch (Exception e) {
+            }
             this.timer = null;
         }
         this.lastCount = 0;
