@@ -126,7 +126,9 @@ public abstract class Timeable {
     public void pauseTimer() {
         this.stopTimer();
         this.running = false;
-        this.lastCount = this.customTimerTask.getCount();
+        if (this.customTimerTask != null) {
+            this.lastCount = this.customTimerTask.getCount();
+        }
     }
 
     public void resumeTimer() {

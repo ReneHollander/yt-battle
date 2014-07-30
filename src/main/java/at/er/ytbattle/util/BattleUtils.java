@@ -115,9 +115,7 @@ public class BattleUtils {
                 }
             }
             objective.setDisplayName(ChatColor.BOLD + "Battle Infos");
-            String version = BattlePlugin.instance().getDescription().getVersion();
-            version = version.substring(0, version.indexOf('-'));
-            objective.getScore(ChatColor.ITALIC + "Battle v" + version).setScore(8);
+            objective.getScore(ChatColor.ITALIC + "Battle v" + getShortVersion()).setScore(8);
             objective.getScore(ChatColor.ITALIC + "").setScore(7);
             objective.getScore(ChatColor.ITALIC + "by").setScore(6);
             objective.getScore(ChatColor.ITALIC + "EXSolo").setScore(5);
@@ -175,6 +173,12 @@ public class BattleUtils {
 
     public static File getSaveFile() {
         return new File(BattlePlugin.instance().getDataFolder(), SAVE_FILE_NAME);
+    }
+
+    public static String getShortVersion() {
+        String version = BattlePlugin.instance().getDescription().getVersion();
+        version = version.substring(0, version.indexOf('-'));
+        return version;
     }
 
 }

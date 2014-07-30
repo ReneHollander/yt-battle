@@ -86,7 +86,7 @@ public class TeamManager {
         int livingcount = 0;
         Team living = null;
         for (Team t : this.getTeams()) {
-            if (t.hasLost() == false) {
+            if (t.hasLost() == false && t.getTeamSize() > 0) {
                 livingcount++;
                 if (livingcount >= 2) {
                     return null;

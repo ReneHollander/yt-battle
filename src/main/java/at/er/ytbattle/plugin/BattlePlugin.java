@@ -23,7 +23,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import at.er.ytbattle.plugin.command.CommandManager;
-import at.er.ytbattle.plugin.event.AwesomeTestListener;
 import at.er.ytbattle.plugin.event.BlockBreakListener;
 import at.er.ytbattle.plugin.event.BlockPlaceListener;
 import at.er.ytbattle.plugin.event.EntityDeathListener;
@@ -98,7 +97,7 @@ public class BattlePlugin extends JavaPlugin {
         new PrepareItemCraftListener();
         new InvincibilityListener();
 
-        new AwesomeTestListener();
+        // new AwesomeTestListener();
     }
 
     public void registerCommands() {

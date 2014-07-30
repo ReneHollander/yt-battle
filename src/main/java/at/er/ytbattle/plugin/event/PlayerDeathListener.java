@@ -1,6 +1,7 @@
 package at.er.ytbattle.plugin.event;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -84,18 +85,20 @@ public class PlayerDeathListener implements Listener {
 
             Team lastTeam = BattlePlugin.game().getTeamManager().getLastTeam();
             if (lastTeam != null) {
-                Bukkit.broadcastMessage(BattlePlugin.prefix() + "Team " + t.getTeamColor().getLongName() + " has won the Battle!");
+                Bukkit.broadcastMessage(BattlePlugin.prefix() + "Team " + lastTeam.getTeamColor().getLongName() + " has won the Battle!");
                 for (BattlePlayer p : BattlePlugin.game().getBattlePlayerManager().getAllBattlePlayers()) {
                     p.teleport(BattlePlugin.game().getSpawn().getLocation());
                     p.setAllowFlight(true);
                     p.setFlying(true);
+                    p.setGameMode(GameMode.CREATIVE);
                 }
                 BattlePlugin.game().setStarted(false);
                 FireworkTimer ft = new FireworkTimer();
                 int id = Bukkit.getScheduler().scheduleSyncRepeatingTask(BattlePlugin.instance(), ft, 0, 20L);
                 ft.setID(id);
-                Bukkit.broadcastMessage(BattlePlugin.prefix() + "Thanks for playing! YT-Battle v" + BattlePlugin.instance().getDescription().getVersion() + " made by EXSolo and Rene8888.");
+                Bukkit.broadcastMessage(BattlePlugin.prefix() + "Thanks for playing! YT-Battle v" + BattleUtils.getShortVersion() + " made by EXSolo and Rene8888.");
             }
+
         }
 
         BattleUtils.updateScoreboard();
