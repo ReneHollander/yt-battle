@@ -74,6 +74,8 @@ public class BattlePlugin extends JavaPlugin {
         this.registerEvents();
         BattleUtils.setTags();
         BattleUtils.updateScoreboard();
+        
+        BattlePlugin.game().getSpawn().getLocation().getWorld().setPVP(false);
     }
 
     @Override
@@ -185,6 +187,8 @@ public class BattlePlugin extends JavaPlugin {
             if (graceTime > 0) {
                 BattlePlugin.game().getSpawn().getLocation().getWorld().setPVP(false);
                 new GraceTimer(graceTime * 60);
+            } else {
+                BattlePlugin.game().getSpawn().getLocation().getWorld().setPVP(true);
             }
 
             BattlePlugin.game().getSpawn().getLocation().getWorld().setTime(200);
