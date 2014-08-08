@@ -10,7 +10,6 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import at.er.ytbattle.plugin.BattlePlugin;
 
@@ -27,7 +26,7 @@ public class AwesomeTestListener implements Listener {
 
         if (event.getBlock().getType() == usedBlock) {
 
-            BukkitRunnable animation = new BukkitRunnable() {
+            Runnable animation = new Runnable() {
 
                 int tick = 0;
 

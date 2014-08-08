@@ -1,11 +1,10 @@
 package at.er.ytbattle.plugin.timer.timeables;
 
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import at.er.ytbattle.plugin.BattlePlugin;
 
-public class BattleStartCountdown extends BukkitRunnable {
+public class BattleStartCountdown implements Runnable {
 
     private int startCountdownDuration;
     private int graceTimeDuration;
