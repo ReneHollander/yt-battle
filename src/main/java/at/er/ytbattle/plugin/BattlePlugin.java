@@ -13,6 +13,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -74,8 +75,10 @@ public class BattlePlugin extends JavaPlugin {
         this.registerEvents();
         BattleUtils.setTags();
         BattleUtils.updateScoreboard();
-        
-        BattlePlugin.game().getSpawn().getLocation().getWorld().setPVP(false);
+
+        for (World w : Bukkit.getServer().getWorlds()) {
+            w.setPVP(false);
+        }
     }
 
     @Override
@@ -185,10 +188,14 @@ public class BattlePlugin extends JavaPlugin {
             }
 
             if (graceTime > 0) {
-                BattlePlugin.game().getSpawn().getLocation().getWorld().setPVP(false);
+                for (World w : Bukkit.getServer().getWorlds()) {
+                    w.setPVP(false);
+                }
                 new GraceTimer(graceTime * 60);
             } else {
-                BattlePlugin.game().getSpawn().getLocation().getWorld().setPVP(true);
+                for (World w : Bukkit.getServer().getWorlds()) {
+                    w.setPVP(true);
+                }
             }
 
             BattlePlugin.game().getSpawn().getLocation().getWorld().setTime(200);

@@ -2,6 +2,7 @@ package at.er.ytbattle.plugin.timer.timeables;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.World;
 
 import at.er.ytbattle.plugin.BattlePlugin;
 import at.er.ytbattle.plugin.player.BattlePlayer;
@@ -37,13 +38,15 @@ public class GraceTimer implements Runnable {
         }
 
         if (time == 0) {
-            BattlePlugin.game().getSpawn().getLocation().getWorld().setPVP(true);
             for (Team t : BattlePlugin.game().getTeamManager().getTeams()) {
                 for (BattlePlayer p : t.getPlayers()) {
                     if (p.hasPlayer()) {
                         p.playSound(p.getLocation(), Sound.AMBIENCE_THUNDER, 10, 1);
                     }
                 }
+            }
+            for (World w : Bukkit.getServer().getWorlds()) {
+                w.setPVP(true);
             }
             Bukkit.broadcastMessage(BattlePlugin.prefix() + "The grace period has ended!");
         }
