@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import at.er.ytbattle.plugin.BattlePlugin;
 import at.er.ytbattle.plugin.player.BattlePlayer;
 import at.er.ytbattle.plugin.timer.timeables.InvincibilityTimer;
+import at.er.ytbattle.util.ConfigurationHelper;
 
 public class InvincibilityListener implements Listener {
 
@@ -29,28 +30,34 @@ public class InvincibilityListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onItemDespawn(ItemDespawnEvent event) {
-        ItemStack itemStack = event.getEntity().getItemStack();
-        BattlePlugin.instance().deadPlayersItems.remove(itemStack.hashCode());
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onItemCombust(EntityCombustEvent event) {
-        if (event.getEntityType() == EntityType.DROPPED_ITEM) {
-            ItemStack itemStack = ((Item) event.getEntity()).getItemStack();
+        if (BattlePlugin.configurationHelper().getConfigFile().getBoolean(ConfigurationHelper.GAME_INVINCIBILITY_LOSEONITEMPICKUP)) {
+            ItemStack itemStack = event.getEntity().getItemStack();
             BattlePlugin.instance().deadPlayersItems.remove(itemStack.hashCode());
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onItemPickup(PlayerPickupItemEvent event) {
-        BattlePlayer player = BattlePlugin.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
-        InvincibilityTimer invincibilityTimer = BattlePlugin.game().getInvincibilityTimerManager().getTimerByPlayer(player);
-        ItemStack itemStack = event.getItem().getItemStack();
-        if (BattlePlugin.instance().deadPlayersItems.contains(itemStack.hashCode()) && invincibilityTimer != null) {
-            player.sendMessage(BattlePlugin.prefix() + "You have picked up the loot from a dead player! You have lost your invincibility!");
-            invincibilityTimer.removeTimer();
+    public void onItemCombust(EntityCombustEvent event) {
+        if (BattlePlugin.configurationHelper().getConfigFile().getBoolean(ConfigurationHelper.GAME_INVINCIBILITY_LOSEONITEMPICKUP)) {
+            if (event.getEntityType() == EntityType.DROPPED_ITEM) {
+                ItemStack itemStack = ((Item) event.getEntity()).getItemStack();
+                BattlePlugin.instance().deadPlayersItems.remove(itemStack.hashCode());
+            }
         }
-        BattlePlugin.instance().deadPlayersItems.remove(itemStack.hashCode());
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onItemPickup(PlayerPickupItemEvent event) {
+        if (BattlePlugin.configurationHelper().getConfigFile().getBoolean(ConfigurationHelper.GAME_INVINCIBILITY_LOSEONITEMPICKUP)) {
+            BattlePlayer player = BattlePlugin.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+            InvincibilityTimer invincibilityTimer = BattlePlugin.game().getInvincibilityTimerManager().getTimerByPlayer(player);
+            ItemStack itemStack = event.getItem().getItemStack();
+            if (BattlePlugin.instance().deadPlayersItems.contains(itemStack.hashCode()) && invincibilityTimer != null) {
+                player.sendMessage(BattlePlugin.prefix() + "You have picked up the loot from a dead player! You have lost your invincibility!");
+                invincibilityTimer.removeTimer();
+            }
+            BattlePlugin.instance().deadPlayersItems.remove(itemStack.hashCode());
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -60,10 +67,11 @@ public class InvincibilityListener implements Listener {
         if (victimTimer != null) {
             victimTimer.removeTimer();
         }
-
-        TIntHashSet deadPlayersItems = BattlePlugin.instance().deadPlayersItems;
-        for (ItemStack itemStack : event.getDrops()) {
-            deadPlayersItems.add(itemStack.hashCode());
+        if (BattlePlugin.configurationHelper().getConfigFile().getBoolean(ConfigurationHelper.GAME_INVINCIBILITY_LOSEONITEMPICKUP)) {
+            TIntHashSet deadPlayersItems = BattlePlugin.instance().deadPlayersItems;
+            for (ItemStack itemStack : event.getDrops()) {
+                deadPlayersItems.add(itemStack.hashCode());
+            }
         }
     }
 

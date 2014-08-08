@@ -13,6 +13,7 @@ public class ConfigurationHelper {
     public static final String GAME_WOOL_MINPLACEHEIGHT_PATH = "game.wool.minplaceheight";
     public static final String GAME_WOOL_TIMETOPLACE_PATH = "game.wool.timetoplace";
     public static final String GAME_INVINCIBILITY_DURATION_PATH = "game.invincibility.duration";
+    public static final String GAME_INVINCIBILITY_LOSEONITEMPICKUP = "game.invincibility.loseonitempickup";
     public static final String GAME_BASEBLOCK_ENABLED_PATH = "game.baseblock.enabled";
     public static final String GAME_BASEBLOCK_CONTENTS_PATH = "game.baseblock.contents";
     public static final String TIMER_REMINDER_ENABLED_PATH = "timer.reminder.enabled";
@@ -39,6 +40,7 @@ public class ConfigurationHelper {
         this.configFile.addDefault(GAME_WOOL_TIMETOPLACE_PATH, 15);
 
         this.configFile.addDefault(GAME_INVINCIBILITY_DURATION_PATH, 10);
+        this.configFile.addDefault(GAME_INVINCIBILITY_LOSEONITEMPICKUP, true);
 
         this.configFile.addDefault(GAME_BASEBLOCK_ENABLED_PATH, true);
         ArrayList<String> defaultChestContent = new ArrayList<String>();
