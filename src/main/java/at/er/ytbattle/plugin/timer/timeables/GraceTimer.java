@@ -40,7 +40,9 @@ public class GraceTimer implements Runnable {
             BattlePlugin.game().getSpawn().getLocation().getWorld().setPVP(true);
             for (Team t : BattlePlugin.game().getTeamManager().getTeams()) {
                 for (BattlePlayer p : t.getPlayers()) {
-                    p.playSound(p.getLocation(), Sound.AMBIENCE_THUNDER, 10, 1);
+                    if (p.hasPlayer()) {
+                        p.playSound(p.getLocation(), Sound.AMBIENCE_THUNDER, 10, 1);
+                    }
                 }
             }
             Bukkit.broadcastMessage(BattlePlugin.prefix() + "The grace period has ended!");
@@ -54,7 +56,9 @@ public class GraceTimer implements Runnable {
     private void note() {
         for (Team t : BattlePlugin.game().getTeamManager().getTeams()) {
             for (BattlePlayer p : t.getPlayers()) {
-                p.playSound(p.getLocation(), Sound.NOTE_SNARE_DRUM, 10, 1);
+                if (p.hasPlayer()) {
+                    p.playSound(p.getLocation(), Sound.NOTE_SNARE_DRUM, 10, 1);
+                }
             }
         }
     }

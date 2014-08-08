@@ -24,7 +24,9 @@ public class WoolPlaceTimer extends Timeable {
         int duration = BattlePlugin.configurationHelper().getWoolTimeToPlace();
         if (elapsedTime == 0) {
             for (BattlePlayer player : team.getPlayers()) {
-                player.sendMessage(BattlePlugin.prefix() + "You have " + ((duration - elapsedTime) / 60) + " minutes left to place a wool.");
+                if (player.hasPlayer()) {
+                    player.sendMessage(BattlePlugin.prefix() + "You have " + ((duration - elapsedTime) / 60) + " minutes left to place a wool.");
+                }
             }
         } else if (elapsedTime >= duration) {
             for (BattlePlayer player : team.getPlayers()) {

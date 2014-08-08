@@ -21,12 +21,15 @@ public class WoolPlaceTimerManager {
             Timeable timeable = BattlePlugin.game().getTimerManager().findLongestRunningTimer(this.team);
             timeable.removeTimer();
             for (BattlePlayer p : team.getPlayers()) {
-                p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
-                int remainingWoolCount = this.getRemainingWoolCount();
-                if (remainingWoolCount == 0) {
-                    p.sendMessage(BattlePlugin.prefix() + "Wool was placed. You don't have to place any more wool for now!");
-                } else {
-                    p.sendMessage(BattlePlugin.prefix() + "Wool was placed. Place " + this.getRemainingWoolCount() + " more to disable the timer.");
+                if (p.hasPlayer()) {
+                    int remainingWoolCount = this.getRemainingWoolCount();
+                    if (remainingWoolCount == 0) {
+                        p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
+                        p.sendMessage(BattlePlugin.prefix() + "Wool was placed. You don't have to place any more wool for now!");
+                    } else {
+                        p.sendMessage(BattlePlugin.prefix() + "Wool was placed. Place " + this.getRemainingWoolCount() + " more to disable the timer.");
+                    }
+                    p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
                 }
             }
         }
