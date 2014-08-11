@@ -53,7 +53,7 @@ Um eine neue Wolle zu erhalten, wird das Kommando `/battle life` verwendet.
 	2. Sollten Lücken im Bedrock Rand durch irgendwelche Umstände entstehen, so ist es dem Spieler nicht erlaubt durch diese Lücken irgendwelche Handlungen zu vollziehen. (z.B. kein Durchgehen, kein Abbauen auf der andern Seite, keine Tiere rüberlocken ect.)
 
 ##Regeln zur Nutzung
-Solltest du das Plugin verwenden und Videos darüber machen, musst du mit einem Direktlink in der Beschreibung oder dergleichen auf diese Seite (`https://github.com/Rene8888/yt-battle`) oder auf den verkürzten Link (`http://ix.lt/battle`) verweisen. Das muss jeder tun der Mitspielt! Änderungen am Code (wie in der Lizenz beschrieben) müssen Öffentlich zugänglich sein. Außerdem sollst du Änderungen nicht verkaufen oder irgendwie anders daran Geld verdienen. Monetarisierung der Videos ist okay, aber das Plugin darf nicht verkauft werden!
+Solltest du das Plugin verwenden und Videos darüber machen, musst du mit einem Direktlink in der Beschreibung oder dergleichen auf diese Seite (`https://github.com/Rene8888/yt-battle`) oder auf den verkürzten Link (`http://bit.ly/battleplugin`) verweisen. Das muss jeder tun der Mitspielt! Änderungen am Code (wie in der Lizenz beschrieben) müssen Öffentlich zugänglich sein. Außerdem sollst du Änderungen nicht verkaufen oder irgendwie anders daran Geld verdienen. Monetarisierung der Videos ist okay, aber das Plugin darf nicht verkauft werden!
 
 ##Mitwirken
 ####Pull Requests
