@@ -72,6 +72,16 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+			<!-- download javadocs from repo -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
 			<!-- set classpath folder and main class for Bukkit and gui -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -89,7 +99,9 @@
 			</plugin>
 			<!-- Clean all previos build artifacts -->
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
 				<configuration>
 					<verbose>true</verbose>
 					<filesets>
