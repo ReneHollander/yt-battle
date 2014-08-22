@@ -84,6 +84,7 @@ public class BattlePlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         BattlePlugin.game().getTimerManager().pauseAllTimers();
+        BattlePlugin.game().setPaused(true);
         saveGame();
     }
 
@@ -254,10 +255,10 @@ public class BattlePlugin extends JavaPlugin {
     }
 
     public void resumeGame() {
+        for (World w : Bukkit.getServer().getWorlds()) {
+            w.setPVP(true);
+        }
         if (BattlePlugin.game().isPaused()) {
-            for (World w : Bukkit.getServer().getWorlds()) {
-                w.setPVP(true);
-            }
             BattlePlugin.game().setPaused(false);
             BattlePlugin.game().getTimerManager().resumeAllTimers();
             BattlePlugin.instance().dontSave(false);
