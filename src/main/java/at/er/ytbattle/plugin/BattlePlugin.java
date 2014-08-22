@@ -255,6 +255,9 @@ public class BattlePlugin extends JavaPlugin {
 
     public void resumeGame() {
         if (BattlePlugin.game().isPaused()) {
+            for (World w : Bukkit.getServer().getWorlds()) {
+                w.setPVP(true);
+            }
             BattlePlugin.game().setPaused(false);
             BattlePlugin.game().getTimerManager().resumeAllTimers();
             BattlePlugin.instance().dontSave(false);
