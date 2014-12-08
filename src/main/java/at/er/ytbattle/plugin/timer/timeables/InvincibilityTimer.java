@@ -10,24 +10,24 @@ import at.er.ytbattle.util.timer.TimerManager.TimeScale;
 
 public class InvincibilityTimer extends Timeable implements Listener {
 
-    private BattlePlayer player;
+	private BattlePlayer player;
 
-    public InvincibilityTimer(BattlePlayer player) {
-        super(InvincibilityTimerManager.MANAGER_ID, TimeScale.MINUTE, 1, player);
-        this.player = player;
-    }
+	public InvincibilityTimer(BattlePlayer player) {
+		super(InvincibilityTimerManager.MANAGER_ID, TimeScale.MINUTE, 1, player);
+		this.player = player;
+	}
 
-    @Override
-    public void tick(long elapsedTime) {
-        if (BattlePlugin.configurationHelper().getInvincibilityTimerDuration() == elapsedTime) {
-            if (player.hasPlayer()) {
-                player.sendMessage(BattlePlugin.prefix() + "Your invincibility ended!");
-            }
-            this.removeTimer();
-        } else {
-            if (player.hasPlayer()) {
-                player.sendMessage(BattlePlugin.prefix() + "Your invincibility ends in " + (BattlePlugin.configurationHelper().getInvincibilityTimerDuration() - elapsedTime) + " minutes!");
-            }
-        }
-    }
+	@Override
+	public void tick(long elapsedTime) {
+		if (BattlePlugin.configurationHelper().getInvincibilityTimerDuration() == elapsedTime) {
+			if (player.hasPlayer()) {
+				player.sendMessage(BattlePlugin.prefix() + "Your invincibility ended!");
+			}
+			this.removeTimer();
+		} else {
+			if (player.hasPlayer()) {
+				player.sendMessage(BattlePlugin.prefix() + "Your invincibility ends in " + (BattlePlugin.configurationHelper().getInvincibilityTimerDuration() - elapsedTime) + " minutes!");
+			}
+		}
+	}
 }

@@ -12,23 +12,23 @@ import at.er.ytbattle.plugin.team.Team;
 
 public class PlayerChatListener implements Listener {
 
-    public PlayerChatListener() {
-        Bukkit.getPluginManager().registerEvents(this, BattlePlugin.instance());
-    }
+	public PlayerChatListener() {
+		Bukkit.getPluginManager().registerEvents(this, BattlePlugin.instance());
+	}
 
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
-        BattlePlayer player = BattlePlugin.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
-        if (BattlePlugin.game().isStarted()) {
-            if (BattlePlugin.game().getTeamManager().isInTeam(player)) {
-                Team t = BattlePlugin.game().getTeamManager().getTeamByPlayer(player);
-                if (BattlePlugin.game().getTeamManager().isLastTeam(t)) {
-                    event.setFormat(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
-                } else {
-                    event.setFormat(t.getTeamColor().getChatColor() + "[Battle]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
-                }
-            }
-        }
-    }
+	@EventHandler
+	public void onPlayerChat(AsyncPlayerChatEvent event) {
+		BattlePlayer player = BattlePlugin.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+		if (BattlePlugin.game().isStarted()) {
+			if (BattlePlugin.game().getTeamManager().isInTeam(player)) {
+				Team t = BattlePlugin.game().getTeamManager().getTeamByPlayer(player);
+				if (BattlePlugin.game().getTeamManager().isLastTeam(t)) {
+					event.setFormat(ChatColor.GOLD + "[Winner]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
+				} else {
+					event.setFormat(t.getTeamColor().getChatColor() + "[Battle]" + ChatColor.WHITE + " - " + "%1$s: " + ChatColor.RESET + "%2$s");
+				}
+			}
+		}
+	}
 
 }

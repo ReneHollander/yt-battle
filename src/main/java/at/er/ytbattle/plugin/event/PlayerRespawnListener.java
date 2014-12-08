@@ -18,32 +18,32 @@ import at.er.ytbattle.util.PlayerArmor;
 
 public class PlayerRespawnListener implements Listener {
 
-    public PlayerRespawnListener() {
-        Bukkit.getPluginManager().registerEvents(this, BattlePlugin.instance());
-    }
+	public PlayerRespawnListener() {
+		Bukkit.getPluginManager().registerEvents(this, BattlePlugin.instance());
+	}
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerRespawn(PlayerRespawnEvent event) {
-        BattlePlayer player = BattlePlugin.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onPlayerRespawn(PlayerRespawnEvent event) {
+		BattlePlayer player = BattlePlugin.game().getBattlePlayerManager().getBattlePlayer(event.getPlayer());
 
-        if (BattlePlugin.game().isStarted() && BattlePlugin.game().getTeamManager().isInTeam(player)) {
-            Team t = BattlePlugin.game().getTeamManager().getTeamByPlayer(player);
-            PlayerArmor armor = BattlePlugin.instance().playerArmor.get(player);
+		if (BattlePlugin.game().isStarted() && BattlePlugin.game().getTeamManager().isInTeam(player)) {
+			Team t = BattlePlugin.game().getTeamManager().getTeamByPlayer(player);
+			PlayerArmor armor = BattlePlugin.instance().playerArmor.get(player);
 
-            if (armor != null) {
-                player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
-                player.getInventory().setHelmet(armor.getHelmet());
-                player.getInventory().setChestplate(armor.getChestplate());
-                player.getInventory().setLeggings(armor.getLeggings());
-                player.getInventory().setBoots(armor.getBoots());
-                BattlePlugin.instance().playerArmor.remove(player);
-            }
+			if (armor != null) {
+				player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
+				player.getInventory().setHelmet(armor.getHelmet());
+				player.getInventory().setChestplate(armor.getChestplate());
+				player.getInventory().setLeggings(armor.getLeggings());
+				player.getInventory().setBoots(armor.getBoots());
+				BattlePlugin.instance().playerArmor.remove(player);
+			}
 
-            BattlePlugin.game().getInvincibilityTimerManager().createTimer(player);
-            event.setRespawnLocation(BattlePlugin.game().getSpawn().getLocation());
-            player.getInventory().addItem(new Wool(t.getTeamColor().getDyeColor()).toItemStack(1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 2));
-        }
-    }
+			BattlePlugin.game().getInvincibilityTimerManager().createTimer(player);
+			event.setRespawnLocation(BattlePlugin.game().getSpawn().getLocation());
+			player.getInventory().addItem(new Wool(t.getTeamColor().getDyeColor()).toItemStack(1));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 2));
+		}
+	}
 
 }
