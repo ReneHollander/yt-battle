@@ -22,7 +22,7 @@ Willkommen beim offiziellen YouTube-Battle Plugin
 
 ###Den Server konfigurieren
 ####Installation:
-Verwendet wird die Craftbukkit Version `1.7.10-R0.1`. Das Plugin muss mitsamt dem `lib` Ordner in den `plugins` Ordner verschoben werden. Am sichersten ist es, wenn vorher alle anderen Plugins wie Permission System, World Edit, Essentials usw entfernt werden. Sonst kann es zu Problemen kommen!  
+Verwendet wird Craftbukkit Version `1.8-R0.1-SNAPSHOT`. Nähere Informationen wie du Bukkit 1.8 bekommst findest du hier: [Bukkit, CraftBukkit & Spigot 1.8 - Server Instructions](http://www.spigotmc.org/threads/bukkit-craftbukkit-spigot-1-8.36598/). Das Plugin muss mitsamt dem `lib` Ordner in den `plugins` Ordner verschoben werden. Am sichersten ist es, wenn vorher alle anderen Plugins wie Permission System, World Edit, Essentials usw entfernt werden. Sonst kann es zu Problemen kommen!  
 Dann kann schon der Server gestartet werden. Die Konfiguration erfolgt nun INGAME:
 
 1. Zuerst muss der Spawn Punkt mit dem Kommando `/battle spawn` gesetzt werden.
@@ -37,30 +37,42 @@ Um eine neue Wolle zu erhalten, wird das Kommando `/battle life` verwendet.
 1. Nether ist aus!
 2. Friedensphase und After-Kill-Schutzzeit:
 	1. Die Friedenphase beträgt 30 Minuten und wird durch das Plugin realisiert (keinem ist es erlaubt in dieser Phase aggressive Handlungen gegenüber anderen Teams zu begehen. (z.B. kein Angreifen, keine Kisten öffnen ect.)
-	2. Die After-Kill-Schutzzeit beträgt 15 Minuten. In dieser Zeit kann der unter Schutzstehende nicht angegriffen werden. ein Plündern seiner Kisten ist allerdings erlaubt. Es gilt, wenn man einen Spieler Schaden zufügen kann, ist die Schutzzeit abgelaufen. Sollte allerdings die Schutzzeit noch nicht abgelaufen sein, muss dieses der betroffene Spieler der Leitung melden. Hier wird im Einzelfall durch die am Kampf nicht beteiligte Leitung entschieden. Sollte die gesamte Leitung am Kampf beteiligt gewesen sein, zählt das Plugin, auch wenn es fehlerhaft sein sollte. 
+	2. Die After-Kill-Schutzzeit beträgt 15 Minuten. In dieser Zeit kann der unter Schutzstehende nicht angegriffen werden. ein Plündern seiner Kisten ist allerdings erlaubt. Es gilt, wenn man einen Spieler Schaden zufügen kann, ist die Schutzzeit abgelaufen. Sollte allerdings die Schutzzeit noch nicht abgelaufen sein, muss dieses der betroffene Spieler der Leitung melden. Hier wird im Einzelfall durch die am Kampf nicht beteiligte Leitung entschieden. Sollte die gesamte Leitung am Kampf beteiligt gewesen sein, zählt das Plugin, auch wenn es fehlerhaft sein sollte.
 	3. Die Schutzzeit erlischt bei einer aggressiven Handlung gegebenüber anderen Teams. (Wolle abbauen, Angreifen)
-	4. Ein Run auf seine gedroppten Items ist erlaubt und führt nicht zur Beendung der Schutzzeit. 
+	4. Ein Run auf seine gedroppten Items ist erlaubt und führt nicht zur Beendung der Schutzzeit.
 3. Wollblöcke als Leben. (überwiegend durch Plugin gehandhabt)
 	1. Jedes Team bekommt zum Start 10 Leben in Form von Wollblöcken
 	2. Jeder Spieler muss 1 Wollblock im Inventar haben und nach der Friedensphase 1 Wollblock in der Welt platziert haben.
-	3. Das platzieren der Wolle in der Welt wird durch das Plugin gesteuert. folgendes gilt aber in jedem Fall: 
+	3. Das platzieren der Wolle in der Welt wird durch das Plugin gesteuert. folgendes gilt aber in jedem Fall:
 	4. Der Wollblock muss in alle Richtungen 2 Blöcke Abstand frei haben und darf auch nicht nachträglich zugebaut werden.  
 	5. Der Wollblock muss über der Erde platziert werden. (Nicht in Höhlen, nicht in Schluchten, nicht Unterwasser ect.)
 	6. Die Wolle darf nicht weiter als 3 Blöcke vom Boden entfernt sein, wobei als Boden das gilt, was die Mehrheit als solchen ansieht! (Also nicht im fliegendem Luftschloss und auch nicht auf den einen Erdblock der durch den Mapgenerator fliegend irgendwo platziert wurde)
 	7. Eigene Wolle darf nicht abgebaut werden
-4. Weltgröße: 
+4. Weltgröße:
 	1. Die Welt wird durch eine Badrock-Wand begrenzt. Der Radius variiert je nach Teilnehmer Anzahl zwischen 350 und 550 Blöcken.
 	2. Sollten Lücken im Bedrock Rand durch irgendwelche Umstände entstehen, so ist es dem Spieler nicht erlaubt durch diese Lücken irgendwelche Handlungen zu vollziehen. (z.B. kein Durchgehen, kein Abbauen auf der andern Seite, keine Tiere rüberlocken ect.)
 
 ##Regeln zur Nutzung
 Solltest du das Plugin verwenden und Videos darüber machen, musst du mit einem Direktlink in der Beschreibung oder dergleichen auf diese Seite (`https://github.com/Rene8888/yt-battle`) oder auf den verkürzten Link (`http://bit.ly/battleplugin`) verweisen. Das muss jeder tun der Mitspielt! Änderungen am Code (wie in der Lizenz beschrieben) müssen Öffentlich zugänglich sein. Außerdem sollst du Änderungen nicht verkaufen oder irgendwie anders daran Geld verdienen. Monetarisierung der Videos ist okay, aber das Plugin darf nicht verkauft werden!
 
+## Arbeitsumgebung aufsetzen
+
+Vorraussetzungen für Eclipse:  
+- Maven Plugin
+
+Das Projekt wurde soweit es geht mit Maven automatisiert. Damit du aber die richtigen Dependencies in deinem lokalen Maven Repository hast musst du das BuildTool von SpigotMC ausführen. Nähere Informationen dafür unter:  
+[Bukkit, CraftBukkit & Spigot 1.8 - Server Instructions](http://www.spigotmc.org/threads/bukkit-craftbukkit-spigot-1-8.36598/).  
+Sobald das BuildTool fertig ist wurden die Dependencies für Bukkit und Craftbukkit installiert.
+Nun kannst du das Repo klonen und zum arbeiten Anfangen.
+
+Wenn du das Plugin testen möchtest musst du folgende Run Configuration ausführen: `Build YT-Battle Plugin`. Das Plugin wird kompiliert und ein Test Server eingerichtet. Wenn du im Root Verzeichnis des Projekts in den Ordner `bukkit` navigierst, kannst du in der Konsole für Windows start.bat und Linux start.sh ausführen und dein Test Server läuft.
+
 ##Mitwirken
 ####Pull Requests
 Du hättest gerne eine Änderung vorgenommen? Oder hast du einen Bug gefunden den du selber fixen kannst? Nice!  
 Damit das gut Funktioniert, bitte ich dich, den Eclipse Code Formatter zu verwenden! Beim Line Wrapping in den Einstellungen bitte die Maximale Zeichenlänge auf 300 Zeichen stellen!  
 Auch bitte ich dich, alles gut zu testen und zu dokumentieren! Jetzt kannst du deinen Pull Request ausführen. Wenn alles passt wird der Request nach maximal 1-2 Tagen angenommen. Die Änderung wird dann bei der nächsten Version im Download inkludiert. Sollte es sich um einen Major Bugfix handeln, wird sofort ein neuer Download bereitgestellt.
- 
+
 ####Issues
 Solltest du einen Fehler finden, kannst du ihn ganz einfach reporten:
 
