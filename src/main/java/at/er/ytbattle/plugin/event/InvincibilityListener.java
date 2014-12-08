@@ -1,6 +1,6 @@
 package at.er.ytbattle.plugin.event;
 
-import net.minecraft.util.gnu.trove.set.hash.TIntHashSet;
+import gnu.trove.set.hash.TIntHashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;

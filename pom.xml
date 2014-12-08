@@ -8,9 +8,9 @@
 	<description>YT-Battle Plugin for the battle series</description>
 	<properties>
 		<!-- current bukkit version -->
-		<bukkit.version>1.7.10-R0.1-SNAPSHOT</bukkit.version>
+		<bukkit.version>1.8-R0.1-SNAPSHOT</bukkit.version>
 		<!-- curring plugin version -->
-		<battle.version>1.9.0</battle.version>
+		<battle.version>2.0.0</battle.version>
 		<!-- version string for filtering and filename -->
 		<battle.version.string>${battle.version}-CB-${bukkit.version}</battle.version.string>
 	</properties>
@@ -27,13 +27,6 @@
 			<email>rene@rene8888.at</email>
 		</developer>
 	</developers>
-	<repositories>
-		<!-- bukkit repo to get the bukkit builds -->
-		<repository>
-			<id>bukkit-repo</id>
-			<url>http://repo.bukkit.org/content/groups/public/</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<!-- Bukkit and Craftbukkit Dependencies -->
 		<dependency>
