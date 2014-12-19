@@ -2,7 +2,7 @@ Willkommen beim offiziellen YouTube-Battle Plugin
 -------------------------------------------------
 
 ###Download
-**Latest Build**: [YT-Battle 2.0.0 for CB-1.8-R0.1-SNAPSHOT | 2014-12-08T12:30:42+01:00](http://files.rene8888.at/yt-battle/yt-battle-2.0.0-CB-1.8-R0.1-SNAPSHOT.zip)  
+**Latest Build**: [YT-Battle 2.0.0 for CB-1.8-R0.1-SNAPSHOT | 2014-12-19T20:23:05+01:00](http://files.rene8888.at/yt-battle/yt-battle-2.0.0-CB-1.8-R0.1-SNAPSHOT.zip)  
 ##Informationen
 
 ###Autoren
