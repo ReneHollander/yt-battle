@@ -1,5 +1,5 @@
 name: YT-Battle
-version: ${battle.version.string}
+version: @version@-@apitype@-@apiversion@
 description: YT-Battle Plugin
 authors: [EXSolo, Rene8888]
 website: https://github.com/Rene8888/yt-battle
