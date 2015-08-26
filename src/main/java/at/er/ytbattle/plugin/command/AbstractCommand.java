@@ -4,6 +4,6 @@ import at.er.ytbattle.plugin.player.BattlePlayer;
 
 public abstract class AbstractCommand {
 
-	public abstract boolean onCommand(String label, String[] args, BattlePlayer player);
+    public abstract boolean onCommand(String label, String[] args, BattlePlayer player);
 
 }

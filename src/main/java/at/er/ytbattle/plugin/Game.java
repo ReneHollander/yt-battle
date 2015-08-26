@@ -8,67 +8,67 @@ import at.er.ytbattle.util.timer.TimerManager;
 
 public class Game {
 
-	private BattlePlayerManager battlePlayerManager;
-	private TeamManager teamManager;
+    private BattlePlayerManager battlePlayerManager;
+    private TeamManager teamManager;
 
-	private TimerManager timerManager;
-	private InvincibilityTimerManager invincibilityTimerManager;
+    private TimerManager timerManager;
+    private InvincibilityTimerManager invincibilityTimerManager;
 
-	private SerializableLocation spawn;
+    private SerializableLocation spawn;
 
-	private boolean started;
-	private boolean paused;
+    private boolean started;
+    private boolean paused;
 
-	public Game() {
-		this.spawn = null;
-		this.started = false;
-		this.paused = false;
+    public Game() {
+        this.spawn = null;
+        this.started = false;
+        this.paused = false;
 
-		this.battlePlayerManager = new BattlePlayerManager();
-		this.teamManager = new TeamManager();
+        this.battlePlayerManager = new BattlePlayerManager();
+        this.teamManager = new TeamManager();
 
-		this.timerManager = new TimerManager();
-		this.invincibilityTimerManager = new InvincibilityTimerManager();
-	}
+        this.timerManager = new TimerManager();
+        this.invincibilityTimerManager = new InvincibilityTimerManager();
+    }
 
-	public TimerManager getTimerManager() {
-		return this.timerManager;
-	}
+    public TimerManager getTimerManager() {
+        return this.timerManager;
+    }
 
-	public BattlePlayerManager getBattlePlayerManager() {
-		return this.battlePlayerManager;
-	}
+    public BattlePlayerManager getBattlePlayerManager() {
+        return this.battlePlayerManager;
+    }
 
-	public TeamManager getTeamManager() {
-		return this.teamManager;
-	}
+    public TeamManager getTeamManager() {
+        return this.teamManager;
+    }
 
-	public InvincibilityTimerManager getInvincibilityTimerManager() {
-		return this.invincibilityTimerManager;
-	}
+    public InvincibilityTimerManager getInvincibilityTimerManager() {
+        return this.invincibilityTimerManager;
+    }
 
-	public boolean isStarted() {
-		return started;
-	}
+    public boolean isStarted() {
+        return started;
+    }
 
-	public void setStarted(boolean started) {
-		this.started = started;
-	}
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
 
-	public SerializableLocation getSpawn() {
-		return spawn;
-	}
+    public SerializableLocation getSpawn() {
+        return spawn;
+    }
 
-	public boolean isPaused() {
-		return paused;
-	}
+    public boolean isPaused() {
+        return paused;
+    }
 
-	public void setPaused(boolean paused) {
-		this.paused = paused;
-	}
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
 
-	public void setSpawn(SerializableLocation spawn) {
-		this.spawn = spawn;
-	}
+    public void setSpawn(SerializableLocation spawn) {
+        this.spawn = spawn;
+    }
 
 }

@@ -43,22 +43,30 @@ version = project.property("version")
 sourceCompatibility = project.property("sourceversion")
 
 dependencies {
-  if (project.property("apitype") == "SPIGOT") {
-    compile group: 'org.spigotmc', name: 'spigot-api', version: project.property("apiversion"), { ext { fatJarExclude = true } }
-    compile group: 'org.spigotmc', name: 'spigot', version: project.property("apiversion"), { ext { fatJarExclude = true } }
-  } else if (project.property("apitype") == "BUKKIT") {
-    compile group: 'org.spigotmc', name: 'bukkit', version: project.property("apiversion"), { ext { fatJarExclude = true } }
-    compile group: 'org.bukkit', name: 'craftbukkit', version: project.property("apiversion"), { ext { fatJarExclude = true } }
-  }
-  // dependencies go here
-  compile 'com.thoughtworks.xstream:xstream:1.4.8'
+    if (project.property("apitype") == "SPIGOT") {
+        compile group: 'org.spigotmc', name: 'spigot-api', version: project.property("apiversion"), {
+            ext { fatJarExclude = true }
+        }
+        compile group: 'org.spigotmc', name: 'spigot', version: project.property("apiversion"), {
+            ext { fatJarExclude = true }
+        }
+    } else if (project.property("apitype") == "BUKKIT") {
+        compile group: 'org.spigotmc', name: 'bukkit', version: project.property("apiversion"), {
+            ext { fatJarExclude = true }
+        }
+        compile group: 'org.bukkit', name: 'craftbukkit', version: project.property("apiversion"), {
+            ext { fatJarExclude = true }
+        }
+    }
+    // dependencies go here
+    compile 'com.thoughtworks.xstream:xstream:1.4.8'
 }
 
 processResources {
     filter ReplaceTokens, tokens: [
             "apiversion": project.property("apiversion"),
-            "apitype"      : project.property("apitype"),
-            "version"      : project.property("version")
+            "apitype"   : project.property("apitype"),
+            "version"   : project.property("version")
     ]
 }
 
@@ -111,7 +119,7 @@ task buildSpigot(type: JavaExec) {
         enabled = false;
         dependsOn = [];
     } else {
-      dependsOn = ['cleanSpigotBuild', 'downloadBuildTool']
+        dependsOn = ['cleanSpigotBuild', 'downloadBuildTool']
     }
     main = '-jar'
     args new File(spigotBuildDir, "BuildTools.jar").getAbsolutePath(), "--rev", project.property("apibuildtoolversion")

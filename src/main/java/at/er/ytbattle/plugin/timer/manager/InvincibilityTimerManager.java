@@ -7,27 +7,27 @@ import at.er.ytbattle.util.timer.Timeable;
 
 public class InvincibilityTimerManager {
 
-	public static final int MANAGER_ID = 943156;
+    public static final int MANAGER_ID = 943156;
 
-	public void stopTimer(BattlePlayer p) {
-		Timeable timeable = BattlePlugin.game().getTimerManager().getTimer(MANAGER_ID, p);
-		if (timeable != null) {
-			timeable.removeTimer();
-		}
-	}
+    public void stopTimer(BattlePlayer p) {
+        Timeable timeable = BattlePlugin.game().getTimerManager().getTimer(MANAGER_ID, p);
+        if (timeable != null) {
+            timeable.removeTimer();
+        }
+    }
 
-	public boolean timerRunning(BattlePlayer p) {
-		return BattlePlugin.game().getTimerManager().hasTimer(MANAGER_ID, p);
-	}
+    public boolean timerRunning(BattlePlayer p) {
+        return BattlePlugin.game().getTimerManager().hasTimer(MANAGER_ID, p);
+    }
 
-	public InvincibilityTimer getTimerByPlayer(BattlePlayer p) {
-		return (InvincibilityTimer) BattlePlugin.game().getTimerManager().getTimer(MANAGER_ID, p);
-	}
+    public InvincibilityTimer getTimerByPlayer(BattlePlayer p) {
+        return (InvincibilityTimer) BattlePlugin.game().getTimerManager().getTimer(MANAGER_ID, p);
+    }
 
-	public void createTimer(BattlePlayer p) {
-		BattlePlugin.game().getTimerManager().removeTimer(MANAGER_ID, p);
-		InvincibilityTimer it = new InvincibilityTimer(p);
-		BattlePlugin.game().getTimerManager().registerTimer(it);
-		it.startTimer();
-	}
+    public void createTimer(BattlePlayer p) {
+        BattlePlugin.game().getTimerManager().removeTimer(MANAGER_ID, p);
+        InvincibilityTimer it = new InvincibilityTimer(p);
+        BattlePlugin.game().getTimerManager().registerTimer(it);
+        it.startTimer();
+    }
 }
