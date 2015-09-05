@@ -27,10 +27,6 @@ public class BattleCommandHelp extends AbstractCommand {
         player.sendMessage("/battle list - Lists all Battle players and spectators");
         player.sendMessage("/battle stats <red;blue;green;yellow;purple;cyan;black;white> - Returns a summary of stats from the attached Team");
 
-        player.sendMessage("");
-        player.sendMessage("");
-        player.sendMessage("There are " + BattlePlugin.instance().deadPlayersItems.size() + " items in the list!");
-
         return true;
     }
 }

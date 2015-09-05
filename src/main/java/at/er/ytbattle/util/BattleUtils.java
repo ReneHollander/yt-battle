@@ -99,44 +99,54 @@ public class BattleUtils {
         return objectiveBattleStats;
     }
 
-    public static void addToScoreboard(Player p) {
-        p.setScoreboard(getBattleScoreboard());
+    public static void addToScoreboard(final Player p) {
+        Bukkit.getScheduler().runTaskLater(BattlePlugin.instance(), new Runnable() {
+            @Override
+            public void run() {
+                p.setScoreboard(getBattleScoreboard());
+            }
+        }, 1);
     }
 
     public static void updateScoreboard() {
-        Scoreboard scoreboard = getBattleScoreboard();
-        Objective objective = getBattleStatsObjective();
-        if (!BattlePlugin.game().isStarted()) {
-            if (objective.getDisplayName().equals(ChatColor.BOLD + "Battle Teamstats")) {
-                for (String entry : scoreboard.getEntries()) {
-                    scoreboard.resetScores(entry);
-                }
-            }
-            objective.setDisplayName(ChatColor.BOLD + "Battle Infos");
-            objective.getScore(ChatColor.ITALIC + "Battle v" + getShortVersion()).setScore(9);
-            objective.getScore(ChatColor.ITALIC + "").setScore(8);
-            objective.getScore(ChatColor.ITALIC + "by").setScore(7);
-            objective.getScore(ChatColor.ITALIC + "EXSolo").setScore(6);
-            objective.getScore(ChatColor.ITALIC + "Rene8888").setScore(5);
-            objective.getScore(ChatColor.ITALIC + "").setScore(4);
-            objective.getScore(ChatColor.ITALIC + "Download:").setScore(3);
-            objective.getScore(ChatColor.ITALIC + "bit.ly").setScore(2);
-            objective.getScore(ChatColor.ITALIC + "/battleplugin").setScore(1);
-        } else {
-            if (objective.getDisplayName().equals(ChatColor.BOLD + "Battle Infos")) {
-                for (String entry : scoreboard.getEntries()) {
-                    scoreboard.resetScores(entry);
-                }
-            }
-            objective.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
-            for (Team t : BattlePlugin.game().getTeamManager().getTeams()) {
-                if (t.getPlayers().size() > 0) {
-                    objective.getScore(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName()).setScore(t.getLifes());
+        Bukkit.getScheduler().runTaskLater(BattlePlugin.instance(), new Runnable() {
+            @Override
+            public void run() {
+                Scoreboard scoreboard = getBattleScoreboard();
+                Objective objective = getBattleStatsObjective();
+                if (!BattlePlugin.game().isStarted()) {
+                    if (objective.getDisplayName().equals(ChatColor.BOLD + "Battle Teamstats")) {
+                        for (String entry : scoreboard.getEntries()) {
+                            scoreboard.resetScores(entry);
+                        }
+                    }
+                    objective.setDisplayName(ChatColor.BOLD + "Battle Infos");
+                    objective.getScore(ChatColor.ITALIC + "Battle v" + getShortVersion()).setScore(9);
+                    objective.getScore(ChatColor.ITALIC + "").setScore(8);
+                    objective.getScore(ChatColor.ITALIC + "by").setScore(7);
+                    objective.getScore(ChatColor.ITALIC + "EXSolo").setScore(6);
+                    objective.getScore(ChatColor.ITALIC + "Rene8888").setScore(5);
+                    objective.getScore(ChatColor.ITALIC + "").setScore(4);
+                    objective.getScore(ChatColor.ITALIC + "Download:").setScore(3);
+                    objective.getScore(ChatColor.ITALIC + "bit.ly").setScore(2);
+                    objective.getScore(ChatColor.ITALIC + "/battleplugin").setScore(1);
                 } else {
-                    scoreboard.resetScores(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName());
+                    if (objective.getDisplayName().equals(ChatColor.BOLD + "Battle Infos")) {
+                        for (String entry : scoreboard.getEntries()) {
+                            scoreboard.resetScores(entry);
+                        }
+                    }
+                    objective.setDisplayName(ChatColor.BOLD + "Battle Teamstats");
+                    for (Team t : BattlePlugin.game().getTeamManager().getTeams()) {
+                        if (t.getPlayers().size() > 0) {
+                            objective.getScore(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName()).setScore(t.getLifes());
+                        } else {
+                            scoreboard.resetScores(t.getTeamColor().getChatColor() + "Team " + t.getTeamColor().getLongName());
+                        }
+                    }
                 }
             }
-        }
+        }, 1);
     }
 
     public static ItemStack removeEnchants(ItemStack input) {
