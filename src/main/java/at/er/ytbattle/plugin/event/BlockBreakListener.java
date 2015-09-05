@@ -30,6 +30,9 @@ public class BlockBreakListener implements Listener {
             if (t.getTeamColor().getDyeColor().equals(color)) {
                 player.sendMessage(BattlePlugin.prefix() + "You can't break your own team's wool!");
                 event.setCancelled(true);
+            } else if (victim == null) {
+                player.sendMessage(BattlePlugin.prefix() + "You can't break wool that doesn't belong to a team!");
+                event.setCancelled(true);
             } else {
                 victim.getBlockPlaceTimerManager().woolBreak();
 
