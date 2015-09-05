@@ -32,7 +32,7 @@ public class BattleUtils {
     public static ItemStack[] getStarterChestContents() {
         if (starterChestContents == null) {
             List<?> confList = BattlePlugin.configurationHelper().getConfigFile().getList(ConfigurationHelper.GAME_BASEBLOCK_CONTENTS_PATH);
-            ArrayList<ItemStack> contents = new ArrayList<ItemStack>();
+            ArrayList<ItemStack> contents = new ArrayList<>();
             try {
                 List<String> itemIDs = Lists.transform(confList, Functions.toStringFunction());
                 for (String s : itemIDs) {
@@ -106,7 +106,7 @@ public class BattleUtils {
     public static void updateScoreboard() {
         Scoreboard scoreboard = getBattleScoreboard();
         Objective objective = getBattleStatsObjective();
-        if (BattlePlugin.game().isStarted() == false) {
+        if (!BattlePlugin.game().isStarted()) {
             if (objective.getDisplayName().equals(ChatColor.BOLD + "Battle Teamstats")) {
                 for (String entry : scoreboard.getEntries()) {
                     scoreboard.resetScores(entry);
@@ -146,9 +146,7 @@ public class BattleUtils {
         return input;
     }
 
-    public static void respawnPlayer(Player p, int delay) {
-        final Player player = (Player) p.getPlayer();
-
+    public static void respawnPlayer(final Player player, int delay) {
         new BukkitRunnable() {
             @Override
             public void run() {

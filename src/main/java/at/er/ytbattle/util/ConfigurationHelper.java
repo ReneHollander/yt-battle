@@ -42,7 +42,7 @@ public class ConfigurationHelper {
         this.configFile.addDefault(GAME_INVINCIBILITY_LOSEONITEMPICKUP, true);
 
         this.configFile.addDefault(GAME_BASEBLOCK_ENABLED_PATH, true);
-        ArrayList<String> defaultChestContent = new ArrayList<String>();
+        ArrayList<String> defaultChestContent = new ArrayList<>();
         defaultChestContent.add("392:16");
         defaultChestContent.add("272");
         defaultChestContent.add("273");

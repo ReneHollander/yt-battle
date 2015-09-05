@@ -14,7 +14,7 @@ public class BattleCommandStart extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
-        if (BattlePlugin.game().isStarted() == false) {
+        if (!BattlePlugin.game().isStarted()) {
             if (BattlePlugin.game().getTeamManager().getTeamCount() > 0) {
                 int graceTime = 0;
                 if (args.length >= 1) {

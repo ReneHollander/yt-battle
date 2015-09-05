@@ -15,7 +15,7 @@ public class BattleCommandRandomTeams extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer bp) {
-        if (BattlePlugin.game().isStarted() == false) {
+        if (!BattlePlugin.game().isStarted()) {
             ArrayList<Team> teams = BattlePlugin.game().getTeamManager().getTeams();
             Random r = new Random();
             for (BattlePlayer player : BattlePlugin.game().getBattlePlayerManager().getAllBattlePlayers()) {

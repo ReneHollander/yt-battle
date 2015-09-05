@@ -17,12 +17,12 @@ public class BattlePlayerManager implements Listener {
     private Map<UUID, BattlePlayer> players;
 
     public BattlePlayerManager() {
-        this.players = new HashMap<UUID, BattlePlayer>();
+        this.players = new HashMap<>();
 
         BattlePlugin.instance().getServer().getPluginManager().registerEvents(this, BattlePlugin.instance());
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (this.players.containsKey(p.getUniqueId()) == false) {
+            if (!this.players.containsKey(p.getUniqueId())) {
                 BattlePlayer battlePlayer = new BattlePlayer(p);
                 this.players.put(UUID.fromString(p.getUniqueId().toString()), battlePlayer);
             }
@@ -43,7 +43,7 @@ public class BattlePlayerManager implements Listener {
     }
 
     public List<BattlePlayer> getAllBattlePlayers() {
-        return new ArrayList<BattlePlayer>(this.players.values());
+        return new ArrayList<>(this.players.values());
     }
 
     public int getBattlePlayerCount() {
@@ -53,7 +53,7 @@ public class BattlePlayerManager implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerLogin(PlayerLoginEvent event) {
         Player player = event.getPlayer();
-        if (this.players.containsKey(player.getUniqueId()) == false) {
+        if (!this.players.containsKey(player.getUniqueId())) {
             BattlePlayer battlePlayer = new BattlePlayer(player);
             this.players.put(UUID.fromString(player.getUniqueId().toString()), battlePlayer);
         }

@@ -25,7 +25,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class BattlePlugin extends JavaPlugin {
@@ -46,7 +46,7 @@ public class BattlePlugin extends JavaPlugin {
 
         this.dontSave = false;
 
-        this.playerArmor = new HashMap<Player, PlayerArmor>();
+        this.playerArmor = new HashMap<>();
         this.deadPlayersItems = new TIntHashSet();
 
         this.addCraftings();
@@ -96,7 +96,7 @@ public class BattlePlugin extends JavaPlugin {
         ItemStack tear = new ItemStack(Material.GHAST_TEAR, 1);
         ItemMeta tearMeta = tear.getItemMeta();
         tearMeta.setDisplayName(ChatColor.GOLD + "Live Exchanger");
-        tearMeta.setLore(Arrays.asList("Right Click Me"));
+        tearMeta.setLore(Collections.singletonList("Right Click Me"));
         tear.setItemMeta(tearMeta);
 
         for (TeamColor tc1 : TeamColor.values()) {
@@ -125,7 +125,7 @@ public class BattlePlugin extends JavaPlugin {
     }
 
     private static Game loadGame(File saveFile) {
-        Game game = null;
+        Game game;
         if (saveFile.exists()) {
             XStream xstream = XStreamUtil.createXStream();
             try {
@@ -157,7 +157,7 @@ public class BattlePlugin extends JavaPlugin {
     }
 
     public void startGame(int graceTime) {
-        if (BattlePlugin.game().isStarted() == false) {
+        if (!BattlePlugin.game().isStarted()) {
             BattlePlugin.game().setStarted(true);
 
             int startlifes = BattlePlugin.configurationHelper().getConfigFile().getInt(ConfigurationHelper.GAME_STARTERLIFES_PATH);
@@ -183,7 +183,7 @@ public class BattlePlugin extends JavaPlugin {
             ItemStack base = new ItemStack(Material.QUARTZ_ORE);
             ItemMeta baseMeta = base.getItemMeta();
             baseMeta.setDisplayName(ChatColor.GRAY + "Base Block");
-            baseMeta.setLore(Arrays.asList("Place me to create a base"));
+            baseMeta.setLore(Collections.singletonList("Place me to create a base"));
             base.setItemMeta(baseMeta);
 
             for (Team t : BattlePlugin.game().getTeamManager().getTeams()) {
@@ -225,7 +225,7 @@ public class BattlePlugin extends JavaPlugin {
     }
 
     public void pauseGame() {
-        if (BattlePlugin.game().isPaused() == false) {
+        if (!BattlePlugin.game().isPaused()) {
             BattlePlugin.game().setPaused(true);
             BattlePlugin.game().getTimerManager().pauseAllTimers();
             BattlePlugin.instance().saveGame();

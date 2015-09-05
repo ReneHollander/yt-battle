@@ -60,7 +60,7 @@ public class InvincibilityListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent event) {
-        BattlePlayer victim = BattlePlugin.game().getBattlePlayerManager().getBattlePlayer((Player) event.getEntity());
+        BattlePlayer victim = BattlePlugin.game().getBattlePlayerManager().getBattlePlayer(event.getEntity());
         InvincibilityTimer victimTimer = BattlePlugin.game().getInvincibilityTimerManager().getTimerByPlayer(victim);
         if (victimTimer != null) {
             victimTimer.removeTimer();

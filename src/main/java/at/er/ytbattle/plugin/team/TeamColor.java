@@ -21,7 +21,7 @@ public enum TeamColor {
     private String shortName;
     private String longName;
 
-    private TeamColor(ChatColor chatColor, DyeColor dyeColor, String shortName, String longname) {
+    TeamColor(ChatColor chatColor, DyeColor dyeColor, String shortName, String longname) {
         this.chatColor = chatColor;
         this.dyeColor = dyeColor;
         this.shortName = shortName;

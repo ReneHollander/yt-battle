@@ -13,7 +13,7 @@ public class BattleCommandJoin extends AbstractCommand {
 
     @Override
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
-        if (BattlePlugin.game().isStarted() == false) {
+        if (!BattlePlugin.game().isStarted()) {
             if (args.length == 0 || args.length > 1) {
                 player.sendMessage(BattlePlugin.prefix() + "Correct usage: /battle join <teamname>");
                 return true;

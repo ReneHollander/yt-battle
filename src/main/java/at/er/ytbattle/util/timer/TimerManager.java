@@ -9,7 +9,7 @@ public class TimerManager {
     private HashMap<Object, HashMap<Object, Timeable>> timers;
 
     public TimerManager() {
-        this.timers = new HashMap<Object, HashMap<Object, Timeable>>();
+        this.timers = new HashMap<>();
     }
 
     public void registerTimer(Timeable timer) {
@@ -57,7 +57,7 @@ public class TimerManager {
     }
 
     public ArrayList<Timeable> getAllTimers() {
-        ArrayList<Timeable> timerlist = new ArrayList<Timeable>();
+        ArrayList<Timeable> timerlist = new ArrayList<>();
         for (Map.Entry<Object, HashMap<Object, Timeable>> entry1 : this.timers.entrySet()) {
             for (Map.Entry<Object, Timeable> entry2 : entry1.getValue().entrySet()) {
                 timerlist.add(entry2.getValue());
@@ -75,7 +75,7 @@ public class TimerManager {
     }
 
     public ArrayList<Timeable> getTimersAsList(Object managerIdentifier) {
-        ArrayList<Timeable> timerlist = new ArrayList<Timeable>();
+        ArrayList<Timeable> timerlist = new ArrayList<>();
         HashMap<Object, Timeable> hs = this.timers.get(managerIdentifier);
         if (hs == null) {
             this.timers.put(managerIdentifier, new HashMap<Object, Timeable>());

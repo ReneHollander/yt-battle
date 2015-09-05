@@ -17,7 +17,7 @@ public class CommandManager implements CommandExecutor {
     private HashMap<String, AbstractCommand> commandHandlers;
 
     public CommandManager() {
-        this.commandHandlers = new HashMap<String, AbstractCommand>();
+        this.commandHandlers = new HashMap<>();
 
         this.addCommandHandler("help", new BattleCommandHelp());
         this.addCommandHandler("join", new BattleCommandJoin());
@@ -35,9 +35,7 @@ public class CommandManager implements CommandExecutor {
     }
 
     private void addCommandHandler(String label, AbstractCommand abc) {
-        if (this.commandHandlers.containsKey(label)) {
-            return;
-        } else {
+        if (!this.commandHandlers.containsKey(label)) {
             if (this.commandHandlers.containsValue(abc)) {
                 for (Map.Entry<String, AbstractCommand> entry : this.commandHandlers.entrySet()) {
                     if (entry.getValue() == abc) {

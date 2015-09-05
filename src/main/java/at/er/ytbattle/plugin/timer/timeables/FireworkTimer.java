@@ -50,7 +50,7 @@ public class FireworkTimer implements Runnable {
             FireworkMeta fm = f.getFireworkMeta();
             Random r = new Random();
             int fType = r.nextInt(5) + 1;
-            Type type = null;
+            Type type;
             switch (fType) {
                 default:
                 case 1:

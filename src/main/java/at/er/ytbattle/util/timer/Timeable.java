@@ -108,7 +108,7 @@ public abstract class Timeable {
             try {
                 this.getTimer().cancel();
                 this.getTimer().purge();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             this.timer = null;
         }

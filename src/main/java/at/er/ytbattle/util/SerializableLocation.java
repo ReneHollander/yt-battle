@@ -35,8 +35,7 @@ public final class SerializableLocation {
         double y = l.y;
         double z = l.z;
         World world = Bukkit.getWorld(l.world);
-        Location location = new Location(world, x, y, z, yaw, pitch);
-        return location;
+        return new Location(world, x, y, z, yaw, pitch);
     }
 
     public static Location returnBlockLocation(SerializableLocation l) {
@@ -44,8 +43,7 @@ public final class SerializableLocation {
         double y = l.y;
         double z = l.z;
         World world = Bukkit.getWorld(l.world);
-        Location location = new Location(world, x, y, z);
-        return location;
+        return new Location(world, x, y, z);
     }
 
     public final Location getLocation() {

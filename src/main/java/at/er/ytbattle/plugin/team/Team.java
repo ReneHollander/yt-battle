@@ -15,7 +15,7 @@ public class Team {
 
     public Team(TeamColor teamColor) {
         this.teamColor = teamColor;
-        this.players = new ArrayList<BattlePlayer>();
+        this.players = new ArrayList<>();
         this.lifes = 0;
         this.lost = false;
 

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public class PrepareItemCraftListener implements Listener {
 
@@ -36,7 +36,7 @@ public class PrepareItemCraftListener implements Listener {
             ItemStack tear = new ItemStack(Material.GHAST_TEAR, 1);
             ItemMeta tearMeta = tear.getItemMeta();
             tearMeta.setDisplayName(ChatColor.GOLD + "Live Exchanger");
-            tearMeta.setLore(Arrays.asList("Right Click Me"));
+            tearMeta.setLore(Collections.singletonList("Right Click Me"));
             tear.setItemMeta(tearMeta);
             event.getInventory().setResult(tear);
         }

@@ -14,7 +14,7 @@ public class TeamManager {
     private Map<TeamColor, Team> teams;
 
     public TeamManager() {
-        this.teams = new HashMap<TeamColor, Team>();
+        this.teams = new HashMap<>();
         for (TeamColor teamColor : TeamColor.values()) {
             Team team = new Team(teamColor);
             this.teams.put(teamColor, team);
@@ -44,7 +44,7 @@ public class TeamManager {
     }
 
     public ArrayList<Team> getTeams() {
-        ArrayList<Team> teamList = new ArrayList<Team>();
+        ArrayList<Team> teamList = new ArrayList<>();
         for (Entry<TeamColor, Team> t : this.teams.entrySet()) {
             teamList.add(t.getValue());
         }
@@ -60,11 +60,7 @@ public class TeamManager {
 
     public boolean isInTeam(BattlePlayer p) {
         Team t = this.getTeamByPlayer(p);
-        if (t == null) {
-            return false;
-        } else {
-            return !t.hasLost();
-        }
+        return t != null && !t.hasLost();
     }
 
     public boolean isLastTeam(Team team) {
@@ -85,7 +81,7 @@ public class TeamManager {
         int livingcount = 0;
         Team living = null;
         for (Team t : this.getTeams()) {
-            if (t.hasLost() == false && t.getTeamSize() > 0) {
+            if (!t.hasLost() && t.getTeamSize() > 0) {
                 livingcount++;
                 if (livingcount >= 2) {
                     return null;

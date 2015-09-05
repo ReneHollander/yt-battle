@@ -13,7 +13,7 @@ public class BattleCommandStats extends AbstractCommand {
     public boolean onCommand(String label, String[] args, BattlePlayer player) {
         if (BattlePlugin.game().isStarted()) {
             String list = "";
-            String winners = "";
+            String winners;
 
             if (BattlePlugin.game().getTeamManager().getTeams().size() > 1) {
                 if (args.length == 0) {

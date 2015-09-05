@@ -23,7 +23,7 @@ public class PlayerMoveListener implements Listener {
     private HashMap<BattlePlayer, LongWrapper> lastMoveMap;
 
     public PlayerMoveListener() {
-        this.lastMoveMap = new HashMap<BattlePlayer, LongWrapper>();
+        this.lastMoveMap = new HashMap<>();
 
         Bukkit.getPluginManager().registerEvents(this, BattlePlugin.instance());
     }

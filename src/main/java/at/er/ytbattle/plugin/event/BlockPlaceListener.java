@@ -34,7 +34,7 @@ public class BlockPlaceListener implements Listener {
             Team t = BattlePlugin.game().getTeamManager().getTeamByPlayer(player);
             if (t.getTeamColor().getDyeColor().equals(color)) {
                 boolean placed = this.placeWool(player, event.getBlock().getLocation(), color);
-                if (placed == false) {
+                if (!placed) {
                     player.sendMessage(BattlePlugin.prefix() + "Invalid Wool Location!");
                     event.setCancelled(true);
                 } else {
@@ -109,7 +109,7 @@ public class BlockPlaceListener implements Listener {
             }
         }
 
-        Location tmp = l;
+        Location tmp = l.clone();
 
         tmp.setZ(tmp.getZ() - 2);
         tmp.setX(tmp.getX() - 2);
