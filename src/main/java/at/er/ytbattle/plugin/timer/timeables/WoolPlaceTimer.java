@@ -10,13 +10,18 @@ import org.bukkit.Sound;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WoolPlaceTimer extends Timeable {
 
     private Team team;
+    private List<Long> breakTimestamps;
 
     public WoolPlaceTimer(Team team) {
         super(team, TimeScale.SECOND, 1);
         this.team = team;
+        this.breakTimestamps = new ArrayList<>();
     }
 
     @Override
@@ -63,4 +68,48 @@ public class WoolPlaceTimer extends Timeable {
             }
         }
     }
+
+    public void woolPlace() {
+        long oldest = getOldestWoolBreak();
+        if (oldest > -1) {
+            this.breakTimestamps.remove(oldest);
+            for (BattlePlayer p : team.getPlayers()) {
+                if (p.hasPlayer()) {
+                    int remainingWoolCount = this.getRemainingWoolCount();
+                    if (remainingWoolCount == 0) {
+                        p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
+                        p.sendMessage(BattlePlugin.prefix() + "Wool was placed. You don't have to place any more wool for now!");
+                    } else {
+                        p.sendMessage(BattlePlugin.prefix() + "Wool was placed. Place " + this.getRemainingWoolCount() + " more to disable the timer.");
+                    }
+                    p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
+                }
+            }
+        }
+    }
+
+    public long getOldestWoolBreak() {
+        long oldest = -1;
+        for (long timestamp : this.breakTimestamps) {
+            if (timestamp > oldest) {
+                oldest = timestamp;
+            }
+        }
+        return oldest;
+    }
+
+    public void woolBreak() {
+        this.breakTimestamps.add(this.getElapsedTime());
+    }
+
+    public int getRemainingWoolCount() {
+        return this.breakTimestamps.size();
+    }
+
+    public void setupInitialWool() {
+        for (int i = 0; i < this.team.getPlayers().size(); i++) {
+            this.breakTimestamps.add(this.getElapsedTime());
+        }
+    }
+
 }
