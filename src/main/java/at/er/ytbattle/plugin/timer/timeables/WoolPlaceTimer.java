@@ -5,6 +5,7 @@ import at.er.ytbattle.plugin.player.BattlePlayer;
 import at.er.ytbattle.plugin.team.Team;
 import at.er.ytbattle.util.timer.Timeable;
 import at.er.ytbattle.util.timer.TimerManager.TimeScale;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -28,11 +29,16 @@ public class WoolPlaceTimer extends Timeable {
                 }
             }
         } else if (elapsedTime >= duration) {
-            for (BattlePlayer player : team.getPlayers()) {
+            for (final BattlePlayer player : team.getPlayers()) {
                 if (player.hasPlayer()) {
-                    player.playSound(player.getLocation(), Sound.IRONGOLEM_HIT, 10, 0.5F);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 40, 0));
-                    player.sendMessage(BattlePlugin.prefix() + "Place a wool to disable the whiter effect!");
+                    Bukkit.getScheduler().runTask(BattlePlugin.instance(), new Runnable() {
+                        @Override
+                        public void run() {
+                            player.playSound(player.getLocation(), Sound.IRONGOLEM_HIT, 10, 0.5F);
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 40, 0));
+                            player.sendMessage(BattlePlugin.prefix() + "Place a wool to disable the whiter effect!");
+                        }
+                    });
                 }
             }
         } else {
